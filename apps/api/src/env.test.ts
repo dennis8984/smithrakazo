@@ -7,7 +7,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { loadEnv, parseExtraAuthOrigins, withEnvOverrides } from "./env.js";
 
 const base = {
-  DATABASE_URL: "postgres://rakazo:rakazo@127.0.0.1:5433/rakazo",
+  DATABASE_URL: "postgres://smith:smith@127.0.0.1:5433/smith",
   NODE_ENV: "test",
 };
 
@@ -293,12 +293,12 @@ describe("loadEnv", () => {
       loadEnv({
         ...base,
         SMTP_URL: " smtps://user:secret@smtp.example.test:465 ",
-        EMAIL_FROM: " Rakazo <no-reply@example.test> ",
+        EMAIL_FROM: " Smith <no-reply@example.test> ",
         EMAIL_EMULATOR: "true",
       }),
     ).toMatchObject({
       smtpUrl: "smtps://user:secret@smtp.example.test:465",
-      emailFrom: "Rakazo <no-reply@example.test>",
+      emailFrom: "Smith <no-reply@example.test>",
       emailEmulator: true,
     });
     expect(

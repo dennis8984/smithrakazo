@@ -247,7 +247,7 @@ describe("model backup settings API", () => {
       ...owner,
       userId: "user-two",
       spaceId: "space-two",
-      email: "two@rakazo.test",
+      email: "two@smith.test",
     };
     const kept = { userId: owner.userId, provider: "openrouter", modelId: "keep", position: 0 };
     const { rows, call, userModelRoleChoice } = setup({ actor, existing: [kept] });

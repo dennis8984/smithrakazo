@@ -24,7 +24,7 @@ describe("OpenAI-compatible model probes", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const baseUrl = "https://127.0.0.1:8000/v1";
@@ -480,7 +480,7 @@ describe("openai-compatible enabled models", () => {
   const actor = {
     spaceId: "space-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const compatible = "openai-compatible";

@@ -40,7 +40,7 @@ interpolates it into `DATABASE_URL` the same way the images stack does. Hex from
 `openssl rand` is safe; characters such as `@ : / ? # %` are not.
 
 Existing source-checkout `pgdata` volumes keep the user, password, and database
-from first init (often the former hardcoded `rakazo` / `rakazo`). Keep those
+from first init (often the former hardcoded `smith` / `smith`). Keep those
 values in `.env`, or change them in place with `ALTER ROLE` / rename. Recreate
 the volume only after a backup (or when the data is disposable);
 `docker compose down -v` deletes all Postgres state.

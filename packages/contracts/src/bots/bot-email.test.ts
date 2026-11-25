@@ -40,7 +40,7 @@ describe("parseBotEmailName", () => {
       "support.ts",
       "admin-bot",
       "help_desk",
-      "rakazo",
+      "smith",
       "rakazobot",
       "no-reply",
       "no-reply.bot",

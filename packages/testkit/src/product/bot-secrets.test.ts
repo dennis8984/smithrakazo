@@ -376,7 +376,7 @@ describeIntegration("reusable credential lifecycle", () => {
         );
         expect(uses[0]!.at >= uses[1]!.at).toBe(true);
         const stranger = await signup(
-          `vault-stranger-${requireApproval}-${stamp}@rakazo.test`,
+          `vault-stranger-${requireApproval}-${stamp}@smith.test`,
           "S",
         );
         await expect(rpc(stranger, "vault/activity", { name: destination.name })).rejects.toThrow(
@@ -455,7 +455,7 @@ describeIntegration("reusable credential lifecycle", () => {
     expect(await rpc(seeded.cookie, "vault/list", {})).toEqual([
       expect.objectContaining({ title: "Stripe live", policy: "off" }),
     ]);
-    const stranger = await signup(`vault-access-stranger-${stamp}@rakazo.test`, "S");
+    const stranger = await signup(`vault-access-stranger-${stamp}@smith.test`, "S");
     await expect(
       rpc(stranger, "vault/put", {
         destination: { name: saved.name, origin: destination.origin, auth },
@@ -798,7 +798,7 @@ describeIntegration("reusable credential lifecycle", () => {
     expect(saved).toMatchObject({ allBots: false, botIds: [seeded.bot.id] });
     const item = { name: saved.name, origin: destination.origin, auth };
     // Only bots of the Space they act in.
-    const stranger = await signup(`vault-bots-stranger-${stamp}@rakazo.test`, "S");
+    const stranger = await signup(`vault-bots-stranger-${stamp}@smith.test`, "S");
     const second = await rpc<{ id: string }>(seeded.cookie, "spaces/create", { name: "Second" });
     const there = await newBot(seeded.cookie, second.id);
     for (const botId of [(await newBot(stranger)).id, there.id, "missing-bot"]) {
@@ -1329,7 +1329,7 @@ describeIntegration("reusable credential lifecycle", () => {
       completedAt?: Date;
     } = {},
   ) {
-    const cookie = await signup(`executor-${label}-${stamp}@rakazo.test`, `Executor ${label}`);
+    const cookie = await signup(`executor-${label}-${stamp}@smith.test`, `Executor ${label}`);
     const me = await rpc<{ userId: string; spaceId: string }>(cookie, "me");
     const bot = await rpc<{ id: string }>(cookie, "bots/create", {
       name: `Executor ${label}`,

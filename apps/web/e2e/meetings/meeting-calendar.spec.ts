@@ -8,7 +8,7 @@ test("a recurring meeting is scheduled and one occurrence can be skipped", async
     process.env.MEETING_PROVIDER !== "emulator",
     "Set MEETING_PROVIDER=emulator to exercise the calendar provider and its OAuth flow.",
   );
-  await signup(page, `calendar-${Date.now()}@rakazo.test`, "password12", "Calendar Tester");
+  await signup(page, `calendar-${Date.now()}@smith.test`, "password12", "Calendar Tester");
   await completeOnboarding(page);
 
   const upcomingRequests: string[] = [];

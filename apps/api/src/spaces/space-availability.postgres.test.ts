@@ -28,7 +28,7 @@ describe.skipIf(!enabled)("items available across a user's spaces (PostgreSQL)",
   const actorIn = (spaceId: string, userId = owner): Actor => ({
     spaceId,
     userId,
-    email: `${userId}@rakazo.test`,
+    email: `${userId}@smith.test`,
     isDeploymentOwner: false,
   });
   const skills = () => createAgentSkillsService(prisma);
@@ -66,7 +66,7 @@ describe.skipIf(!enabled)("items available across a user's spaces (PostgreSQL)",
       });
       for (const userId of [owner, teammate]) {
         await prisma.user.create({
-          data: { id: userId, name: userId, email: `${userId}@rakazo.test`, emailVerified: false },
+          data: { id: userId, name: userId, email: `${userId}@smith.test`, emailVerified: false },
         });
         await prisma.member.create({
           data: { id: `${userId}-m`, organizationId, userId, role: "owner", createdAt: new Date() },

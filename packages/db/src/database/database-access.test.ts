@@ -22,8 +22,8 @@ vi.mock("pg", async (importActual) => ({
   },
 }));
 
-const owner = "postgres://rakazo:owner-password@postgres:5432/rakazo";
-const runtime = "postgres://rakazo_app:app-password@postgres:5432/rakazo";
+const owner = "postgres://smith:owner-password@postgres:5432/smith";
+const runtime = "postgres://rakazo_app:app-password@postgres:5432/smith";
 
 describe("databaseUrls", () => {
   it("migrates as the owner and runs the app as the runtime login", () => {
@@ -44,7 +44,7 @@ describe("databaseUrls", () => {
   });
 
   it("treats two URLs for the same login as shared", () => {
-    const sameLogin = "postgres://rakazo:owner-password@127.0.0.1:5433/rakazo";
+    const sameLogin = "postgres://smith:owner-password@127.0.0.1:5433/smith";
     expect(databaseUrls({ DATABASE_URL: sameLogin, DATABASE_MIGRATION_URL: owner }).separate).toBe(
       false,
     );
@@ -68,8 +68,8 @@ describe("rowSecurityWarning", () => {
 
   it("names the login and why it bypasses the policies", () => {
     expect(
-      rowSecurityWarning({ enforced: false, role: "rakazo", reason: "is a superuser" }),
-    ).toContain("connects as rakazo, which is a superuser");
+      rowSecurityWarning({ enforced: false, role: "smith", reason: "is a superuser" }),
+    ).toContain("connects as smith, which is a superuser");
   });
 });
 
@@ -103,7 +103,7 @@ describe("provisionRuntimeRole", () => {
 
 describe("timeZoneWarning", () => {
   const session = (zone: string) =>
-    ({ $queryRawUnsafe: async () => [{ zone, login: "rakazo_app", database: "rakazo" }] }) as never;
+    ({ $queryRawUnsafe: async () => [{ zone, login: "rakazo_app", database: "smith" }] }) as never;
 
   it.each(["UTC", "Etc/UTC", "GMT", "Etc/GMT", "GMT0", "Etc/GMT+0", "Greenwich", "Zulu"])(
     "stays quiet for %s",
@@ -114,7 +114,7 @@ describe("timeZoneWarning", () => {
 
   it("warns for a zone with an offset, naming the database and the login", async () => {
     const warning = await timeZoneWarning(session("Europe/London"));
-    expect(warning).toContain("ALTER DATABASE rakazo SET timezone TO 'UTC'");
+    expect(warning).toContain("ALTER DATABASE smith SET timezone TO 'UTC'");
     expect(warning).toContain("ALTER ROLE rakazo_app");
     expect(warning).not.toContain("db:migrate");
   });

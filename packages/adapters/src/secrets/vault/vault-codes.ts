@@ -180,7 +180,7 @@ export function loginCodeClaim(input: {
   // six-digit code could be reversed by anyone who can read the table.
   const keyed = (text: string, length: number) =>
     createHmac("sha256", resolveEncryptionKey())
-      .update("rakazo:vault-code-claim:v1\0")
+      .update("smith:vault-code-claim:v1\0")
       .update(text)
       .digest("hex")
       .slice(0, length);

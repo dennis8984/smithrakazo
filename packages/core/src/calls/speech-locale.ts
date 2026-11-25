@@ -1,6 +1,6 @@
 /** Per-device opt-in to provider transcription without a language hint during calls. */
 export const callAutoLanguagePreference = {
-  key: "rakazo.call-auto-language",
+  key: "smith.call-auto-language",
   parse: (value: string | null) => value === "1",
   serialize: (enabled: boolean) => (enabled ? "1" : null),
 };

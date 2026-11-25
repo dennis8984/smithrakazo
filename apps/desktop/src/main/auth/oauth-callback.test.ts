@@ -78,7 +78,7 @@ it("lets SSO reach its API callback instead of capturing a separate loopback ori
 });
 
 describe("MCP sign-in callbacks", () => {
-  const appOrigin = "https://rakazo.example.com";
+  const appOrigin = "https://smith.example.com";
 
   it("reads the code from the app's own callback route", () => {
     expect(

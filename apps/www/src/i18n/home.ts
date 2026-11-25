@@ -146,49 +146,49 @@ const EN_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Research prospects and draft follow-ups.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Sort email and draft replies.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Review applications and shortlist candidates.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Match receipts to payments.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Make code changes on your computer.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Prepare replies and track renewals.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Review ad spend and report changes.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Prepare briefings and coordinate your bots.",
   },
 ];
@@ -197,49 +197,49 @@ const DE_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Recherchiert Kunden und entwirft Follow-ups.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Sortiert E-Mails und entwirft Antworten.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Prüft Bewerbungen und wählt Kandidaten aus.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Ordnet Belege den Zahlungen zu.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Ändert Code auf deinem Computer.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Bereitet Antworten vor und verfolgt Vertragsverlängerungen.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Prüft Werbeausgaben und meldet Änderungen.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Erstellt Briefings und koordiniert deine Bots.",
   },
 ];
@@ -248,49 +248,49 @@ const KO_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "잠재 고객을 조사하고 후속 메일을 작성합니다.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "메일을 분류하고 답장 초안을 씁니다.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "지원서를 검토하고 후보를 추립니다.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "영수증과 결제 내역을 맞춥니다.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "내 컴퓨터에서 코드를 수정합니다.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "답변을 준비하고 계약 갱신을 챙깁니다.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "광고 지출을 검토하고 변화를 보고합니다.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "브리핑을 준비하고 봇을 조율합니다.",
   },
 ];
@@ -299,49 +299,49 @@ const ZH_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "调研客户，起草跟进邮件。",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "整理邮件，起草回复。",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "审核简历，筛选候选人。",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "核对收据与付款。",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "在你的电脑上修改代码。",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "准备回复，跟进续约。",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "检查广告支出，汇报变化。",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "准备简报，协调 Bot。",
   },
 ];
@@ -350,49 +350,49 @@ const JA_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "見込み客を調べて、フォローアップを下書きします。",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "メールを仕分けて、返信を下書きします。",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "応募書類を確認して、候補者を絞り込みます。",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "領収書と支払いを照合します。",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "あなたのコンピューターでコードを変更します。",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "返信を準備して、契約更新を管理します。",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "広告費を確認して、変化を報告します。",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "ブリーフィングを準備して、ボットたちを取りまとめます。",
   },
 ];
@@ -401,49 +401,49 @@ const ES_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Investiga prospectos y redacta seguimientos.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Ordena el correo y redacta respuestas.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Revisa solicitudes y preselecciona candidatos.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Concilia recibos con pagos.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Hace cambios en el código en tu computadora.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Prepara respuestas y sigue las renovaciones.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Revisa el gasto en anuncios e informa de los cambios.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Prepara resúmenes y coordina a tus bots.",
   },
 ];
@@ -452,49 +452,49 @@ const FR_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Recherche des prospects et rédige des relances.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Trie les e-mails et rédige des réponses.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Examine les candidatures et présélectionne les candidats.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Rapproche les reçus des paiements.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Modifie le code sur votre ordinateur.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Prépare des réponses et suit les renouvellements.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Analyse les dépenses publicitaires et signale les changements.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Prépare des briefings et coordonne vos bots.",
   },
 ];
@@ -503,49 +503,49 @@ const PT_BR_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Pesquisa prospects e escreve follow-ups.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Organiza e-mails e escreve respostas.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Analisa candidaturas e pré-seleciona candidatos.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Concilia recibos com pagamentos.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Faz alterações no código no seu computador.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Prepara respostas e acompanha renovações.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Analisa gastos com anúncios e relata mudanças.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Prepara resumos e coordena seus bots.",
   },
 ];
@@ -554,49 +554,49 @@ const NL_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Onderzoekt prospects en schrijft follow-ups.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Sorteert e-mail en schrijft conceptantwoorden.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Beoordeelt sollicitaties en maakt een shortlist.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Koppelt bonnetjes aan betalingen.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Past code aan op je computer.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Bereidt antwoorden voor en volgt verlengingen.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Controleert advertentie-uitgaven en meldt wijzigingen.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Maakt briefings en coördineert je bots.",
   },
 ];
@@ -605,49 +605,49 @@ const RU_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Изучает потенциальных клиентов и готовит повторные письма.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Сортирует почту и готовит черновики ответов.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Разбирает отклики и отбирает кандидатов.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Сопоставляет чеки с платежами.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Вносит изменения в код на вашем компьютере.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Готовит ответы и следит за продлениями.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Проверяет рекламные расходы и сообщает об изменениях.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Готовит сводки и координирует ваших ботов.",
   },
 ];
@@ -656,49 +656,49 @@ const TR_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Potansiyel müşterileri araştırır ve takip e-postaları hazırlar.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "E-postaları düzenler ve yanıt taslakları hazırlar.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Başvuruları inceler ve adayları kısa listeye alır.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Fişleri ödemelerle eşleştirir.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Bilgisayarınızda kod değişiklikleri yapar.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Yanıtları hazırlar ve yenilemeleri takip eder.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Reklam harcamalarını inceler ve değişiklikleri raporlar.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Brifingler hazırlar ve botlarınızı koordine eder.",
   },
 ];
@@ -707,49 +707,49 @@ const HE_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "חוקר לקוחות פוטנציאליים ומנסח הודעות המשך.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "ממיין אימיילים ומנסח תשובות.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "בודק מועמדויות ובוחר מועמדים לשלב הבא.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "מתאים קבלות לתשלומים.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "מבצע שינויים בקוד במחשב שלך.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "מכין תשובות ועוקב אחרי חידושי חוזים.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "בודק הוצאות פרסום ומדווח על שינויים.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "מכין תדריכים ומתאם את הבוטים שלך.",
   },
 ];
@@ -758,49 +758,49 @@ const HI_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "संभावित ग्राहकों पर रिसर्च करता है और फ़ॉलो-अप ड्राफ़्ट करता है।",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "ईमेल छांटता है और जवाब ड्राफ़्ट करता है।",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "आवेदनों की समीक्षा करता है और उम्मीदवारों को शॉर्टलिस्ट करता है।",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "रसीदों का भुगतानों से मिलान करता है।",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "आपके कंप्यूटर पर कोड में बदलाव करता है।",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "जवाब तैयार करता है और रिन्यूअल पर नज़र रखता है।",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "विज्ञापन खर्च की समीक्षा करता है और बदलावों की रिपोर्ट देता है।",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "ब्रीफ़िंग तैयार करता है और आपके बॉट्स के बीच तालमेल बिठाता है।",
   },
 ];
@@ -809,49 +809,49 @@ const ZH_TW_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "研究潛在客戶，草擬跟進信件。",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "整理郵件，草擬回覆。",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "審閱履歷，篩選候選人。",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "比對收據與付款。",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "在你的電腦上修改程式碼。",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "準備回覆，追蹤續約。",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "檢視廣告支出，回報變化。",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "準備簡報，協調你的機器人。",
   },
 ];
@@ -860,49 +860,49 @@ const PL_ROSTER: RosterBot[] = [
   {
     name: "Sales Outbound",
     color: "#F5A03C",
-    slug: "rakazo/sales-outbound",
+    slug: "smith/sales-outbound",
     desc: "Sprawdza potencjalnych klientów i przygotowuje kolejne wiadomości.",
   },
   {
     name: "Inbox Manager",
     color: "#6A6BF5",
-    slug: "rakazo/inbox-manager",
+    slug: "smith/inbox-manager",
     desc: "Porządkuje pocztę i przygotowuje odpowiedzi.",
   },
   {
     name: "Talent Scout",
     color: "#3B82F6",
-    slug: "rakazo/talent-scout",
+    slug: "smith/talent-scout",
     desc: "Przegląda zgłoszenia i wybiera kandydatów.",
   },
   {
     name: "Expense Manager",
     color: "#F2622A",
-    slug: "rakazo/expense-manager",
+    slug: "smith/expense-manager",
     desc: "Dopasowuje rachunki do płatności.",
   },
   {
     name: "Coding Agent",
     color: "#5B6EE1",
-    slug: "rakazo/coding-agent",
+    slug: "smith/coding-agent",
     desc: "Wprowadza zmiany w kodzie na Twoim komputerze.",
   },
   {
     name: "Account Manager",
     color: "#9B5CF6",
-    slug: "rakazo/account-manager",
+    slug: "smith/account-manager",
     desc: "Przygotowuje odpowiedzi i pilnuje odnowień umów.",
   },
   {
     name: "Paid Media",
     color: "#3EC5A8",
-    slug: "rakazo/paid-media",
+    slug: "smith/paid-media",
     desc: "Sprawdza wydatki na reklamy i raportuje zmiany.",
   },
   {
     name: "Chief of Staff",
     color: "#8B93A8",
-    slug: "rakazo/chief-of-staff",
+    slug: "smith/chief-of-staff",
     desc: "Przygotowuje podsumowania i koordynuje pracę botów.",
   },
 ];
@@ -915,7 +915,7 @@ const TESTIMONIALS: HomeCopy["testimonials"]["items"] = [
   },
   {
     quote:
-      "Im a co-founder and cto, loving rakazo, we have it running against private on qwen 3.8 with strong hw/gpus - all private.",
+      "Im a co-founder and cto, loving smith, we have it running against private on qwen 3.8 with strong hw/gpus - all private.",
     attribution: "@bc101101",
   },
   {
@@ -925,30 +925,30 @@ const TESTIMONIALS: HomeCopy["testimonials"]["items"] = [
   },
   {
     quote:
-      "Hermes is good but more complicated setup. Rakazo has better multi agent workflow and simpler to setup",
+      "Hermes is good but more complicated setup. Smith has better multi agent workflow and simpler to setup",
     attribution: "@notabot_92732",
   },
   {
-    quote: "ive been using rakazo for 1 month in claude oauth no problems yet",
+    quote: "ive been using smith for 1 month in claude oauth no problems yet",
     attribution: "@hey_cabron",
   },
   {
     quote:
-      "I set up the mobile app today with expo, first time using expo but was easy with rakazo walking me through",
+      "I set up the mobile app today with expo, first time using expo but was easy with smith walking me through",
     attribution: "@mithril0x",
   },
 ];
 
 const HOME_COPY: Record<Locale, HomeCopy> = {
   pl: {
-    title: "Rakazo | Otwarta alternatywa dla Grok Bot",
+    title: "Smith | Otwarta alternatywa dla Grok Bot",
     description:
-      "Rakazo to otwarta alternatywa dla Grok Bot. Boty AI z własną pamięcią wykonują zadania na Twoim komputerze, z wybranym przez Ciebie modelem.",
-    ogImageAlt: "Rakazo. Twój zespół AI na Twoim komputerze, z Twoimi kluczami i modelem.",
+      "Smith to otwarta alternatywa dla Grok Bot. Boty AI z własną pamięcią wykonują zadania na Twoim komputerze, z wybranym przez Ciebie modelem.",
+    ogImageAlt: "Smith. Twój zespół AI na Twoim komputerze, z Twoimi kluczami i modelem.",
     availableLanguage: "Polish",
     skipToContent: "Przejdź do treści",
     nav: {
-      home: "Strona główna Rakazo",
+      home: "Strona główna Smith",
       primary: "Nawigacja główna",
       menu: "Menu",
       docs: "Dokumentacja",
@@ -979,7 +979,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
     selfHost: {
       heading: "Na własnym serwerze",
-      copy: "Uruchom Rakazo na swoim komputerze i wybierz modele dla swoich botów.",
+      copy: "Uruchom Smith na swoim komputerze i wybierz modele dla swoich botów.",
       worksWith: "Współpracuje z",
       mock: {
         weekdays: "W dni robocze o 9:00",
@@ -1065,7 +1065,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Czy mogę używać subskrypcji Claude Pro/Max lub ChatGPT Plus/Pro?",
           answer:
-            "Tak. W ustawieniach modeli Rakazo zaloguj się planem Claude Pro lub Max albo odpowiednim planem ChatGPT. Możesz też połączyć klucz API. Szczegóły opisano na stronie Model subscriptions w dokumentacji.",
+            "Tak. W ustawieniach modeli Smith zaloguj się planem Claude Pro lub Max albo odpowiednim planem ChatGPT. Możesz też połączyć klucz API. Szczegóły opisano na stronie Model subscriptions w dokumentacji.",
         },
         {
           question: "Czy mogę uruchomić model lokalnie?",
@@ -1081,7 +1081,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
     openSource: {
       heading: "Otwarty kod źródłowy",
-      copy: "Licencja Apache-2.0. Uruchom Rakazo i dostosuj kod do swoich potrzeb.",
+      copy: "Licencja Apache-2.0. Uruchom Smith i dostosuj kod do swoich potrzeb.",
       starOnGithub: "Dodaj gwiazdkę na GitHubie",
       readTheDocs: "Przeczytaj dokumentację",
       cloudTitle: "Chmura",
@@ -1127,13 +1127,13 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   en: {
-    title: "Rakazo | Open source Grok Bot alternative",
+    title: "Smith | Open source Grok Bot alternative",
     description: SITE_DESCRIPTION,
-    ogImageAlt: "Rakazo. AI teammates you actually own. Your keys, your model, your machine.",
+    ogImageAlt: "Smith. AI teammates you actually own. Your keys, your model, your machine.",
     availableLanguage: "English",
     skipToContent: "Skip to content",
     nav: {
-      home: "Rakazo home",
+      home: "Smith home",
       primary: "Primary",
       menu: "Menu",
       docs: "Docs",
@@ -1305,15 +1305,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   de: {
-    title: "Rakazo | Open-Source-Alternative zu Grok Bot",
+    title: "Smith | Open-Source-Alternative zu Grok Bot",
     description:
-      "Rakazo ist eine Open-Source-Alternative zu Grok Bot für persistente KI-Teamkollegen, die echte Arbeit erledigen. Deine Keys, dein Modell, deine Maschine.",
+      "Smith ist eine Open-Source-Alternative zu Grok Bot für persistente KI-Teamkollegen, die echte Arbeit erledigen. Deine Keys, dein Modell, deine Maschine.",
     ogImageAlt:
-      "Rakazo. KI-Teamkollegen, die dir wirklich gehören. Deine Keys, dein Modell, deine Maschine.",
+      "Smith. KI-Teamkollegen, die dir wirklich gehören. Deine Keys, dein Modell, deine Maschine.",
     availableLanguage: "German",
     skipToContent: "Zum Inhalt springen",
     nav: {
-      home: "Rakazo-Startseite",
+      home: "Smith-Startseite",
       primary: "Hauptnavigation",
       menu: "Menü",
       docs: "Docs",
@@ -1433,7 +1433,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Kann ich mein Claude Pro/Max- oder ChatGPT Plus/Pro-Abo nutzen?",
           answer:
-            "Ja. Melde dich in den Modelleinstellungen von Rakazo mit deinem Claude Pro- oder Max-Plan oder einem passenden ChatGPT-Plan an. Du kannst auch einen API-Schlüssel verbinden. Details findest du unter Model subscriptions in der Dokumentation.",
+            "Ja. Melde dich in den Modelleinstellungen von Smith mit deinem Claude Pro- oder Max-Plan oder einem passenden ChatGPT-Plan an. Du kannst auch einen API-Schlüssel verbinden. Details findest du unter Model subscriptions in der Dokumentation.",
         },
         {
           question: "Kann ich ein lokales Modell nutzen?",
@@ -1495,14 +1495,14 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   ko: {
-    title: "Rakazo | 오픈소스 Grok Bot 대안",
+    title: "Smith | 오픈소스 Grok Bot 대안",
     description:
-      "Rakazo는 실제 업무를 수행하는 지속형 AI 팀원을 위한 오픈소스 Grok Bot 대안입니다. 키, 모델, 머신, 모두 당신 것.",
-    ogImageAlt: "Rakazo. 진짜로 내 것인 AI 팀원. 키, 모델, 머신, 모두 당신 것.",
+      "Smith는 실제 업무를 수행하는 지속형 AI 팀원을 위한 오픈소스 Grok Bot 대안입니다. 키, 모델, 머신, 모두 당신 것.",
+    ogImageAlt: "Smith. 진짜로 내 것인 AI 팀원. 키, 모델, 머신, 모두 당신 것.",
     availableLanguage: "Korean",
     skipToContent: "본문으로 건너뛰기",
     nav: {
-      home: "Rakazo 홈",
+      home: "Smith 홈",
       primary: "주 메뉴",
       menu: "메뉴",
       docs: "Docs",
@@ -1605,7 +1605,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Claude Pro/Max 또는 ChatGPT Plus/Pro 구독을 쓸 수 있나요?",
           answer:
-            "네. Rakazo의 모델 설정에서 Claude Pro 또는 Max 요금제나 해당 ChatGPT 요금제로 로그인하세요. API 키를 연결해도 됩니다. 자세한 내용은 문서의 Model subscriptions를 확인하세요.",
+            "네. Smith의 모델 설정에서 Claude Pro 또는 Max 요금제나 해당 ChatGPT 요금제로 로그인하세요. API 키를 연결해도 됩니다. 자세한 내용은 문서의 Model subscriptions를 확인하세요.",
         },
         {
           question: "로컬 모델을 쓸 수 있나요?",
@@ -1667,14 +1667,14 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   zh: {
-    title: "Rakazo | 开源 Grok Bot 替代品",
+    title: "Smith | 开源 Grok Bot 替代品",
     description:
-      "Rakazo 是一个开源 Grok Bot 替代品，用于运行真正干活的持久化 AI 队友。密钥、模型、机器，都归你所有。",
-    ogImageAlt: "Rakazo：真正属于你的 AI 队友。密钥、模型、机器，都归你所有。",
+      "Smith 是一个开源 Grok Bot 替代品，用于运行真正干活的持久化 AI 队友。密钥、模型、机器，都归你所有。",
+    ogImageAlt: "Smith：真正属于你的 AI 队友。密钥、模型、机器，都归你所有。",
     availableLanguage: "Chinese",
     skipToContent: "跳到主要内容",
     nav: {
-      home: "Rakazo 首页",
+      home: "Smith 首页",
       primary: "主导航",
       menu: "菜单",
       docs: "文档",
@@ -1768,7 +1768,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "可以用我的 Claude Pro/Max 或 ChatGPT Plus/Pro 订阅吗？",
           answer:
-            "可以。在 Rakazo 的模型设置中，用你的 Claude Pro 或 Max 套餐，或符合条件的 ChatGPT 套餐登录。你也可以连接 API 密钥。详情见文档中的 Model subscriptions。",
+            "可以。在 Smith 的模型设置中，用你的 Claude Pro 或 Max 套餐，或符合条件的 ChatGPT 套餐登录。你也可以连接 API 密钥。详情见文档中的 Model subscriptions。",
         },
         {
           question: "可以用本地模型吗？",
@@ -1830,15 +1830,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   ja: {
-    title: "Rakazo | オープンソースの Grok Bot 代替ツール",
+    title: "Smith | オープンソースの Grok Bot 代替ツール",
     description:
-      "Rakazo は、実際の仕事をこなす常駐型 AI チームメイトのための、オープンソースの Grok Bot 代替ツールです。キーもモデルもマシンも、すべてあなたのものです。",
+      "Smith は、実際の仕事をこなす常駐型 AI チームメイトのための、オープンソースの Grok Bot 代替ツールです。キーもモデルもマシンも、すべてあなたのものです。",
     ogImageAlt:
-      "Rakazo。本当に自分のものにできる AI チームメイト。キーもモデルもマシンも、すべてあなたのもの。",
+      "Smith。本当に自分のものにできる AI チームメイト。キーもモデルもマシンも、すべてあなたのもの。",
     availableLanguage: "Japanese",
     skipToContent: "本文へスキップ",
     nav: {
-      home: "Rakazo ホーム",
+      home: "Smith ホーム",
       primary: "メインナビゲーション",
       menu: "メニュー",
       docs: "ドキュメント",
@@ -1944,7 +1944,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Claude Pro/Max や ChatGPT Plus/Pro のサブスクリプションを使えますか？",
           answer:
-            "はい。Rakazo のモデル設定で、Claude Pro または Max のプラン、あるいは対象の ChatGPT プランでサインインしてください。API キーを接続することもできます。詳しくはドキュメントの Model subscriptions をご覧ください。",
+            "はい。Smith のモデル設定で、Claude Pro または Max のプラン、あるいは対象の ChatGPT プランでサインインしてください。API キーを接続することもできます。詳しくはドキュメントの Model subscriptions をご覧ください。",
         },
         {
           question: "ローカルモデルを使えますか？",
@@ -2006,15 +2006,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   es: {
-    title: "Rakazo | Alternativa de código abierto a Grok Bot",
+    title: "Smith | Alternativa de código abierto a Grok Bot",
     description:
-      "Rakazo es una alternativa de código abierto a Grok Bot para compañeros de IA persistentes que hacen trabajo real. Tus claves, tu modelo, tu máquina.",
+      "Smith es una alternativa de código abierto a Grok Bot para compañeros de IA persistentes que hacen trabajo real. Tus claves, tu modelo, tu máquina.",
     ogImageAlt:
-      "Rakazo. Compañeros de IA que de verdad son tuyos. Tus claves, tu modelo, tu máquina.",
+      "Smith. Compañeros de IA que de verdad son tuyos. Tus claves, tu modelo, tu máquina.",
     availableLanguage: "Spanish",
     skipToContent: "Saltar al contenido",
     nav: {
-      home: "Inicio de Rakazo",
+      home: "Inicio de Smith",
       primary: "Navegación principal",
       menu: "Menú",
       docs: "Documentación",
@@ -2128,7 +2128,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "¿Puedo usar mi suscripción a Claude Pro/Max o ChatGPT Plus/Pro?",
           answer:
-            "Sí. En la configuración de modelos de Rakazo, inicia sesión con tu plan Claude Pro o Max, o con un plan compatible de ChatGPT. También puedes conectar una clave de API. Consulta Model subscriptions en la documentación para más detalles.",
+            "Sí. En la configuración de modelos de Smith, inicia sesión con tu plan Claude Pro o Max, o con un plan compatible de ChatGPT. También puedes conectar una clave de API. Consulta Model subscriptions en la documentación para más detalles.",
         },
         {
           question: "¿Puedo usar un modelo local?",
@@ -2190,15 +2190,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   fr: {
-    title: "Rakazo | Alternative open source à Grok Bot",
+    title: "Smith | Alternative open source à Grok Bot",
     description:
-      "Rakazo est une alternative open source à Grok Bot pour des coéquipiers IA persistants qui font un vrai travail. Vos clés, votre modèle, votre machine.",
+      "Smith est une alternative open source à Grok Bot pour des coéquipiers IA persistants qui font un vrai travail. Vos clés, votre modèle, votre machine.",
     ogImageAlt:
-      "Rakazo. Des coéquipiers IA qui vous appartiennent vraiment. Vos clés, votre modèle, votre machine.",
+      "Smith. Des coéquipiers IA qui vous appartiennent vraiment. Vos clés, votre modèle, votre machine.",
     availableLanguage: "French",
     skipToContent: "Aller au contenu",
     nav: {
-      home: "Accueil Rakazo",
+      home: "Accueil Smith",
       primary: "Navigation principale",
       menu: "Menu",
       docs: "Documentation",
@@ -2318,7 +2318,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Puis-je utiliser mon abonnement Claude Pro/Max ou ChatGPT Plus/Pro ?",
           answer:
-            "Oui. Dans les réglages des modèles de Rakazo, connectez-vous avec votre offre Claude Pro ou Max, ou avec une offre ChatGPT éligible. Vous pouvez aussi connecter une clé API. Consultez Model subscriptions dans la documentation pour en savoir plus.",
+            "Oui. Dans les réglages des modèles de Smith, connectez-vous avec votre offre Claude Pro ou Max, ou avec une offre ChatGPT éligible. Vous pouvez aussi connecter une clé API. Consultez Model subscriptions dans la documentation pour en savoir plus.",
         },
         {
           question: "Puis-je utiliser un modèle local ?",
@@ -2380,15 +2380,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   "pt-br": {
-    title: "Rakazo | Alternativa de código aberto ao Grok Bot",
+    title: "Smith | Alternativa de código aberto ao Grok Bot",
     description:
-      "Rakazo é uma alternativa de código aberto ao Grok Bot para colegas de IA persistentes que fazem trabalho de verdade. Suas chaves, seu modelo, sua máquina.",
+      "Smith é uma alternativa de código aberto ao Grok Bot para colegas de IA persistentes que fazem trabalho de verdade. Suas chaves, seu modelo, sua máquina.",
     ogImageAlt:
-      "Rakazo. Colegas de IA que são realmente seus. Suas chaves, seu modelo, sua máquina.",
+      "Smith. Colegas de IA que são realmente seus. Suas chaves, seu modelo, sua máquina.",
     availableLanguage: "Portuguese",
     skipToContent: "Pular para o conteúdo",
     nav: {
-      home: "Página inicial do Rakazo",
+      home: "Página inicial do Smith",
       primary: "Navegação principal",
       menu: "Menu",
       docs: "Documentação",
@@ -2505,7 +2505,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Posso usar minha assinatura do Claude Pro/Max ou ChatGPT Plus/Pro?",
           answer:
-            "Sim. Nas configurações de modelos do Rakazo, entre com seu plano Claude Pro ou Max ou com um plano elegível do ChatGPT. Você também pode conectar uma chave de API. Veja Model subscriptions na documentação para mais detalhes.",
+            "Sim. Nas configurações de modelos do Smith, entre com seu plano Claude Pro ou Max ou com um plano elegível do ChatGPT. Você também pode conectar uma chave de API. Veja Model subscriptions na documentação para mais detalhes.",
         },
         {
           question: "Posso usar um modelo local?",
@@ -2567,15 +2567,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   nl: {
-    title: "Rakazo | Open source alternatief voor Grok Bot",
+    title: "Smith | Open source alternatief voor Grok Bot",
     description:
-      "Rakazo is een open source alternatief voor Grok Bot voor blijvende AI-teamgenoten die echt werk doen. Jouw keys, jouw model, jouw machine.",
+      "Smith is een open source alternatief voor Grok Bot voor blijvende AI-teamgenoten die echt werk doen. Jouw keys, jouw model, jouw machine.",
     ogImageAlt:
-      "Rakazo. AI-teamgenoten die echt van jou zijn. Jouw keys, jouw model, jouw machine.",
+      "Smith. AI-teamgenoten die echt van jou zijn. Jouw keys, jouw model, jouw machine.",
     availableLanguage: "Dutch",
     skipToContent: "Naar inhoud springen",
     nav: {
-      home: "Rakazo-startpagina",
+      home: "Smith-startpagina",
       primary: "Hoofdnavigatie",
       menu: "Menu",
       docs: "Docs",
@@ -2689,7 +2689,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Kan ik mijn Claude Pro/Max- of ChatGPT Plus/Pro-abonnement gebruiken?",
           answer:
-            "Ja. Log in via de modelinstellingen van Rakazo met je Claude Pro- of Max-abonnement, of met een geschikt ChatGPT-abonnement. Je kunt ook een API-sleutel koppelen. Zie Model subscriptions in de documentatie voor details.",
+            "Ja. Log in via de modelinstellingen van Smith met je Claude Pro- of Max-abonnement, of met een geschikt ChatGPT-abonnement. Je kunt ook een API-sleutel koppelen. Zie Model subscriptions in de documentatie voor details.",
         },
         {
           question: "Kan ik een lokaal model draaien?",
@@ -2751,15 +2751,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   ru: {
-    title: "Rakazo | Альтернатива Grok Bot с открытым исходным кодом",
+    title: "Smith | Альтернатива Grok Bot с открытым исходным кодом",
     description:
-      "Rakazo — альтернатива Grok Bot с открытым исходным кодом: постоянные ИИ-коллеги, которые выполняют реальную работу. Ваши ключи, ваша модель, ваш компьютер.",
+      "Smith — альтернатива Grok Bot с открытым исходным кодом: постоянные ИИ-коллеги, которые выполняют реальную работу. Ваши ключи, ваша модель, ваш компьютер.",
     ogImageAlt:
-      "Rakazo. ИИ-коллеги, которые действительно принадлежат вам. Ваши ключи, ваша модель, ваш компьютер.",
+      "Smith. ИИ-коллеги, которые действительно принадлежат вам. Ваши ключи, ваша модель, ваш компьютер.",
     availableLanguage: "Russian",
     skipToContent: "Перейти к содержимому",
     nav: {
-      home: "Главная Rakazo",
+      home: "Главная Smith",
       primary: "Основная навигация",
       menu: "Меню",
       docs: "Документация",
@@ -2873,7 +2873,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Можно ли использовать подписку Claude Pro/Max или ChatGPT Plus/Pro?",
           answer:
-            "Да. В настройках моделей Rakazo войдите с тарифом Claude Pro или Max либо с подходящим тарифом ChatGPT. Можно также подключить API-ключ. Подробности см. на странице Model subscriptions в документации.",
+            "Да. В настройках моделей Smith войдите с тарифом Claude Pro или Max либо с подходящим тарифом ChatGPT. Можно также подключить API-ключ. Подробности см. на странице Model subscriptions в документации.",
         },
         {
           question: "Можно ли запустить локальную модель?",
@@ -2935,15 +2935,15 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   tr: {
-    title: "Rakazo | Açık kaynaklı Grok Bot alternatifi",
+    title: "Smith | Açık kaynaklı Grok Bot alternatifi",
     description:
-      "Rakazo, gerçek işler yapan kalıcı yapay zekâ ekip arkadaşları için açık kaynaklı bir Grok Bot alternatifidir. Sizin anahtarlarınız, sizin modeliniz, sizin makineniz.",
+      "Smith, gerçek işler yapan kalıcı yapay zekâ ekip arkadaşları için açık kaynaklı bir Grok Bot alternatifidir. Sizin anahtarlarınız, sizin modeliniz, sizin makineniz.",
     ogImageAlt:
-      "Rakazo. Gerçekten size ait yapay zekâ ekip arkadaşları. Sizin anahtarlarınız, sizin modeliniz, sizin makineniz.",
+      "Smith. Gerçekten size ait yapay zekâ ekip arkadaşları. Sizin anahtarlarınız, sizin modeliniz, sizin makineniz.",
     availableLanguage: "Turkish",
     skipToContent: "İçeriğe geç",
     nav: {
-      home: "Rakazo ana sayfa",
+      home: "Smith ana sayfa",
       primary: "Ana menü",
       menu: "Menü",
       docs: "Belgeler",
@@ -3057,7 +3057,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "Claude Pro/Max veya ChatGPT Plus/Pro aboneliğimi kullanabilir miyim?",
           answer:
-            "Evet. Rakazo'nun model ayarlarında Claude Pro veya Max planınızla ya da uygun bir ChatGPT planıyla giriş yapın. Bir API anahtarı da bağlayabilirsiniz. Ayrıntılar için belgelerdeki Model subscriptions sayfasına bakın.",
+            "Evet. Smith'nun model ayarlarında Claude Pro veya Max planınızla ya da uygun bir ChatGPT planıyla giriş yapın. Bir API anahtarı da bağlayabilirsiniz. Ayrıntılar için belgelerdeki Model subscriptions sayfasına bakın.",
         },
         {
           question: "Yerel bir model çalıştırabilir miyim?",
@@ -3119,14 +3119,14 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   he: {
-    title: "Rakazo | חלופת קוד פתוח ל-Grok Bot",
+    title: "Smith | חלופת קוד פתוח ל-Grok Bot",
     description:
-      "Rakazo היא חלופת קוד פתוח ל-Grok Bot לעמיתי AI קבועים שעושים עבודה אמיתית. המפתחות שלך, המודל שלך, המכונה שלך.",
-    ogImageAlt: "Rakazo. עמיתי AI ששייכים לך באמת. המפתחות שלך, המודל שלך, המכונה שלך.",
+      "Smith היא חלופת קוד פתוח ל-Grok Bot לעמיתי AI קבועים שעושים עבודה אמיתית. המפתחות שלך, המודל שלך, המכונה שלך.",
+    ogImageAlt: "Smith. עמיתי AI ששייכים לך באמת. המפתחות שלך, המודל שלך, המכונה שלך.",
     availableLanguage: "Hebrew",
     skipToContent: "דילוג לתוכן",
     nav: {
-      home: "דף הבית של Rakazo",
+      home: "דף הבית של Smith",
       primary: "ניווט ראשי",
       menu: "תפריט",
       docs: "תיעוד",
@@ -3234,7 +3234,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "אפשר להשתמש במנוי Claude Pro/Max או ChatGPT Plus/Pro שלי?",
           answer:
-            "כן. בהגדרות המודלים של Rakazo, התחברו עם תוכנית Claude Pro או Max, או עם תוכנית ChatGPT מתאימה. אפשר גם לחבר מפתח API. לפרטים, ראו את Model subscriptions בתיעוד.",
+            "כן. בהגדרות המודלים של Smith, התחברו עם תוכנית Claude Pro או Max, או עם תוכנית ChatGPT מתאימה. אפשר גם לחבר מפתח API. לפרטים, ראו את Model subscriptions בתיעוד.",
         },
         {
           question: "אפשר להריץ מודל מקומי?",
@@ -3296,14 +3296,14 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   hi: {
-    title: "Rakazo | Grok Bot का ओपन सोर्स विकल्प",
+    title: "Smith | Grok Bot का ओपन सोर्स विकल्प",
     description:
-      "Rakazo, Grok Bot का ओपन सोर्स विकल्प है, ऐसे स्थायी AI साथियों के लिए जो असली काम करते हैं। आपकी कुंजियाँ, आपका मॉडल, आपकी मशीन।",
-    ogImageAlt: "Rakazo. ऐसे AI साथी जो सच में आपके अपने हैं। आपकी कुंजियाँ, आपका मॉडल, आपकी मशीन।",
+      "Smith, Grok Bot का ओपन सोर्स विकल्प है, ऐसे स्थायी AI साथियों के लिए जो असली काम करते हैं। आपकी कुंजियाँ, आपका मॉडल, आपकी मशीन।",
+    ogImageAlt: "Smith. ऐसे AI साथी जो सच में आपके अपने हैं। आपकी कुंजियाँ, आपका मॉडल, आपकी मशीन।",
     availableLanguage: "Hindi",
     skipToContent: "सामग्री पर जाएं",
     nav: {
-      home: "Rakazo होम",
+      home: "Smith होम",
       primary: "मुख्य नेविगेशन",
       menu: "मेनू",
       docs: "दस्तावेज़",
@@ -3417,7 +3417,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "क्या मेरा Claude Pro/Max या ChatGPT Plus/Pro सब्सक्रिप्शन इस्तेमाल हो सकता है?",
           answer:
-            "हाँ। Rakazo की मॉडल सेटिंग्स में अपने Claude Pro या Max प्लान, या किसी योग्य ChatGPT प्लान से साइन इन करें। आप API कुंजी भी जोड़ सकते हैं। विवरण के लिए डॉक्स में Model subscriptions देखें।",
+            "हाँ। Smith की मॉडल सेटिंग्स में अपने Claude Pro या Max प्लान, या किसी योग्य ChatGPT प्लान से साइन इन करें। आप API कुंजी भी जोड़ सकते हैं। विवरण के लिए डॉक्स में Model subscriptions देखें।",
         },
         {
           question: "क्या लोकल मॉडल चलाया जा सकता है?",
@@ -3479,14 +3479,14 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
     },
   },
   "zh-tw": {
-    title: "Rakazo | 開源 Grok Bot 替代方案",
+    title: "Smith | 開源 Grok Bot 替代方案",
     description:
-      "Rakazo 是開源的 Grok Bot 替代方案，讓常駐的 AI 隊友幫你完成實際工作。金鑰、模型、機器，全都屬於你。",
-    ogImageAlt: "Rakazo：真正屬於你的 AI 隊友。金鑰、模型、機器，全都屬於你。",
+      "Smith 是開源的 Grok Bot 替代方案，讓常駐的 AI 隊友幫你完成實際工作。金鑰、模型、機器，全都屬於你。",
+    ogImageAlt: "Smith：真正屬於你的 AI 隊友。金鑰、模型、機器，全都屬於你。",
     availableLanguage: "Chinese (Traditional)",
     skipToContent: "跳至主要內容",
     nav: {
-      home: "Rakazo 首頁",
+      home: "Smith 首頁",
       primary: "主要導覽",
       menu: "選單",
       docs: "說明文件",
@@ -3580,7 +3580,7 @@ const HOME_COPY: Record<Locale, HomeCopy> = {
         {
           question: "可以用我的 Claude Pro/Max 或 ChatGPT Plus/Pro 訂閱嗎？",
           answer:
-            "可以。在 Rakazo 的模型設定中，以你的 Claude Pro 或 Max 方案，或符合資格的 ChatGPT 方案登入。你也可以連接 API 金鑰。詳情請見文件中的 Model subscriptions。",
+            "可以。在 Smith 的模型設定中，以你的 Claude Pro 或 Max 方案，或符合資格的 ChatGPT 方案登入。你也可以連接 API 金鑰。詳情請見文件中的 Model subscriptions。",
         },
         {
           question: "可以執行本機模型嗎？",

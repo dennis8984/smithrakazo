@@ -6,7 +6,7 @@ const errorNames = { GET: "GetSecretByName", POST: "CreateSecret", DELETE: "Dele
 /** Strict offline REST fake shared by provider and credential-boundary tests. */
 export function infisicalFake() {
   const values = new Map<string, string>();
-  const folders = new Set(["/rakazo"]);
+  const folders = new Set(["/smith"]);
   const statuses: number[] = [];
   const loginStatuses: number[] = [];
   let logins = 0;
@@ -103,7 +103,7 @@ export function infisicalFake() {
     clientSecret: "fake-client-secret",
     projectId: "fake-project",
     environment: "test",
-    folder: "/rakazo",
+    folder: "/smith",
     fetch: fetcher,
     sleep,
   };

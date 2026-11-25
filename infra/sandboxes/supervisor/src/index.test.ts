@@ -343,11 +343,11 @@ describe("sandbox supervisor input containment", () => {
 
   it("accepts the legacy workspace label without weakening container identity", () => {
     expect(
-      hasComputerIdentity({ "rakazo.botId": "bot", "rakazo.workspaceId": "space" }, "bot", "space"),
+      hasComputerIdentity({ "smith.botId": "bot", "smith.workspaceId": "space" }, "bot", "space"),
     ).toBe(true);
     expect(
       hasComputerIdentity(
-        { "rakazo.botId": "bot", "rakazo.workspaceId": "other-space" },
+        { "smith.botId": "bot", "smith.workspaceId": "other-space" },
         "bot",
         "space",
       ),
@@ -355,9 +355,9 @@ describe("sandbox supervisor input containment", () => {
     expect(
       hasComputerIdentity(
         {
-          "rakazo.botId": "bot",
-          "rakazo.spaceId": "space",
-          "rakazo.workspaceId": "other-space",
+          "smith.botId": "bot",
+          "smith.spaceId": "space",
+          "smith.workspaceId": "other-space",
         },
         "bot",
         "space",
@@ -380,8 +380,8 @@ describe("sandbox supervisor input containment", () => {
     ];
     const aimed = [{ kind: "scroll" as const, direction: "down" as const, x: 600, y: 420 }];
     const sideways = [{ kind: "scroll" as const, direction: "left" as const }];
-    const current = { [AIMED_SCROLL_CONTROL_LABEL]: "1", "rakazo.botId": "bot" };
-    const older = { "rakazo.botId": "bot" };
+    const current = { [AIMED_SCROLL_CONTROL_LABEL]: "1", "smith.botId": "bot" };
+    const older = { "smith.botId": "bot" };
     expect(controlHandlesActions(older, plain)).toBe(true);
     expect(controlHandlesActions(older, aimed)).toBe(false);
     expect(controlHandlesActions(older, sideways)).toBe(false);
@@ -785,7 +785,7 @@ describe("sandbox supervisor input containment", () => {
     expect(command).toContain("browser-pid-");
     expect(command).toContain("tr '\\0' '\\n' <\"/proc/$1/cmdline\"");
     expect(browserProfilePathForScreen("../../writer")).toMatch(
-      /^\/home\/rakazo\/\.browser-profiles\/chromium-bot-[0-9a-f]+$/,
+      /^\/home\/smith\/\.browser-profiles\/chromium-bot-[0-9a-f]+$/,
     );
   });
 
@@ -1278,7 +1278,7 @@ describe("computer command identity", () => {
     expect(computerCommandEnv({ display: ":2", debugPort: 9223 })).toEqual([
       "DISPLAY=:2",
       "RAKAZO_CDP_PORT=9223",
-      "HOME=/home/rakazo",
+      "HOME=/home/smith",
       "PATH=/home/rakazo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       "NPM_CONFIG_PREFIX=/home/rakazo/.local",
       "PIP_USER=1",
@@ -1294,7 +1294,7 @@ describe("computer name recovery", () => {
       Config: { Labels: labels, Image: image },
     } as Docker.ContainerInspectInfo;
   }
-  const owned = { "rakazo.botId": "bot", "rakazo.spaceId": "space", "rakazo.managed": "true" };
+  const owned = { "smith.botId": "bot", "smith.spaceId": "space", "smith.managed": "true" };
   function recovery(info: Docker.ContainerInspectInfo) {
     const remove = vi.fn().mockResolvedValue(undefined);
     const cleared = vi.fn();
@@ -1320,10 +1320,10 @@ describe("computer name recovery", () => {
   });
 
   it.each([
-    { ...owned, "rakazo.botId": "other" },
-    { ...owned, "rakazo.spaceId": "other" },
+    { ...owned, "smith.botId": "other" },
+    { ...owned, "smith.spaceId": "other" },
     {} as Record<string, string>,
-    { "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+    { "smith.botId": "bot", "smith.spaceId": "space" },
   ])("preserves a non-owned name holder and the original error: %j", async (labels) => {
     const { reclaim, remove, cleared } = recovery(holder(labels, "unmanaged"));
     const create = vi.fn().mockRejectedValue(conflict);
@@ -1336,7 +1336,7 @@ describe("computer name recovery", () => {
   it("accepts the existing legacy identity and image management rule", () => {
     expect(
       isManagedComputer(
-        holder({ "rakazo.botId": "bot", "rakazo.workspaceId": "space" }),
+        holder({ "smith.botId": "bot", "smith.workspaceId": "space" }),
         "bot",
         "space",
         "computer",

@@ -15,7 +15,7 @@ async function createBot(page: Page, name: string) {
 
 test("create group from + and see two bots in one transcript", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `group-${stamp}@rakazo.test`, "password12", "Group E2E");
+  await signup(page, `group-${stamp}@smith.test`, "password12", "Group E2E");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -339,7 +339,7 @@ test("create group from + and see two bots in one transcript", async ({ page }, 
 test("subagents keep group approvals answerable across reload while conversation continues", async ({
   page,
 }, testInfo) => {
-  await signup(page, `group-subagent-${Date.now()}@rakazo.test`, "password12", "Group Delegation");
+  await signup(page, `group-subagent-${Date.now()}@smith.test`, "password12", "Group Delegation");
   await completeOnboarding(page);
   const researcherId = await createBot(page, "Researcher");
   const writerId = await createBot(page, "Writer");
@@ -356,7 +356,7 @@ test("subagents keep group approvals answerable across reload while conversation
   await page.goto(`/app/g/${group.id}`);
   const composer = page.getByRole("combobox", { name: "Message Delegation team" });
   await composer.fill(
-    "@Researcher delegate to a helper: fetch https://group-approval.rakazo.test/notes",
+    "@Researcher delegate to a helper: fetch https://group-approval.smith.test/notes",
   );
   await page.keyboard.press("Enter");
   const allow = page.getByRole("button", { name: "Allow once", exact: true });

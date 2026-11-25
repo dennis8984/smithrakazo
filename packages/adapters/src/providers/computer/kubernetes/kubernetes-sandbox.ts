@@ -46,7 +46,7 @@ export interface KubernetesSandboxOptions {
   podLabels?: Record<string, string>;
   readyTimeoutMs?: number;
   /**
-   * Claim in the sandbox namespace that holds the Rakazo data directory. When
+   * Claim in the sandbox namespace that holds the Smith data directory. When
    * set, each Computer mounts only its own `homes/<bot id>` directory at the
    * workspace, so the home persists in place and is never copied in or out.
    * The claim's volume is ReadWriteOnce, so the pod must also be placed with
@@ -522,7 +522,7 @@ function podNameForBot(botId: string): string {
     .replaceAll(/^-+|-+$/g, "")
     .slice(0, 40);
   const hash = createHash("sha256").update(botId).digest("hex").slice(0, 12);
-  return `rakazo-${normalized || "bot"}-${hash}`;
+  return `smith-${normalized || "bot"}-${hash}`;
 }
 
 /** The data directory holds `homes/<bot id>`; a bot id must name exactly one folder. */

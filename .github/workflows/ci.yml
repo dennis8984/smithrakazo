@@ -82,7 +82,7 @@ jobs:
           filter: "@rakazo/desktop..."
       - run: pnpm db:generate
         env:
-          DATABASE_URL: postgres://rakazo:rakazo@127.0.0.1:5433/rakazo
+          DATABASE_URL: postgres://smith:smith@127.0.0.1:5433/smith
           electron_config_cache: ${{ runner.temp }}/electron-cache
       - run: pnpm --filter @rakazo/desktop build
         env:
@@ -215,7 +215,7 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           if [[ -z "$EXPO_TOKEN" ]]; then
-            echo "Add an EXPO_TOKEN repository secret with access to the inbox-zero/rakazo Expo project." >&2
+            echo "Add an EXPO_TOKEN repository secret with access to the inbox-zero/smith Expo project." >&2
             exit 1
           fi
 

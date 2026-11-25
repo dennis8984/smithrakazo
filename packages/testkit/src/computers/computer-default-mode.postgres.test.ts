@@ -64,14 +64,14 @@ describe.skipIf(!hasDb)("COMPUTER_DEFAULT_MODE for new bots", () => {
     ).computer;
 
   it("gives a bot a Team computer when nothing is configured", async () => {
-    const cookie = await signup(app, `default-team-${Date.now()}@rakazo.test`);
+    const cookie = await signup(app, `default-team-${Date.now()}@smith.test`);
     const bot = await create(cookie, "Shared");
     expect(bot.computerMode).toBe("team");
     expect((await computerOf(bot.id))?.scope).toBe("team");
   });
 
   it("follows the deployment default, and an explicit choice still wins", async () => {
-    const cookie = await signup(app, `default-private-${Date.now()}@rakazo.test`);
+    const cookie = await signup(app, `default-private-${Date.now()}@smith.test`);
     process.env.COMPUTER_DEFAULT_MODE = "dedicated";
 
     const first = await create(cookie, "Private one");
@@ -88,7 +88,7 @@ describe.skipIf(!hasDb)("COMPUTER_DEFAULT_MODE for new bots", () => {
   });
 
   it("leaves an existing bot on its computer when the default changes", async () => {
-    const cookie = await signup(app, `default-existing-${Date.now()}@rakazo.test`);
+    const cookie = await signup(app, `default-existing-${Date.now()}@smith.test`);
     const before = await create(cookie, "Before");
     const beforeComputer = await computerOf(before.id);
     process.env.COMPUTER_DEFAULT_MODE = "dedicated";

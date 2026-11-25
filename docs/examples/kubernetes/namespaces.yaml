@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: rakazo
+  name: smith
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/enforce-version: v1.35
 ---
@@ -13,6 +13,6 @@ kind: Namespace
 metadata:
   name: rakazo-sandboxes
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/enforce-version: v1.35

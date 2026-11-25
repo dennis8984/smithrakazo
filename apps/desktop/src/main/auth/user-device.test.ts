@@ -21,7 +21,7 @@ vi.mock("../setup/setup-store.js", async (actual) => {
   return { ...store, writePrivateFile: vi.fn(store.writePrivateFile) };
 });
 
-const origin = "https://rakazo.example.com";
+const origin = "https://smith.example.com";
 const other = "https://other.example.com";
 
 // Reversible stand-in for OS encryption that still keeps the plaintext off disk.
@@ -316,7 +316,7 @@ describe("remote computer access", () => {
     const first = clients[0]!.authorize();
     const second = clients[0]!.authorize();
     await vi.waitFor(() => expect(confirm).toHaveBeenCalledTimes(1));
-    expect(confirm).toHaveBeenCalledWith("rakazo.example.com");
+    expect(confirm).toHaveBeenCalledWith("smith.example.com");
     answer.resolve(true);
     expect(await Promise.all([first, second])).toEqual([true, true]);
     expect(await clients[0]!.authorize()).toBe(true);

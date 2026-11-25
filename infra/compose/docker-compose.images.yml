@@ -6,7 +6,7 @@
 # Pin a published vX.Y.Z tag for a fixed version; `latest` moves to each new stable release.
 # Default SANDBOX_PROVIDER=docker boots a local computer via the in-stack supervisor (no E2B key).
 # Optional: set e2b / daytona / boat plus the matching API key for remote computers.
-name: rakazo
+name: smith
 
 # What the api and worker both read. Each service adds the keys only it reads, so a process
 # only sees what it uses instead of the whole .env. A key with no value is passed through
@@ -15,7 +15,7 @@ name: rakazo
 x-app-environment: &app-environment # Runtime
   NODE_ENV: production
   # The app's own login, subject to row-level security (docs/self-host-configuration.md#database-roles).
-  DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+  DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
   REALTIME_DATABASE_URL:
   DB_POOL_MAX:
   DATA_DIR: /data
@@ -363,15 +363,15 @@ services:
     pids_limit: 200
     mem_limit: 2g
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-rakazo}
+      POSTGRES_USER: ${POSTGRES_USER:-smith}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-      POSTGRES_DB: ${POSTGRES_DB:-rakazo}
+      POSTGRES_DB: ${POSTGRES_DB:-smith}
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rakazo} -d ${POSTGRES_DB:-rakazo}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-smith} -d ${POSTGRES_DB:-smith}"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -491,8 +491,8 @@ services:
     pids_limit: 256
     mem_limit: 1536m
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
-      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
+      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-smith}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
     networks:
       - data
     depends_on:
@@ -734,8 +734,8 @@ services:
       RAKAZO_UPDATER_PORT: "7092"
       RAKAZO_IMAGE: ${RAKAZO_IMAGE:-ghcr.io/elie222/rakazo/app}
       RAKAZO_COMPUTER_IMAGE: ${RAKAZO_COMPUTER_IMAGE:-ghcr.io/elie222/rakazo/computer}
-      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-rakazo}
-      RAKAZO_DEPLOY_DIR: ${RAKAZO_DEPLOY_DIR:-/srv/rakazo}
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-smith}
+      RAKAZO_DEPLOY_DIR: ${RAKAZO_DEPLOY_DIR:-/srv/smith}
       RAKAZO_COMPOSE_FILE: ${RAKAZO_COMPOSE_FILE:-docker-compose.images.yml}
       RAKAZO_UPDATE_SERVICES: ${RAKAZO_UPDATE_SERVICES:-supervisor,computer}
       COMPOSE_PATH_SEPARATOR: ${COMPOSE_PATH_SEPARATOR:-}
@@ -744,7 +744,7 @@ services:
       LOG_LEVEL: ${LOG_LEVEL:-info}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${RAKAZO_DEPLOY_DIR:-/srv/rakazo}:${RAKAZO_DEPLOY_DIR:-/srv/rakazo}
+      - ${RAKAZO_DEPLOY_DIR:-/srv/smith}:${RAKAZO_DEPLOY_DIR:-/srv/smith}
     networks:
       - control
     healthcheck:

@@ -11,7 +11,7 @@ import { handleRpcError } from "../rpc-errors.js";
 export const owner: Actor = {
   userId: "user-one",
   spaceId: "space-one",
-  email: "one@rakazo.test",
+  email: "one@smith.test",
   isDeploymentOwner: true,
 };
 

@@ -329,8 +329,8 @@ export function stackFailureMessage(
       );
     case "other":
       return phase === "pulling"
-        ? t("Downloading Rakazo images failed. Check the output below, then retry.")
-        : t("Rakazo services did not start. Check the output below, then retry.");
+        ? t("Downloading Smith images failed. Check the output below, then retry.")
+        : t("Smith services did not start. Check the output below, then retry.");
   }
 }
 
@@ -600,8 +600,8 @@ export class LocalStackController extends StackLifecycle {
         type: "docker-missing",
         message:
           this.deps.platform === "linux"
-            ? t("Rakazo needs Docker to run on this computer.")
-            : t("Rakazo needs Docker Desktop to run on this computer."),
+            ? t("Smith needs Docker to run on this computer.")
+            : t("Smith needs Docker Desktop to run on this computer."),
       });
       return;
     }

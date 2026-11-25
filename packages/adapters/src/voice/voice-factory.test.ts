@@ -39,7 +39,7 @@ afterEach(() => {
   vi.unstubAllEnvs();
   if (previousRuntime === undefined) delete process.env.AGENT_RUNTIME;
   else process.env.AGENT_RUNTIME = previousRuntime;
-  installLogger(createLogger({ service: "rakazo", level: "off", sinks: [] }));
+  installLogger(createLogger({ service: "smith", level: "off", sinks: [] }));
 });
 
 describe("createVoiceProvider", () => {

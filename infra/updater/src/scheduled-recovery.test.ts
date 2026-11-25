@@ -75,7 +75,7 @@ async function fixture(env: string, commit: string, computers = false) {
     const failed = (output: string) => ({ ok: false, exitCode: 1, stdout: "", output });
     if (command === "git") return ok(`${older}\trefs/tags/v1.0.0\n${newer}\trefs/tags/v1.1.0\n`);
     if (args[0] === "ps") {
-      if (args.at(-1) === '{{.Label "com.docker.compose.project"}}\t{{.Label "rakazo.managed"}}')
+      if (args.at(-1) === '{{.Label "com.docker.compose.project"}}\t{{.Label "smith.managed"}}')
         return ok(
           `${[
             `${config.projectName}\t`,

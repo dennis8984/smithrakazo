@@ -54,7 +54,7 @@ describe("AppleContainerSandboxProvider", () => {
       "--network",
       "rakazo-1",
       "--label",
-      "rakazo.bot-id=bot-a",
+      "smith.bot-id=bot-a",
     ]);
     expect(args.slice(args.indexOf("--cap-drop"), args.indexOf("--cap-drop") + 4)).toEqual([
       "--cap-drop",
@@ -127,7 +127,7 @@ describe("AppleContainerSandboxProvider", () => {
       "-",
     ]);
     expect(apply!.stdin).toBe(localVmFirewall("192.168.70.1"));
-    expect(verify!.argv.slice(-4)).toEqual(["list", "table", "inet", "rakazo"]);
+    expect(verify!.argv.slice(-4)).toEqual(["list", "table", "inet", "smith"]);
   });
 
   it.each(["exit", "throw"])(

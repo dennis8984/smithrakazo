@@ -7,8 +7,8 @@ import {
 } from "../api/api";
 import { currentSessionGeneration } from "../api/session";
 
-const LAST_BOT_KEY = "rakazo.last_bot_id";
-const LAST_BOT_SPACE_KEY = "rakazo.last_bot_space_id";
+const LAST_BOT_KEY = "smith.last_bot_id";
+const LAST_BOT_SPACE_KEY = "smith.last_bot_space_id";
 const READ_TIMEOUT_MS = 500;
 let writes: Promise<unknown> = Promise.resolve();
 

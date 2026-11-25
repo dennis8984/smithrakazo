@@ -23,7 +23,7 @@ const context: AdapterContext = {
   signal: new AbortController().signal,
 };
 
-const TEAM_BANK = `rakazo-${createHash("sha256").update("space-1").digest("hex")}`;
+const TEAM_BANK = `smith-${createHash("sha256").update("space-1").digest("hex")}`;
 const OWN_BANK = `${TEAM_BANK}-${createHash("sha256").update("bot-1").digest("hex")}`;
 
 interface RecordedRequest {
@@ -257,7 +257,7 @@ describe("Hindsight saves", () => {
         {
           content: "Prefers tea.",
           context:
-            "A fact a Rakazo AI assistant chose to remember about the people it works for and their work",
+            "A fact a Smith AI assistant chose to remember about the people it works for and their work",
           timestamp: expect.any(String),
         },
       ],
@@ -758,7 +758,7 @@ describe("Hindsight conversations", () => {
               timestamp: "2026-11-11T10:00:03.000Z",
             },
           ]),
-          context: "Conversation in Rakazo with Sam, Ada and Bob",
+          context: "Conversation in Smith with Sam, Ada and Bob",
           timestamp: "2026-11-11T10:00:03.000Z",
           document_id: SESSION,
           update_mode: "append",
@@ -1018,22 +1018,22 @@ describe("Hindsight conversations", () => {
     expect(writes(fake.requests).map((request) => request.body?.items)).toEqual([
       [
         expect.objectContaining({
-          context: "Chat in Rakazo between Sam and Ada, an AI assistant",
+          context: "Chat in Smith between Sam and Ada, an AI assistant",
         }),
       ],
       [
         expect.objectContaining({
-          context: "Conversation in Rakazo with Sam, Ada and Bob",
+          context: "Conversation in Smith with Sam, Ada and Bob",
         }),
       ],
       [
         expect.objectContaining({
-          context: "Conversation in Rakazo with Sam, Ada, Bob and Carol",
+          context: "Conversation in Smith with Sam, Ada, Bob and Carol",
         }),
       ],
       [
         expect.objectContaining({
-          context: "Group chat in Rakazo with Sam, Ada, Bob and Carol",
+          context: "Group chat in Smith with Sam, Ada, Bob and Carol",
         }),
       ],
     ]);
@@ -1493,7 +1493,7 @@ describe("Hindsight connection", () => {
     ]) {
       await expect(
         prepareHindsightConnection({ recallBanks }, { apiKey: "hsk-test-key" }, { fetch }),
-      ).rejects.toThrow("Bank names starting with rakazo- are reserved.");
+      ).rejects.toThrow("Bank names starting with smith- are reserved.");
     }
     expect(fetch).not.toHaveBeenCalled();
   });
@@ -1504,7 +1504,7 @@ describe("Hindsight connection", () => {
         { recallBanks: "rakazo-legacy-organization" },
         { apiKey: "hsk-test-key" },
       ),
-    ).toThrow("Bank names starting with rakazo- are reserved.");
+    ).toThrow("Bank names starting with smith- are reserved.");
   });
 
   it("validates recall settings and keeps only those that differ from the defaults", async () => {

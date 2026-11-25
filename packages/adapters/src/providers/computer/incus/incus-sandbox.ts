@@ -189,7 +189,7 @@ export class IncusSandboxProvider extends ImageComputerSandbox {
     await this.removeOrphans(request.botId, request.providerRef, signal);
     // A new name for every start, as the Daytona provider does: a later start never adopts an
     // instance that an abandoned one created, so that one can be deleted without a race.
-    const name = `rakazo-${randomUUID()}`;
+    const name = `smith-${randomUUID()}`;
     const machine = { provider: "incus", machineId: name, homeKey: request.botId };
     // The name is chosen here, so it is recorded before Incus is asked: a create whose answer is
     // lost, or that this process does not outlive, is still deleted.

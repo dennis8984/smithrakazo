@@ -27,7 +27,7 @@ describePostgres("queued turns share a chat one at a time (PostgreSQL)", () => {
   let jobs: BackgroundJob[];
   let deps: ExecutorDeps;
   let groupMessages = 0;
-  const address = `chat-wait-${randomUUID()}@rakazo.test`;
+  const address = `chat-wait-${randomUUID()}@smith.test`;
 
   beforeAll(async () => {
     db = createDb(url!);

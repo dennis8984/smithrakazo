@@ -44,13 +44,13 @@ it("embeds one watch app with the correct sources, icon, and companion identity"
     const regenerated = regenerate(directory);
     const { PBXCopyFilesBuildPhase, PBXNativeTarget } = regenerated.hash.project.objects;
     const [target] = Object.values(PBXNativeTarget).filter(
-      (entry) => entry.name?.replaceAll('"', "") === "RakazoWatch",
+      (entry) => entry.name?.replaceAll('"', "") === "SmithWatch",
     );
     expect(
       existsSync(
         join(
           directory,
-          "RakazoWatch",
+          "SmithWatch",
           "WatchAssets.xcassets",
           "AppIcon.appiconset",
           "app-icon.png",
@@ -69,10 +69,10 @@ it("embeds one watch app with the correct sources, icon, and companion identity"
     );
 
     const watchSigning = config.expo.extra.eas.build.experimental.ios.appExtensions.find(
-      ({ targetName }) => targetName === "RakazoWatch",
+      ({ targetName }) => targetName === "SmithWatch",
     );
     const settings = Object.values(regenerated.pbxXCBuildConfigurationSection()).filter(
-      (entry) => entry.buildSettings?.PRODUCT_NAME?.replaceAll('"', "") === "RakazoWatch",
+      (entry) => entry.buildSettings?.PRODUCT_NAME?.replaceAll('"', "") === "SmithWatch",
     );
     expect(settings).toHaveLength(2);
     for (const { buildSettings } of settings) {
@@ -106,11 +106,11 @@ it("embeds the complications in the watch app with their sources and shared App 
     const regenerated = regenerate(directory);
     const { PBXCopyFilesBuildPhase, PBXNativeTarget } = regenerated.hash.project.objects;
     const [target] = Object.values(PBXNativeTarget).filter(
-      (entry) => entry.name?.replaceAll?.('"', "") === "RakazoWatch",
+      (entry) => entry.name?.replaceAll?.('"', "") === "SmithWatch",
     );
     // Inside the watch app, never the iPhone app.
     const [complications] = Object.entries(PBXNativeTarget).filter(
-      ([, entry]) => entry.name?.replaceAll?.('"', "") === "RakazoWatchComplications",
+      ([, entry]) => entry.name?.replaceAll?.('"', "") === "SmithWatchComplications",
     );
     const [complicationsUuid, complicationsTarget] = complications;
     const productRef = complicationsTarget.productReference;
@@ -135,10 +135,10 @@ it("embeds the complications in the watch app with their sources and shared App 
       regenerated.hash.project.objects.PBXSourcesBuildPhase[complicationSources.value].files,
     ).toHaveLength(2);
     const watchSigning = config.expo.extra.eas.build.experimental.ios.appExtensions.find(
-      ({ targetName }) => targetName === "RakazoWatch",
+      ({ targetName }) => targetName === "SmithWatch",
     );
     const complicationSigning = config.expo.extra.eas.build.experimental.ios.appExtensions.find(
-      ({ targetName }) => targetName === "RakazoWatchComplications",
+      ({ targetName }) => targetName === "SmithWatchComplications",
     );
     for (const signing of [watchSigning, complicationSigning]) {
       expect(signing.entitlements["com.apple.security.application-groups"]).toEqual([
@@ -147,7 +147,7 @@ it("embeds the complications in the watch app with their sources and shared App 
     }
     const complicationSettings = Object.values(regenerated.pbxXCBuildConfigurationSection()).filter(
       (entry) =>
-        entry.buildSettings?.PRODUCT_NAME?.replaceAll('"', "") === "RakazoWatchComplications",
+        entry.buildSettings?.PRODUCT_NAME?.replaceAll('"', "") === "SmithWatchComplications",
     );
     expect(complicationSettings).toHaveLength(2);
     for (const { buildSettings } of complicationSettings) {

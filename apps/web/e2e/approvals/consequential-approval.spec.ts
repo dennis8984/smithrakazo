@@ -13,7 +13,7 @@ test("A change asks without an approval model, and approvals settings shape what
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `action-approvals-${stamp}@rakazo.test`, "password12", "Approval UI");
+  await signup(page, `action-approvals-${stamp}@smith.test`, "password12", "Approval UI");
   await completeOnboarding(page, testInfo);
 
   await requestDestinationWrite(page, "write this to the destination crm as a note");
@@ -105,7 +105,7 @@ test("A change asks without an approval model, and approvals settings shape what
 
 test("A webhook run follows Always allow without asking", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `webhook-approval-${stamp}@rakazo.test`, "password12", "Webhook Approval");
+  await signup(page, `webhook-approval-${stamp}@smith.test`, "password12", "Webhook Approval");
   await completeOnboarding(page);
 
   await requestDestinationWrite(page, "write this to the destination crm as a note");

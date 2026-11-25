@@ -523,7 +523,7 @@ describe("objectStorageConfigFromEnv", () => {
       region: "us-east-1",
       accessKeyId: "id",
       secretAccessKey: "secret",
-      prefix: "rakazo/",
+      prefix: "smith/",
       pathStyle: true,
     });
   });

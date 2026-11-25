@@ -326,7 +326,7 @@ describe("KubernetesSandboxProvider", () => {
   describe("mounted home", () => {
     const home = {
       homeClaim: "data-claim",
-      homeColocateNamespace: "rakazo",
+      homeColocateNamespace: "smith",
       homeColocateLabels: { app: "rakazo-api" },
     };
 
@@ -351,7 +351,7 @@ describe("KubernetesSandboxProvider", () => {
           podAffinity: {
             requiredDuringSchedulingIgnoredDuringExecution: [
               {
-                namespaces: ["rakazo"],
+                namespaces: ["smith"],
                 labelSelector: { matchLabels: { app: "rakazo-api" } },
                 topologyKey: "kubernetes.io/hostname",
               },
@@ -360,7 +360,7 @@ describe("KubernetesSandboxProvider", () => {
         },
         containers: [
           {
-            volumeMounts: [{ name: "home", mountPath: "/home/rakazo", subPath: "homes/team-ab12" }],
+            volumeMounts: [{ name: "home", mountPath: "/home/smith", subPath: "homes/team-ab12" }],
           },
         ],
       });
@@ -423,7 +423,7 @@ describe("KubernetesSandboxProvider", () => {
                     : [
                         {
                           name: "home",
-                          mountPath: kind === "wrong-path" ? "/other" : "/home/rakazo",
+                          mountPath: kind === "wrong-path" ? "/other" : "/home/smith",
                           subPath: kind === "wrong-home" ? "homes/other" : "homes/bot-a",
                         },
                       ],
@@ -449,7 +449,7 @@ describe("KubernetesSandboxProvider", () => {
           containers: [
             {
               name: "computer",
-              volumeMounts: [{ name: "home", mountPath: "/home/rakazo", subPath: "homes/bot-a" }],
+              volumeMounts: [{ name: "home", mountPath: "/home/smith", subPath: "homes/bot-a" }],
             },
           ],
         },
@@ -471,7 +471,7 @@ describe("KubernetesSandboxProvider", () => {
           containers: [
             {
               name: "computer",
-              volumeMounts: [{ name: "home", mountPath: "/home/rakazo", subPath: "homes/bot-a" }],
+              volumeMounts: [{ name: "home", mountPath: "/home/smith", subPath: "homes/bot-a" }],
             },
           ],
         },
@@ -1108,7 +1108,7 @@ describe("KubernetesSandboxProvider", () => {
               args[4]?.write(
                 execFileSync("bash", [
                   "-c",
-                  script.replace(`cd ${shellQuote("/home/rakazo")}`, `cd ${shellQuote(root)}`),
+                  script.replace(`cd ${shellQuote("/home/smith")}`, `cd ${shellQuote(root)}`),
                 ]),
               );
             } else if (args[6]) {

@@ -4,7 +4,7 @@ import { captureScreenshot, completeOnboarding, signup } from "../helpers/helper
 test("ordinary accounts can add personal MCP connections without server setup", async ({
   page,
 }, testInfo) => {
-  await signup(page, `personal-mcp-${Date.now()}@rakazo.test`, "password12", "Personal MCP");
+  await signup(page, `personal-mcp-${Date.now()}@smith.test`, "password12", "Personal MCP");
   await completeOnboarding(page);
   await page.goto("/integrations/setup");
   await expect(page.getByRole("heading", { name: "Add MCP server" })).toBeVisible();
@@ -82,7 +82,7 @@ test("ordinary accounts can add personal MCP connections without server setup", 
 });
 
 test("GitHub is discoverable without a managed app catalog", async ({ page }, testInfo) => {
-  await signup(page, `direct-mcp-${Date.now()}@rakazo.test`, "password12", "Direct MCP");
+  await signup(page, `direct-mcp-${Date.now()}@smith.test`, "password12", "Direct MCP");
   await completeOnboarding(page);
   await page.route("**/rpc/connections/catalog", (route) => route.fulfill({ json: { json: [] } }));
   await page.getByRole("button", { name: "Connect apps", exact: true }).click();

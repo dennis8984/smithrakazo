@@ -12,7 +12,7 @@ test("board creates, edits, and moves a ticket across its views", async ({ page 
   const stamp = Date.now();
   const title = "Ship the board";
   const description = "Track the kanban launch.";
-  await signup(page, `board-${stamp}@rakazo.test`, "password12", "Board QA");
+  await signup(page, `board-${stamp}@smith.test`, "password12", "Board QA");
   await completeOnboarding(page);
   await createNamedBot(page, "Planner");
   await createNamedBot(page, "Reviewer");

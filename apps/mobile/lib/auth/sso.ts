@@ -77,7 +77,7 @@ export async function continueWithSso(
     if (result.type !== "success") return false;
     const callback = new URL(result.url);
     if (
-      callback.protocol !== "rakazo:" ||
+      callback.protocol !== "smith:" ||
       callback.host !== new URL(callbackURL).host ||
       (callback.pathname && callback.pathname !== "/")
     )

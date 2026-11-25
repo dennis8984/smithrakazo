@@ -109,15 +109,15 @@ describe("mobile session storage", () => {
     registerSessionDiskCache(after);
     await expect(clearSessionToken()).resolves.toBe(true);
     expect(after).toHaveBeenCalledOnce();
-    expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith("rakazo.integrations-scope");
+    expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith("smith.integrations-scope");
   });
 
   it("stores and clears only the session token key", async () => {
     await saveSessionToken("secret-token");
     await clearSessionToken();
 
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("rakazo.session_token", "secret-token");
-    expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith("rakazo.session_token");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("smith.session_token", "secret-token");
+    expect(SecureStore.deleteItemAsync).toHaveBeenCalledWith("smith.session_token");
   });
 
   it("rotates the artifact namespace on session save, clear and restore", async () => {
@@ -155,10 +155,10 @@ describe("mobile session storage", () => {
 
   it("overwrites the token when SecureStore delete fails", async () => {
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
-      if (key === "rakazo.session_token") throw new Error("device locked");
+      if (key === "smith.session_token") throw new Error("device locked");
     });
     await expect(clearSessionToken()).resolves.toBe(true);
-    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("rakazo.session_token", "");
+    expect(SecureStore.setItemAsync).toHaveBeenCalledWith("smith.session_token", "");
   });
 
   it("invalidates the in-memory session when SecureStore cannot clear the token", async () => {
@@ -178,8 +178,8 @@ describe("mobile session storage", () => {
     await expect(loadSessionToken()).resolves.toBe("");
 
     expect(SecureStore.getItemAsync).toHaveBeenCalledTimes(2);
-    expect(SecureStore.getItemAsync).toHaveBeenNthCalledWith(1, "rakazo.session_token");
-    expect(SecureStore.getItemAsync).toHaveBeenNthCalledWith(2, "rakazo.session_token");
+    expect(SecureStore.getItemAsync).toHaveBeenNthCalledWith(1, "smith.session_token");
+    expect(SecureStore.getItemAsync).toHaveBeenNthCalledWith(2, "smith.session_token");
   });
 
   it("restores the active session in memory when persistence is unavailable", async () => {
@@ -202,7 +202,7 @@ describe("mobile session storage", () => {
 });
 
 describe("password change token rotation", () => {
-  const NAMESPACE_KEY = "rakazo.artifact-cache-session";
+  const NAMESPACE_KEY = "smith.artifact-cache-session";
   let disk: Map<string, string>;
   let namespace: string;
   beforeEach(async () => {
@@ -229,7 +229,7 @@ describe("password change token rotation", () => {
 
     expect(clearFailedSends).not.toHaveBeenCalled();
     expect(await artifactCacheSession("fake-new")).toBe(namespace);
-    expect(disk.get("rakazo.session_token")).toBe("fake-new");
+    expect(disk.get("smith.session_token")).toBe("fake-new");
     expect(stored()).toEqual({ token: "fake-new", namespace, previous: "fake-old" });
   });
 
@@ -248,7 +248,7 @@ describe("password change token rotation", () => {
     ).rejects.toThrow("keychain unavailable");
 
     // A restart still finds the previous token beside the namespace that names the queue.
-    expect(disk.get("rakazo.session_token")).toBe("fake-old");
+    expect(disk.get("smith.session_token")).toBe("fake-old");
     expect(stored()).toEqual({ token: "fake-old", namespace });
     await expect(loadSessionToken()).resolves.toBe("fake-new");
     expect(clearFailedSends).not.toHaveBeenCalled();
@@ -265,7 +265,7 @@ describe("password change token rotation", () => {
     expect(stored()).toEqual({ token: "fake-old", namespace });
 
     await saveRotatedSessionToken();
-    expect(disk.get("rakazo.session_token")).toBe("fake-new");
+    expect(disk.get("smith.session_token")).toBe("fake-new");
     expect(stored()).toEqual({ token: "fake-new", namespace, previous: "fake-old" });
   });
 
@@ -277,7 +277,7 @@ describe("password change token rotation", () => {
     await clearSessionToken();
 
     await saveRotatedSessionToken();
-    expect(disk.has("rakazo.session_token")).toBe(false);
+    expect(disk.has("smith.session_token")).toBe(false);
     expect(disk.has(NAMESPACE_KEY)).toBe(false);
   });
 
@@ -291,20 +291,20 @@ describe("password change token rotation", () => {
   it("finishes after a restart a rotation that stopped between its two saves", async () => {
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
       // The app stops after the namespace is saved, before the token is.
-      if (key === "rakazo.session_token") throw new Error("app stopped");
+      if (key === "smith.session_token") throw new Error("app stopped");
       disk.set(key, value);
     });
     await expect(
       rotateSessionTokenIfCurrent(currentSessionGeneration(), "fake-old", "fake-new"),
     ).rejects.toThrow();
-    expect(disk.get("rakazo.session_token")).toBe("fake-old");
+    expect(disk.get("smith.session_token")).toBe("fake-old");
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
       disk.set(key, value);
     });
 
     const next = await restart();
     await expect(next.loadSessionToken()).resolves.toBe("fake-new");
-    expect(disk.get("rakazo.session_token")).toBe("fake-new");
+    expect(disk.get("smith.session_token")).toBe("fake-new");
     expect(await next.artifactCacheSession("fake-new")).toBe(namespace);
   });
 
@@ -320,7 +320,7 @@ describe("password change token rotation", () => {
     const next = await restart();
     await expect(next.snapshotSessionToken()).resolves.toEqual({ ok: false });
     await expect(next.loadSessionToken()).resolves.toBe("fake-new");
-    expect(disk.get("rakazo.session_token")).toBe("fake-new");
+    expect(disk.get("smith.session_token")).toBe("fake-new");
   });
 
   it.each([
@@ -347,7 +347,7 @@ describe("password change token rotation", () => {
     recoveryWrite?.resolve();
     await Promise.all([recovering, changing]);
 
-    expect(disk.get("rakazo.session_token") ?? "").toBe(expected);
+    expect(disk.get("smith.session_token") ?? "").toBe(expected);
     await expect(next.loadSessionToken()).resolves.toBe(expected);
   });
 
@@ -362,7 +362,7 @@ describe("password change token rotation", () => {
 
     const next = await restart();
     await next.saveVerifiedScope(0, scope);
-    expect(disk.get("rakazo.session_token")).toBe("fake-new");
+    expect(disk.get("smith.session_token")).toBe("fake-new");
     await expect(next.loadVerifiedScope()).resolves.toEqual(scope);
   });
 
@@ -374,7 +374,7 @@ describe("password change token rotation", () => {
 
     const next = await restart();
     await expect(next.loadSessionToken()).resolves.toBe("fake-old");
-    expect(disk.get("rakazo.session_token")).toBe("fake-old");
+    expect(disk.get("smith.session_token")).toBe("fake-old");
   });
 });
 
@@ -467,7 +467,7 @@ describe("verified integration session scope", () => {
   it("loads the scope only for the exact stored session", async () => {
     await saveVerifiedScope(currentSessionGeneration(), scope);
     expect(await loadVerifiedScope()).toEqual(scope);
-    disk.set("rakazo.session_token", "fake-session-b");
+    disk.set("smith.session_token", "fake-session-b");
     expect(await loadVerifiedScope()).toBeNull();
   });
   it.each(["sign-out", "replacement", "restore"])("invalidates the scope on %s", async (change) => {
@@ -476,18 +476,18 @@ describe("verified integration session scope", () => {
     if (change === "replacement") await saveSessionToken("fake-session-a");
     if (change === "restore") await restoreSessionToken("fake-session-a");
     expect(await loadVerifiedScope()).toBeNull();
-    expect(disk.has("rakazo.integrations-scope")).toBe(false);
+    expect(disk.has("smith.integrations-scope")).toBe(false);
   });
   it("rejects a late verification after session replacement", async () => {
     const generation = currentSessionGeneration();
     await saveSessionToken("fake-session-b");
     await saveVerifiedScope(generation, scope);
-    expect(disk.has("rakazo.integrations-scope")).toBe(false);
+    expect(disk.has("smith.integrations-scope")).toBe(false);
   });
   it("serializes an in-flight scope write before sign-out deletes it", async () => {
     const pending = deferred();
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "rakazo.integrations-scope") await pending.promise;
+      if (key === "smith.integrations-scope") await pending.promise;
       disk.set(key, value);
     });
     const saving = saveVerifiedScope(currentSessionGeneration(), scope);
@@ -496,12 +496,12 @@ describe("verified integration session scope", () => {
     const clearing = clearSessionToken();
     pending.resolve();
     await Promise.all([saving, clearing]);
-    expect(disk.has("rakazo.integrations-scope")).toBe(false);
+    expect(disk.has("smith.integrations-scope")).toBe(false);
     expect(await loadVerifiedScope()).toBeNull();
   });
   it("treats malformed stored scopes as misses", async () => {
     await saveVerifiedScope(currentSessionGeneration(), scope);
-    disk.set("rakazo.integrations-scope", "{");
+    disk.set("smith.integrations-scope", "{");
     expect(await loadVerifiedScope()).toBeNull();
   });
 });

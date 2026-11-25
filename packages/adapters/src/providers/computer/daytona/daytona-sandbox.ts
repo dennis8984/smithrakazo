@@ -269,14 +269,14 @@ export class DaytonaSandboxProvider extends LinuxDesktopSandbox implements Sandb
 
     // The unique name lets a create that fails after Daytona accepted it find and delete the
     // sandbox: it never auto-stops or auto-deletes, so a leaked one bills until removed.
-    const name = `rakazo-${randomUUID()}`;
+    const name = `smith-${randomUUID()}`;
     let sandbox: DaytonaSandbox;
     try {
       sandbox = await this.client.create(
         {
           name,
           ...(this.snapshotName ? { snapshot: this.snapshotName } : {}),
-          labels: { botId: request.botId, rakazo: "computer" },
+          labels: { botId: request.botId, smith: "computer" },
           envVars: { VNC_RESOLUTION: "1280x800" },
           autoStopInterval: 0,
           autoDeleteInterval: -1,

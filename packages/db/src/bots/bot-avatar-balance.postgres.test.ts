@@ -121,11 +121,11 @@ describePostgres("new bot avatars (PostgreSQL)", () => {
       expect(original).toMatchObject({ avatarSet: "organic", color });
       await asSystem(prisma).bot.update({
         where: { id: original.id },
-        data: { avatarSet: "rakazo" },
+        data: { avatarSet: "smith" },
       });
       const reloaded = await runAsTenant(owner, () => repos.listBots(actor()));
       expect(reloaded.find((bot) => bot.id === original.id)).toMatchObject({
-        avatarSet: "rakazo",
+        avatarSet: "smith",
         color,
       });
     }
@@ -135,7 +135,7 @@ describePostgres("new bot avatars (PostgreSQL)", () => {
     const repos = createRepos(prisma);
     for (const explicit of [undefined, "#123456"]) {
       const id = `c${newClientId().replaceAll("-", "").slice(0, 24)}`;
-      const input = { ...botInput("Preview"), id, avatarSet: "rakazo" as const, color: explicit };
+      const input = { ...botInput("Preview"), id, avatarSet: "smith" as const, color: explicit };
       const [first, retry] = await runAsTenant(owner, () =>
         Promise.all([repos.createBot(actor(), input), repos.createBot(actor(), input)]),
       );

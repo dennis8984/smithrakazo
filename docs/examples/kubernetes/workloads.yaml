@@ -4,8 +4,8 @@ kind: Deployment
 metadata:
   name: rakazo-api
   labels:
-    rakazo.example/phase: app
-  namespace: rakazo
+    smith.example/phase: app
+  namespace: smith
 spec:
   replicas: 1
   strategy:
@@ -102,8 +102,8 @@ kind: Service
 metadata:
   name: rakazo-api
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   selector:
     app: rakazo-api
@@ -116,8 +116,8 @@ kind: Deployment
 metadata:
   name: rakazo-worker
   labels:
-    rakazo.example/phase: app
-  namespace: rakazo
+    smith.example/phase: app
+  namespace: smith
 spec:
   replicas: 1
   strategy:
@@ -203,8 +203,8 @@ kind: Deployment
 metadata:
   name: rakazo-web
   labels:
-    rakazo.example/phase: app
-  namespace: rakazo
+    smith.example/phase: app
+  namespace: smith
 spec:
   replicas: 1
   strategy:
@@ -280,8 +280,8 @@ kind: Service
 metadata:
   name: rakazo-web
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   selector:
     app: rakazo-web
@@ -293,9 +293,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rakazo-web-peers
-  namespace: rakazo
+  namespace: smith
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
 spec:
   clusterIP: None
   selector:
@@ -310,7 +310,7 @@ metadata:
   name: rakazo-ingress-peers
   namespace: kube-system
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
 spec:
   clusterIP: None
   selector:

@@ -22,9 +22,9 @@ import {
   restartDelay,
 } from "./native-stack.js";
 
-const TEMPLATE = `POSTGRES_USER=rakazo
+const TEMPLATE = `POSTGRES_USER=smith
 POSTGRES_PASSWORD=
-POSTGRES_DB=rakazo
+POSTGRES_DB=smith
 POSTGRES_APP_PASSWORD=
 BETTER_AUTH_SECRET=
 ENCRYPTION_KEY=
@@ -171,7 +171,7 @@ function harness(
     localWebUrl: "http://127.0.0.1:5173",
     imageTag: "v1.0.0",
     serverBundle: { version: "1.0.0", file: "/bundle.tar.xz" },
-    nodeBinary: "/Applications/Rakazo.app/Contents/MacOS/Rakazo",
+    nodeBinary: "/Applications/Smith.app/Contents/MacOS/Smith",
     env: { HOME: "/Users/someone", OPENAI_API_KEY: "from-the-shell" },
     uid: 501,
     run,
@@ -316,7 +316,7 @@ describe("NativeStackController", () => {
         DATABASE_CONTAINER,
         `${DATABASE_CONTAINER}:/var/lib/postgresql/data`,
         "PGDATA=/var/lib/postgresql/data/pgdata",
-        "POSTGRES_USER=rakazo",
+        "POSTGRES_USER=smith",
         "127.0.0.1:40000:5432",
       ]),
     );
@@ -328,7 +328,7 @@ describe("NativeStackController", () => {
     // Migrations wait for the real server, not the one that initializes a new volume.
     expect(migrate?.listening).toBe(true);
     expect(migrate?.env.DATABASE_MIGRATION_URL).toBe(
-      `postgres://rakazo:${"cd".repeat(16)}@127.0.0.1:40000/rakazo`,
+      `postgres://smith:${"cd".repeat(16)}@127.0.0.1:40000/smith`,
     );
     expect(migrate?.env.DATABASE_URL).toMatch(/^postgres:\/\/rakazo_app:/);
     expect(migrate?.env.RAKAZO_ENV_FILE).toBe("none");
@@ -494,7 +494,7 @@ describe("NativeStackController", () => {
     });
     const state = await controller.start();
     expect(state.message).toBe(
-      "Your Rakazo data is in a different computer runtime. Quit the one running, then retry.",
+      "Your Smith data is in a different computer runtime. Quit the one running, then retry.",
     );
     expect(other.commands().filter((command) => /create/.test(command))).toEqual([]);
 
@@ -527,7 +527,7 @@ describe("NativeStackController", () => {
     expect(resolved).toEqual([true]);
     expect(state.phase).toBe("failed");
     expect(state.message).toBe(
-      "Your Rakazo data is in a different computer runtime. Quit the one running, then retry.",
+      "Your Smith data is in a different computer runtime. Quit the one running, then retry.",
     );
     expect(commands()).not.toContain("create --name");
   });
@@ -536,7 +536,7 @@ describe("NativeStackController", () => {
     await mkdir(stackDir, { recursive: true });
     await writeFile(
       path.join(stackDir, ".env"),
-      `${TEMPLATE.replace("POSTGRES_USER=rakazo", "POSTGRES_USER=rakazo_app")}DATABASE_MIGRATION_URL=postgres://owner:secret@db/rakazo\n`,
+      `${TEMPLATE.replace("POSTGRES_USER=smith", "POSTGRES_USER=rakazo_app")}DATABASE_MIGRATION_URL=postgres://owner:secret@db/smith\n`,
     );
     const targets: string[] = [];
     const { deps, runs, byName } = harness({
@@ -546,10 +546,10 @@ describe("NativeStackController", () => {
     });
     const controller = new NativeStackController(deps);
     expect((await controller.start()).phase).toBe("ready");
-    expect(runs.find((call) => call.args[0] === "create")?.args).toContain("POSTGRES_USER=rakazo");
-    expect(targets).toEqual(["rakazo"]);
+    expect(runs.find((call) => call.args[0] === "create")?.args).toContain("POSTGRES_USER=smith");
+    expect(targets).toEqual(["smith"]);
     const migrate = runs.find((call) => call.args[0]?.endsWith("migrate-database.js"));
-    expect(migrate?.env.DATABASE_MIGRATION_URL).toMatch(/^postgres:\/\/rakazo:/);
+    expect(migrate?.env.DATABASE_MIGRATION_URL).toMatch(/^postgres:\/\/smith:/);
     for (const name of ["apps/api/dist/index.js", "apps/worker/dist/index.js"]) {
       expect(byName(name)[0]?.env.DATABASE_MIGRATION_URL).toBeUndefined();
     }
@@ -580,7 +580,7 @@ describe("NativeStackController", () => {
     const state = await controller.start();
     order.push("start failed");
     expect(state.message).toBe(
-      "Downloading Rakazo failed. Check the internet connection, then retry.",
+      "Downloading Smith failed. Check the internet connection, then retry.",
     );
     expect(order).toEqual(["runtime stopped", "start failed"]);
   });
@@ -668,7 +668,7 @@ describe("NativeStackController", () => {
     const state = await controller.start();
     expect(state.phase).toBe("failed");
     expect(state.message).toBe(
-      "Rakazo services did not start. Check the output below, then retry.",
+      "Smith services did not start. Check the output below, then retry.",
     );
     expect(controller.hasProcesses()).toBe(false);
   });
@@ -685,7 +685,7 @@ describe("NativeStackController", () => {
     const state = await controller.start();
     expect(state.phase).toBe("failed");
     expect(state.message).toBe(
-      "Rakazo services did not start. Check the output below, then retry.",
+      "Smith services did not start. Check the output below, then retry.",
     );
     expect(state.output).toContain("postgres exited");
     expect(controller.hasProcesses()).toBe(false);
@@ -704,7 +704,7 @@ describe("NativeStackController", () => {
     const state = await controller.start();
     expect(state.phase).toBe("failed");
     expect(state.message).toBe(
-      "Downloading Rakazo failed. Check the internet connection, then retry.",
+      "Downloading Smith failed. Check the internet connection, then retry.",
     );
     expect(state.output).toContain("Pulling the database image exited with code 1");
     expect(children).toEqual([]);
@@ -740,7 +740,7 @@ describe("NativeStackController", () => {
     const state = await new NativeStackController(deps).start();
     expect(state.phase).toBe("failed");
     expect(state.message).toBe(
-      "Rakazo services did not start. Check the output below, then retry.",
+      "Smith services did not start. Check the output below, then retry.",
     );
     expect(state.output).toContain("Postgres did not answer on 127.0.0.1:40000: read ECONNRESET");
     expect(runs.some((call) => call.args[0]?.endsWith("migrate-database.js"))).toBe(false);
@@ -763,8 +763,8 @@ describe("NativeStackController", () => {
     });
     expect((await controller.start()).phase).toBe("ready");
     expect(order).toEqual([
-      "psql DROP DATABASE IF EXISTS rakazo WITH (FORCE);\nCREATE DATABASE rakazo;",
-      `import ${CLI} ${DATABASE_CONTAINER} rakazo rakazo`,
+      "psql DROP DATABASE IF EXISTS smith WITH (FORCE);\nCREATE DATABASE smith;",
+      `import ${CLI} ${DATABASE_CONTAINER} smith smith`,
       "migrate",
     ]);
     expect(runs.find((call) => call.args.includes("psql"))?.args).not.toContain("-h");

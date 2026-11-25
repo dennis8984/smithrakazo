@@ -11,8 +11,8 @@ import { i18n } from "../locale/i18n";
 import { CLIENT_BUILD } from "../platform/client-build";
 import { reportClientError } from "../platform/monitoring";
 
-const SPACE_STORAGE_KEY = "rakazo:space-id";
-export const ORGANIZATION_SPACES_STORAGE_KEY = "rakazo:org-spaces";
+const SPACE_STORAGE_KEY = "smith:space-id";
+export const ORGANIZATION_SPACES_STORAGE_KEY = "smith:org-spaces";
 
 type RpcClientContext = {
   spaceId?: string | null;
@@ -30,7 +30,7 @@ export function selectedSpaceId(): string | null {
 }
 
 /** Fired after the selected Space changes, so per-organization state (billing) can reload. */
-export const SPACE_SELECTED_EVENT = "rakazo:space-selected";
+export const SPACE_SELECTED_EVENT = "smith:space-selected";
 
 export function selectSpace(id: string): boolean {
   let selected: boolean;

@@ -1,11 +1,11 @@
 # Production deployment
 
-Run Rakazo on a public server with automatic HTTPS, hardened hosts and zero-downtime deploys.
+Run Smith on a public server with automatic HTTPS, hardened hosts and zero-downtime deploys.
 
 For a personal server, the [one-line installer](./self-host.md#published-images-no-checkout) on any
 VPS with 4 GB of RAM, or the [Railway template](../infra/railway/README.md), is enough. Once your account
 exists on a public host, set `SIGNUPS_ENABLED=false` ([accounts](./self-host-accounts.md)) so nobody else
-can sign up. This page covers running Rakazo for many users.
+can sign up. This page covers running Smith for many users.
 
 For a single-node cluster, see [Kubernetes / k3s installation](./self-host-kubernetes.md).
 Putting a cookie-based login gate in front of any deployment also needs
@@ -45,7 +45,7 @@ container logs, default no-new-privileges, and the kernel NAT path instead of Do
    `POSTGRES_PASSWORD`, `BETTER_AUTH_SECRET`, `ENCRYPTION_KEY`, `SCREEN_PROXY_SECRET`,
    `OPENROUTER_API_KEY`, the API key for your selected sandbox provider,
    `RAKAZO_HOST`, and the three public origins. Set `RAKAZO_DEPLOY_DIR` when the checkout is not at
-   the supported Linux default, `/srv/rakazo`. Use URL-safe random values for database credentials.
+   the supported Linux default, `/srv/smith`. Use URL-safe random values for database credentials.
    If you enable the `updater` profile, also set a dedicated `RAKAZO_UPDATER_TOKEN` (at least 32
    characters) that differs from `BETTER_AUTH_SECRET`, `SANDBOX_SUPERVISOR_TOKEN`, and
    `SCREEN_PROXY_SECRET`.
@@ -66,9 +66,9 @@ SANDBOX_PROVIDER=e2b
 AGENT_RUNTIME=pi
 WAKEUP_DRIVER=graphile
 DATA_DIR=/data
-# Absolute path of this checkout as the Docker daemon sees it. /srv/rakazo is the Linux default;
+# Absolute path of this checkout as the Docker daemon sees it. /srv/smith is the Linux default;
 # set this explicitly for every other layout. See "The deploy directory must be one path" in Upgrading.
-RAKAZO_DEPLOY_DIR=/srv/rakazo
+RAKAZO_DEPLOY_DIR=/srv/smith
 RAKAZO_IMAGE_TAG=local
 # Optional: required only with `--profile updater`.
 # RAKAZO_UPDATER_TOKEN=replace-with-32-plus-character-updater-token
@@ -173,7 +173,7 @@ finds the lock held exits non-zero. A deploy refuses to start with less than
 `RAKAZO_DEPLOY_MIN_FREE_GB` (default `5`) free, and after a healthy rollout it keeps the current and
 previous app images (the previous ones tagged `rakazo-rollback`), removes untagged images, and
 trims the build cache that fallback builds leave to `RAKAZO_DEPLOY_BUILD_CACHE_GB` (8 GB by default).
-For a checkout outside `/srv/rakazo`, put `RAKAZO_DEPLOY_DIR=/absolute/path` (and any of these
+For a checkout outside `/srv/smith`, put `RAKAZO_DEPLOY_DIR=/absolute/path` (and any of these
 settings) in a root-owned `/etc/rakazo/deploy.env` readable by the deploy user. The launcher runs
 `infra/compose/deploy-main.sh` from `origin/main`, so deploy changes apply on the next deploy; only
 a change to the launcher itself needs

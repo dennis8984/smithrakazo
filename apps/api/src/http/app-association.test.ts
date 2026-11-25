@@ -10,7 +10,7 @@ function association(env: Record<string, string>) {
   mountAppAssociation(
     app,
     loadEnv({
-      DATABASE_URL: "postgres://rakazo:rakazo@127.0.0.1:5433/rakazo",
+      DATABASE_URL: "postgres://smith:smith@127.0.0.1:5433/smith",
       NODE_ENV: "test",
       ...env,
     }),

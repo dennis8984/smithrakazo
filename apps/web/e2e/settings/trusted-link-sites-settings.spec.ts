@@ -8,7 +8,7 @@ import {
 } from "../helpers/helpers";
 
 test("lists a trusted site in Settings and removes it", async ({ page }, testInfo) => {
-  await signup(page, `trusted-sites-${Date.now()}@rakazo.test`, "password12", "Trusted sites");
+  await signup(page, `trusted-sites-${Date.now()}@smith.test`, "password12", "Trusted sites");
   await completeOnboarding(page);
   await rpc(page, "trustedLinkSites/trust", { url: "https://example.com/" });
   const settings = await openUserSettings(page);

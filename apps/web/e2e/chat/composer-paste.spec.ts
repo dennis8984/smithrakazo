@@ -5,7 +5,7 @@ test("large pasted text can stay inline or use the normal file upload", async ({
   page,
   context,
 }, testInfo) => {
-  await signup(page, `paste-${Date.now()}@rakazo.test`, "password12", "Paste Tester");
+  await signup(page, `paste-${Date.now()}@smith.test`, "password12", "Paste Tester");
   await completeOnboarding(page);
   const composer = page.getByRole("combobox", { name: /Message/ });
   const choice = page.getByRole("group", { name: "Large paste" });

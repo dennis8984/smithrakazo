@@ -84,13 +84,13 @@ A start, in order:
    then unpacked into a scratch folder that is renamed to `runtime/<name>-<version>`.
 3. Creates the database VM once: `rakazo-postgres` on a network of its own, a volume of the same
    name with `PGDATA` in a subdirectory (the volume's root holds `lost+found`), owner and database
-   `rakazo`, and `POSTGRES_PASSWORD` passed through the CLI's environment rather than its arguments.
+   `smith`, and `POSTGRES_PASSWORD` passed through the CLI's environment rather than its arguments.
    The saved port is kept while free; a taken one recreates the VM on a new port, keeping the
    volume. A VM a crashed launch left running is stopped first, since the runtime only attaches to
    VMs it starts. The VM then runs under `container start --attach`, so its output goes to
    `logs/postgres.log` and the app sees it stop. The start waits for the server that listens on the
    network: on a new volume the image's setup server also reports ready.
-4. Runs the bundle's migrate entrypoint (owner login `rakazo` with `POSTGRES_PASSWORD`, runtime
+4. Runs the bundle's migrate entrypoint (owner login `smith` with `POSTGRES_PASSWORD`, runtime
    login `rakazo_app` with `POSTGRES_APP_PASSWORD`). The owner's name is fixed rather than read
    from `POSTGRES_USER`, so it can never be the runtime login.
 5. Spawns API, worker and web with `ELECTRON_RUN_AS_NODE=1` on loopback ports. The API and worker get
@@ -223,10 +223,10 @@ plus the kernel download on its first start (about 45 s measured). The computer 
   the app pins the image tag of its own version.
 - Docker users: when a Docker stack exists (its compose file is in the stack folder), no native
   stack exists yet (`.native-ports`), the saved setup is **This computer** and Docker answers, the
-  app asks once ("Run Rakazo without Docker?" with **Move** and **Keep Docker**) and remembers the
+  app asks once ("Run Smith without Docker?" with **Move** and **Keep Docker**) and remembers the
   answer in `.desktop-stack-choice`. **Keep Docker** keeps today's path. **Move** keeps the same
   `.env` (so `BETTER_AUTH_SECRET`, `ENCRYPTION_KEY` and the other secrets carry over) and, on the
-  next start, after the database VM is up and before migrations: empties the `rakazo` database,
+  next start, after the database VM is up and before migrations: empties the `smith` database,
   stops the Docker API, worker, web and supervisor, creates the `rakazo_app` role if it is missing,
   then streams `pg_dump --format=custom` from the Docker database container through the app into
   `pg_restore --no-owner --exit-on-error` in the database VM. Both run each database's own tools
@@ -271,7 +271,7 @@ unless the user turns on the existing local computer access, which is unchanged.
 - Requested CPUs are a soft hint: one VM reported 3 CPUs when 2 were asked.
 - `container`'s services use fixed `com.apple.container.*` launchd labels, so the app shares a
   running system instead of starting a second one (see runtime resolution). Our resources are
-  namespaced (`rakazo-` names, the `rakazo.bot-id` label), so we never touch the person's own. The
+  namespaced (`smith-` names, the `smith.bot-id` label), so we never touch the person's own. The
   database VM, network and volume are `rakazo-postgres` with no bot label; the `local-vm` provider
   only removes VMs labelled for a bot, so its cleanup never touches them. One runtime holds one
   native stack's database.

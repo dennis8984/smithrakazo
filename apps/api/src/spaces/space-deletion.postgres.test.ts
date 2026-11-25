@@ -62,7 +62,7 @@ describePostgres("space deletion lease (PostgreSQL)", () => {
     const userId = `space-del-${++sequence}-${suffix}`;
     users.push(userId);
     await system.user.create({
-      data: { id: userId, name: userId, email: `${userId}@rakazo.test`, emailVerified: false },
+      data: { id: userId, name: userId, email: `${userId}@smith.test`, emailVerified: false },
     });
     const { spaceId: defaultSpaceId } = await bootstrapUserSpace(system, { id: userId });
     const { id: spaceId } = await createSpaceForMember(system, {

@@ -820,7 +820,7 @@ function BotSettings() {
               label={t`Icon set`}
               choices={[
                 { key: "organic", label: t`Original` },
-                { key: "rakazo", label: t`Rakazo` },
+                { key: "smith", label: t`Smith` },
               ]}
               value={avatarSet}
               onChange={(next) => {

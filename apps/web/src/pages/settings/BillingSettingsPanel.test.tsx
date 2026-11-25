@@ -84,7 +84,7 @@ let trialEnded = false;
 beforeEach(() => {
   i18n.activate("en");
   trialEnded = false;
-  localStorage.setItem("rakazo:space-id", "space-a");
+  localStorage.setItem("smith:space-id", "space-a");
   vi.stubGlobal(
     "fetch",
     vi.fn(async (request: Request, init?: RequestInit) => {
@@ -153,9 +153,9 @@ it("sends the panel's confirmations to the space it opened for", async () => {
 
   // Another tab selects another organization while this panel stays open.
   await vi.waitFor(() => expect(container.textContent).toContain("Hours by computer"));
-  localStorage.setItem("rakazo:space-id", "space-b");
+  localStorage.setItem("smith:space-id", "space-b");
   act(() => {
-    window.dispatchEvent(new StorageEvent("storage", { key: "rakazo:space-id" }));
+    window.dispatchEvent(new StorageEvent("storage", { key: "smith:space-id" }));
   });
 
   await act(async () => {
@@ -187,7 +187,7 @@ it("acts on the window's space when another tab switched before the panel opened
   (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
   // This window shows space-a; another tab selected space-b before Billing opened here.
   const client = createSpaceRpc("space-a");
-  localStorage.setItem("rakazo:space-id", "space-b");
+  localStorage.setItem("smith:space-id", "space-b");
   const container = document.createElement("div");
   document.body.append(container);
   const root = createRoot(container);
@@ -234,7 +234,7 @@ it("opens the billing portal of the window's space, and says so when it cannot",
   );
   const assign = vi.fn();
   vi.stubGlobal("location", { ...window.location, assign });
-  localStorage.setItem("rakazo:space-id", "space-b");
+  localStorage.setItem("smith:space-id", "space-b");
   const container = document.createElement("div");
   document.body.append(container);
   const root = createRoot(container);

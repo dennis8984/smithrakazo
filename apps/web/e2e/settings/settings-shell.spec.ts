@@ -9,7 +9,7 @@ import {
 
 test("changing language updates settings overflow without resizing", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `settings-language-${stamp}@rakazo.test`, "password12", "Settings");
+  await signup(page, `settings-language-${stamp}@smith.test`, "password12", "Settings");
   await completeOnboarding(page);
   const settings = await openUserSettings(page);
   // Below the desktop breakpoint, where the section list scrolls sideways.
@@ -39,7 +39,7 @@ test("narrow settings reveals the active section and offers scroll controls", as
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `settings-narrow-${stamp}@rakazo.test`, "password12", "Settings");
+  await signup(page, `settings-narrow-${stamp}@smith.test`, "password12", "Settings");
   await completeOnboarding(page);
   const settings = await openUserSettings(page, "organization");
   const nav = settings.getByTestId("settings-nav");
@@ -100,7 +100,7 @@ test("settings shell is two-pane and deep-links Models Memory Voice Usage", asyn
 }, testInfo) => {
   const stamp = Date.now();
   const userName = `Settings shell ${stamp}`;
-  await signup(page, `settings-shell-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `settings-shell-${stamp}@smith.test`, "password12", userName);
   await completeOnboarding(page);
 
   await page.getByTestId("user-menu-trigger").click();
@@ -145,7 +145,7 @@ test("settings shell is two-pane and deep-links Models Memory Voice Usage", asyn
   await streamReplies.click();
   await expect(streamReplies).toBeChecked();
   await expect
-    .poll(() => page.evaluate(() => window.localStorage.getItem("rakazo.responseStreaming")))
+    .poll(() => page.evaluate(() => window.localStorage.getItem("smith.responseStreaming")))
     .toBe("on");
   const deleteAccount = settings.getByTestId("delete-account");
   await deleteAccount.scrollIntoViewIfNeeded();
@@ -195,7 +195,7 @@ test("settings shell is two-pane and deep-links Models Memory Voice Usage", asyn
 test("Honcho memory settings empty and filled", async ({ page }, testInfo) => {
   // These screenshots never submit credentials or contact Honcho.
   const stamp = Date.now();
-  await signup(page, `memory-honcho-${stamp}@rakazo.test`, "password12", "Memory settings");
+  await signup(page, `memory-honcho-${stamp}@smith.test`, "password12", "Memory settings");
   await completeOnboarding(page);
   const settings = await openUserSettings(page, "memory");
   const memory = settings.getByTestId("memory-settings");
@@ -218,17 +218,17 @@ test("Honcho memory settings empty and filled", async ({ page }, testInfo) => {
   await userPeer.fill("bot-123");
   await expect(userPeer).toHaveAttribute("aria-invalid", "true");
   await expect(
-    memory.getByText("rakazo-shared and IDs starting with bot- are reserved for Rakazo."),
+    memory.getByText("rakazo-shared and IDs starting with bot- are reserved for Smith."),
   ).toBeVisible();
   await expect(memory.getByRole("button", { name: "Connect", exact: true })).toBeDisabled();
   await captureScreenshot(page, testInfo, "memory-honcho-user-peer-reserved");
   await userPeer.fill("user-alex");
   await expect(
-    memory.getByText("Recall from this peer; save to Rakazo’s own peers."),
+    memory.getByText("Recall from this peer; save to Smith’s own peers."),
   ).toBeVisible();
   await expect(memory.getByRole("button", { name: "Connect", exact: true })).toBeEnabled();
   await memory
-    .getByText("Recall from this peer; save to Rakazo’s own peers.")
+    .getByText("Recall from this peer; save to Smith’s own peers.")
     .evaluate((element) => element.scrollIntoView({ block: "center" }));
   await captureScreenshot(page, testInfo, "memory-honcho-filled");
   await memory.getByRole("button", { name: "Self-hosted", exact: true }).click();
@@ -329,7 +329,7 @@ test("Honcho memory settings empty and filled", async ({ page }, testInfo) => {
 test("a connected memory provider edits with its saved settings", async ({ page }, testInfo) => {
   // The connection is served by the route below; nothing is saved or sent to Hindsight.
   const stamp = Date.now();
-  await signup(page, `memory-edit-${stamp}@rakazo.test`, "password12", "Memory settings");
+  await signup(page, `memory-edit-${stamp}@smith.test`, "password12", "Memory settings");
   await completeOnboarding(page);
   await page.route(/\/rpc\/memory\/providerConfig(\?|$)/, (route) =>
     route.fulfill({

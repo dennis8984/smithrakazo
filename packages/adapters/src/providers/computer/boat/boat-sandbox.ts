@@ -1473,7 +1473,7 @@ export class BoatSandboxProvider extends LinuxDesktopSandbox implements SandboxP
   }
 
   private async terminateCommand(id: string, marker: string): Promise<void> {
-    const pattern = marker.replace("rakazo", "[r]akazo");
+    const pattern = marker.replace("smith", "[r]akazo");
     await this.rawCommand(
       id,
       `pkill -TERM -f ${shellQuote(pattern)} 2>/dev/null || true; sleep 0.2; pkill -KILL -f ${shellQuote(pattern)} 2>/dev/null || true`,

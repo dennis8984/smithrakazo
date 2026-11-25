@@ -197,13 +197,13 @@ export class BoxdSandboxProvider extends LinuxDesktopSandbox implements SandboxP
       }
     }
     const fromSnapshot = await this.computerSnapshot(context.signal);
-    const name = `rakazo-${randomUUID().replaceAll("-", "").slice(0, 20)}`;
+    const name = `smith-${randomUUID().replaceAll("-", "").slice(0, 20)}`;
     const params = {
       name,
       ...(this.org ? { org: this.org } : {}),
       // Bots run untrusted code: no boxd credentials inside, and no route to other machines.
       isolated: true,
-      // Rakazo's idle sleep stops the computer; boxd's own counts only network traffic and would
+      // Smith's idle sleep stops the computer; boxd's own counts only network traffic and would
       // freeze a long command that prints nothing.
       config: { autoSuspendTimeout: 0 },
     };

@@ -10,10 +10,10 @@ import {
 const admin: Actor = {
   userId: "admin-user",
   spaceId: "admin-space",
-  email: "admin@rakazo.test",
+  email: "admin@smith.test",
   isDeploymentOwner: false,
 };
-const member: Actor = { ...admin, userId: "member-user", email: "member@rakazo.test" };
+const member: Actor = { ...admin, userId: "member-user", email: "member@smith.test" };
 
 type Row = {
   deploymentModelProvider: string | null;

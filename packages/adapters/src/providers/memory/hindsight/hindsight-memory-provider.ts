@@ -51,7 +51,7 @@ const RECALL_MAX_TOKENS = 4_096;
 const MAX_RECALL_BANKS = 10;
 const RECALL_BANK = /^[^\s/?#%\\,]{1,256}$/;
 // Space IDs include legacy identifiers, so the whole generated namespace is reserved.
-const RESERVED_BANK = /^rakazo-/i;
+const RESERVED_BANK = /^smith-/i;
 /** A failing extra bank is skipped this long; used only for recall. */
 const EXTRA_BANK_COOLDOWN_MS = 5 * 60_000;
 /** An extra bank still silent after this much of the recall timeout counts as failing. */
@@ -113,12 +113,12 @@ function conversationContext(request: SemanticMemoryConversationRequest): string
     ...new Set(request.turns.flatMap((turn) => (turn.speaker ? [turn.speaker] : []))),
   ];
   if (request.conversation === "group") {
-    return `Group chat in Rakazo with ${joinNames([...new Set([request.userName, request.botName, ...speakers])])}`;
+    return `Group chat in Smith with ${joinNames([...new Set([request.userName, request.botName, ...speakers])])}`;
   }
   if (speakers.length) {
-    return `Conversation in Rakazo with ${joinNames([...new Set([request.userName, request.botName, ...speakers])])}`;
+    return `Conversation in Smith with ${joinNames([...new Set([request.userName, request.botName, ...speakers])])}`;
   }
-  return `Chat in Rakazo between ${request.userName} and ${request.botName}, an AI assistant`;
+  return `Chat in Smith between ${request.userName} and ${request.botName}, an AI assistant`;
 }
 
 /**
@@ -158,9 +158,9 @@ export function parseRecallBanks(value: string | undefined): string[] {
   if (banks.some((bank) => bank === "." || bank === "..")) {
     throw new Error("recallBanks may not include . or ..");
   }
-  // Rakazo's own banks are recalled automatically; another Space's must never be named.
+  // Smith's own banks are recalled automatically; another Space's must never be named.
   if (banks.some((bank) => RESERVED_BANK.test(bank))) {
-    throw new Error("Bank names starting with rakazo- are reserved.");
+    throw new Error("Bank names starting with smith- are reserved.");
   }
   if (banks.length > MAX_RECALL_BANKS) throw new Error("recallBanks may list at most 10 banks");
   return banks;
@@ -281,7 +281,7 @@ function ownBank(spaceId: string, botId: string): string {
 
 /** The Space's team bank, which bots that share memory also write to and recall from. */
 function teamBank(spaceId: string): string {
-  return `rakazo-${createHash("sha256").update(spaceId).digest("hex")}`;
+  return `smith-${createHash("sha256").update(spaceId).digest("hex")}`;
 }
 
 function writeBanks(spaceId: string, botId: string, scope: DurableMemoryScope): string[] {
@@ -291,7 +291,7 @@ function writeBanks(spaceId: string, botId: string, scope: DurableMemoryScope): 
 
 /** One appended document per conversation history. */
 function sessionId(threadId: string, generation: number, botId: string): string {
-  return `rakazo-${threadId}-${generation}-${botId}`;
+  return `smith-${threadId}-${generation}-${botId}`;
 }
 
 /** A stable UUID v4-shaped digest, so a retried job reuses the same operation id. */
@@ -551,7 +551,7 @@ export class HindsightMemoryProvider implements SemanticMemoryProvider {
     const item = {
       content,
       context:
-        "A fact a Rakazo AI assistant chose to remember about the people it works for and their work",
+        "A fact a Smith AI assistant chose to remember about the people it works for and their work",
       timestamp: new Date().toISOString(),
     };
     // The same fact saved again by the same operation, as a retried tool call does, reuses its id,

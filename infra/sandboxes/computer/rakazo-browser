@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-RAKAZO_HOME="${HOME:-/home/rakazo}"
+RAKAZO_HOME="${HOME:-/home/smith}"
 # start.sh exports the session bus for the whole desktop; the supervisor may
 # launch this script with a minimal environment, so recover the bus address.
 if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && [ -r /tmp/rakazo/dbus-session ]; then

@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Rakazo",
-    "slug": "rakazo",
+    "name": "Smith",
+    "slug": "smith",
     "owner": "inbox-zero",
-    "scheme": "rakazo",
+    "scheme": "smith",
     "version": "1.0.20",
     "orientation": "default",
     "userInterfaceStyle": "automatic",
@@ -26,29 +26,29 @@
         "expo-audio",
         {
           "enableBackgroundPlayback": false,
-          "microphonePermission": "Rakazo uses the microphone for voice calls with your bots."
+          "microphonePermission": "Smith uses the microphone for voice calls with your bots."
         }
       ],
       [
         "expo-speech-recognition",
         {
-          "speechRecognitionPermission": "Rakazo turns your speech into messages during voice calls.",
-          "microphonePermission": "Rakazo uses the microphone for voice calls with your bots."
+          "speechRecognitionPermission": "Smith turns your speech into messages during voice calls.",
+          "microphonePermission": "Smith uses the microphone for voice calls with your bots."
         }
       ],
       "expo-localization",
       [
         "expo-media-library",
         {
-          "savePhotosPermission": "Rakazo saves photos and videos you download from Artifacts to your photo library.",
+          "savePhotosPermission": "Smith saves photos and videos you download from Artifacts to your photo library.",
           "granularPermissions": []
         }
       ],
       [
         "expo-calendar",
         {
-          "calendarPermission": "Allow Rakazo to read and add events in calendars you choose for your bots.",
-          "remindersPermission": "Allow Rakazo to create and complete reminders in lists you choose for your bots."
+          "calendarPermission": "Allow Smith to read and add events in calendars you choose for your bots.",
+          "remindersPermission": "Allow Smith to create and complete reminders in lists you choose for your bots."
         }
       ],
       "@react-native-vector-icons/ionicons",
@@ -62,9 +62,9 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Rakazo uses your photo library so you can attach images to a bot message.",
-          "cameraPermission": "Rakazo uses the camera so you can attach photos to a bot message.",
-          "microphonePermission": "Rakazo uses the microphone for voice calls with your bots."
+          "photosPermission": "Smith uses your photo library so you can attach images to a bot message.",
+          "cameraPermission": "Smith uses the camera so you can attach photos to a bot message.",
+          "microphonePermission": "Smith uses the microphone for voice calls with your bots."
         }
       ],
       "./plugins/with-share-extension",
@@ -137,9 +137,9 @@
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "NSCameraUsageDescription": "Rakazo uses the camera so you can attach photos to a bot message.",
-        "NSPhotoLibraryUsageDescription": "Rakazo uses your photo library so you can attach images to a bot message.",
-        "NSLocalNetworkUsageDescription": "Rakazo connects to a self-hosted Rakazo server on your local network.",
+        "NSCameraUsageDescription": "Smith uses the camera so you can attach photos to a bot message.",
+        "NSPhotoLibraryUsageDescription": "Smith uses your photo library so you can attach images to a bot message.",
+        "NSLocalNetworkUsageDescription": "Smith connects to a self-hosted Smith server on your local network.",
         "NSAppTransportSecurity": {
           "NSAllowsLocalNetworking": true
         },
@@ -176,21 +176,21 @@
             "ios": {
               "appExtensions": [
                 {
-                  "targetName": "RakazoWatch",
+                  "targetName": "SmithWatch",
                   "bundleIdentifier": "com.rakazo.app.watchkitapp",
                   "entitlements": {
                     "com.apple.security.application-groups": ["group.com.rakazo.app"]
                   }
                 },
                 {
-                  "targetName": "RakazoWatchComplications",
+                  "targetName": "SmithWatchComplications",
                   "bundleIdentifier": "com.rakazo.app.watchkitapp.complications",
                   "entitlements": {
                     "com.apple.security.application-groups": ["group.com.rakazo.app"]
                   }
                 },
                 {
-                  "targetName": "RakazoWidgets",
+                  "targetName": "SmithWidgets",
                   "bundleIdentifier": "com.rakazo.app.widgets"
                 },
                 {

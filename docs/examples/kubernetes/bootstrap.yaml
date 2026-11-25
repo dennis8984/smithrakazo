@@ -4,8 +4,8 @@ kind: Job
 metadata:
   name: rakazo-bootstrap
   labels:
-    rakazo.example/phase: bootstrap
-  namespace: rakazo
+    smith.example/phase: bootstrap
+  namespace: smith
 spec:
   backoffLimit: 1
   template:

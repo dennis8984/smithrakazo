@@ -6,7 +6,7 @@ import { t } from "../i18n.js";
 
 /** Managed desktop origin; development keeps its usual web/API ports. */
 export const DEFAULT_LOCAL_WEB_URL = "http://127.0.0.1:45173";
-/** Hosted Rakazo; setup saves it as an `existing` server so it opens like any other. */
+/** Hosted Smith; setup saves it as an `existing` server so it opens like any other. */
 export const RAKAZO_CLOUD_URL = "https://app.rakazo.com";
 export const PROBE_RESPONSE_LIMIT_BYTES = 64 * 1024;
 
@@ -19,9 +19,9 @@ export type StartupTarget =
 const SCHEME = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//;
 
 /**
- * Accepts what a person would actually type ("localhost:5173", "rakazo.example.com")
+ * Accepts what a person would actually type ("localhost:5173", "smith.example.com")
  * and returns a canonical http(s) origin, or null when the input can never
- * securely address a Rakazo server.
+ * securely address a Smith server.
  */
 export function normalizeServerUrl(input: string): string | null {
   const trimmed = input.trim();
@@ -46,7 +46,7 @@ export function normalizeServerUrl(input: string): string | null {
   // Public login cookies and API traffic must never cross a cleartext connection.
   if (url.protocol === "http:" && !isPrivateNetworkHost(url.hostname)) return null;
 
-  // Rakazo serves its renderer, RPC, and auth routes from one origin. Keeping a
+  // Smith serves its renderer, RPC, and auth routes from one origin. Keeping a
   // user-supplied path would make the setup probe and the loaded app disagree.
   return url.origin;
 }
@@ -123,7 +123,7 @@ export function serializeSetup(setup: DesktopSetup): string {
 }
 
 /**
- * Decides between the setup window and the app window. A first launch opens Rakazo
+ * Decides between the setup window and the app window. A first launch opens Smith
  * Cloud; other servers are a choice made from setup later. An explicit
  * `RAKAZO_WEB_URL` still wins over saved configuration so test and performance
  * harnesses can point the shell anywhere without touching a user's real setup.
@@ -178,13 +178,13 @@ export function servesBundledRenderer(targetUrl: string, managedLocalStack: bool
   }
 }
 
-/** Each Rakazo origin gets its own persistent cookie and storage partition. */
+/** Each Smith origin gets its own persistent cookie and storage partition. */
 export function sessionPartitionForServerUrl(targetUrl: string): string | null {
   try {
     const url = new URL(targetUrl);
     if (url.protocol !== "http:" && url.protocol !== "https:") return null;
     const digest = createHash("sha256").update(url.origin).digest("hex").slice(0, 24);
-    return `persist:rakazo-${digest}`;
+    return `persist:smith-${digest}`;
   } catch {
     return null;
   }
@@ -201,7 +201,7 @@ export function safeExternalUrl(targetUrl: string): string | null {
   }
 }
 
-export function isRakazoHealth(value: unknown): boolean {
+export function isSmithHealth(value: unknown): boolean {
   if (typeof value !== "object" || value === null) return false;
   const json = (value as { json?: unknown }).json;
   return (

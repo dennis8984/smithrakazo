@@ -16,7 +16,7 @@ import {
 
 const USAGE = `Usage: pnpm bench:page-browser [options]
   --driver=installed|<git-ref>   Driver to measure; repeat to compare (default: installed)
-  --image=<image>                Computer image for a fresh local container (default: rakazo/computer:local)
+  --image=<image>                Computer image for a fresh local container (default: smith/computer:local)
   --exec="<command prefix>"      Run in an existing computer instead, e.g. "docker exec -i my-computer"
   --repeat=<n>                   Runs of the suite per driver (default: 3)
   --live-sites                   Also size a few public pages (needs internet)
@@ -126,7 +126,7 @@ function driverRunner(exec: Exec, driverPath: string) {
     const env = [
       "DISPLAY=:1",
       "RAKAZO_CDP_PORT=9222",
-      "HOME=/home/rakazo",
+      "HOME=/home/smith",
       "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       "RAKAZO_BROWSER_ARGS_STDIN=1",
     ];
@@ -210,7 +210,7 @@ async function main() {
   const repeat = Number(option("repeat") ?? 3);
   if (!Number.isInteger(repeat) || repeat < 1)
     throw new Error("--repeat must be a positive integer");
-  const image = option("image") ?? "rakazo/computer:local";
+  const image = option("image") ?? "smith/computer:local";
   const out = option("out") ?? "page-browser-bench.json";
 
   let container: string | undefined;

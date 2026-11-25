@@ -34,7 +34,7 @@ describe.skipIf(!enabled)("board prefix rename (PostgreSQL)", () => {
         data: {
           id: userId,
           name: "Board rename",
-          email: `${userId}@rakazo.test`,
+          email: `${userId}@smith.test`,
           emailVerified: false,
           labs: ["board"],
         },
@@ -59,7 +59,7 @@ describe.skipIf(!enabled)("board prefix rename (PostgreSQL)", () => {
       const board = await ensureBoard(prisma, spaceId);
       expect(board.nextNumber).toBe(1);
       boardId = board.id;
-      actor = { spaceId, userId, email: `${userId}@rakazo.test`, isDeploymentOwner: false };
+      actor = { spaceId, userId, email: `${userId}@smith.test`, isDeploymentOwner: false };
     }),
   );
 

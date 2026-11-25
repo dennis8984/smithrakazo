@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { captureScreenshot, completeOnboarding, signup } from "../helpers/helpers";
 
 test("keyboard shortcuts list and focus the composer", async ({ page }, testInfo) => {
-  await signup(page, `shortcuts-${Date.now()}@rakazo.test`, "password12", "Shortcut Keys");
+  await signup(page, `shortcuts-${Date.now()}@smith.test`, "password12", "Shortcut Keys");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);

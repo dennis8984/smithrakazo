@@ -7,7 +7,7 @@ import { AppState, Platform } from "react-native";
 import { openExternalUrl } from "./open-url";
 import { OFFICIAL_BUNDLE_ID } from "./store-update";
 
-const STORAGE_KEY = "rakazo.store-review";
+const STORAGE_KEY = "smith.store-review";
 const MIN_ACTIVE_DAYS = 2;
 const MIN_COMPLETED_RUNS = 3;
 const ASK_AGAIN_AFTER_MS = 120 * 24 * 60 * 60_000;

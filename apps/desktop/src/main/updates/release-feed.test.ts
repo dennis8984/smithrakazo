@@ -83,7 +83,7 @@ it.each([undefined, "false", "true", "invalid"])("selects release platforms for 
 });
 
 describe("release repository feed", () => {
-  it.each(["own-app", ".rakazo", "_rakazo", "-rakazo"])(
+  it.each(["own-app", ".smith", "_rakazo", "-smith"])(
     "packages repository %s without changing identity or signing settings",
     (repo) => {
       const root = mkdtempSync(path.join(os.tmpdir(), "release-feed-"));

@@ -401,8 +401,8 @@ describe("DaytonaSandboxProvider", () => {
     expect(computer).not.toHaveProperty("started");
     expect(fixture.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: expect.stringMatching(/^rakazo-/),
-        labels: { botId: "bot-a", rakazo: "computer" },
+        name: expect.stringMatching(/^smith-/),
+        labels: { botId: "bot-a", smith: "computer" },
         envVars: { VNC_RESOLUTION: "1280x800" },
       }),
       { timeout: 120 },
@@ -882,7 +882,7 @@ describe("DaytonaSandboxProvider", () => {
       timeout,
     );
     const name = fixture.create.mock.calls[0]?.[0].name;
-    expect(name).toMatch(/^rakazo-/);
+    expect(name).toMatch(/^smith-/);
     expect(fixture.get).toHaveBeenCalledWith(name);
     expect(fixture.deleteSandbox).toHaveBeenCalledOnce();
     expect(fixture.remote.missing).toBe(true);
@@ -1111,7 +1111,7 @@ describe("DaytonaSandboxProvider", () => {
     const provider = new DaytonaSandboxProvider({}, fixture.client);
     const computer = await provider.provision({ botId: "bot-a", homePath: "/unused" }, context);
     await provider.prepare(computer, context);
-    // Stopped outside Rakazo, for example from the Daytona dashboard.
+    // Stopped outside Smith, for example from the Daytona dashboard.
     fixture.remote.state = "stopped";
     fixture.remote.desiredState = "stopped";
 

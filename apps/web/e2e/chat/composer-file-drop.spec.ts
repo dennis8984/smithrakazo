@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { captureScreenshot, completeOnboarding, signup } from "../helpers/helpers";
 
 test("files dropped anywhere on the chat attach to the composer", async ({ page }, testInfo) => {
-  await signup(page, `file-drop-${Date.now()}@rakazo.test`, "password12", "Drop Tester");
+  await signup(page, `file-drop-${Date.now()}@smith.test`, "password12", "Drop Tester");
   await completeOnboarding(page);
   await expect(page.getByRole("combobox", { name: /Message/ })).toBeVisible();
   const transcript = page.getByTestId("transcript");

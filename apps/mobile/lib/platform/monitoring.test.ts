@@ -311,9 +311,9 @@ describe("mobile monitoring", () => {
       { code: "UpdateServerUnreachable", level: "error", timestamp: 3, message: "offline" },
     ]);
     const monitor = await import("./monitoring");
-    storage.set("rakazo.api_base", "https://app.example.com");
+    storage.set("smith.api_base", "https://app.example.com");
     storage.set(
-      "rakazo.expo-error-window",
+      "smith.expo-error-window",
       JSON.stringify({ server: "https://app.example.com", since: 1, reportedThrough: 0 }),
     );
     monitor.installMobileEarlyErrorReporting(secureStorage, application);
@@ -376,7 +376,7 @@ describe("mobile monitoring", () => {
       updates.readLogEntriesAsync.mockResolvedValue(entries);
       if (step === "read") updates.readLogEntriesAsync.mockReturnValueOnce(new Promise(() => {}));
       else sdk.flush.mockReturnValueOnce(new Promise(() => {}));
-      storage.set("rakazo.api_base", "https://app.example.com");
+      storage.set("smith.api_base", "https://app.example.com");
       const monitor = await import("./monitoring");
       monitor.installMobileEarlyErrorReporting(secureStorage, application);
       const first = monitor.configureMobileMonitoring(
@@ -430,7 +430,7 @@ describe("mobile monitoring", () => {
       },
     ]);
     const monitor = await import("./monitoring");
-    storage.set("rakazo.api_base", "https://first.example.com");
+    storage.set("smith.api_base", "https://first.example.com");
     monitor.installMobileEarlyErrorReporting(secureStorage, application);
     await monitor.configureMobileMonitoring(
       "https://first.example.com",
@@ -438,7 +438,7 @@ describe("mobile monitoring", () => {
       response({ dsn: "https://key@errors.example.com/8" }),
     );
     expect(sdk.captureException).not.toHaveBeenCalled();
-    storage.set("rakazo.api_base", "https://second.example.com");
+    storage.set("smith.api_base", "https://second.example.com");
     monitor.resetMobileMonitoring();
     await monitor.configureMobileMonitoring(
       "https://second.example.com",

@@ -10,7 +10,7 @@ import {
 } from "./meeting-media.test-support.js";
 
 function fixture() {
-  const emulator = createMeetingMediaEmulator("https://rakazo.example.test");
+  const emulator = createMeetingMediaEmulator("https://smith.example.test");
   const app = new Hono();
   emulator.bridge.mount(app);
   const token = new URL(emulator.url()).hash.slice(1);
@@ -31,7 +31,7 @@ describe("meeting media bridge", () => {
     const { emulator, app, session, turn } = fixture();
     const page = await app.request(MEETING_MEDIA_PATH);
     expect(page.headers.get("referrer-policy")).toBe("no-referrer");
-    expect(await page.text()).toContain('alt="Rakazo"');
+    expect(await page.text()).toContain('alt="Smith"');
     expect(await (await session()).json()).toEqual({ botName: "Atlas", voice: true });
 
     const response = await turn();
@@ -102,7 +102,7 @@ describe("meeting media bridge", () => {
         },
         { highWaterMark: 0 },
       );
-      const request = new Request(`https://rakazo.example.test${MEETING_MEDIA_PATH}/turn`, {
+      const request = new Request(`https://smith.example.test${MEETING_MEDIA_PATH}/turn`, {
         method: "POST",
         headers,
         body,
@@ -137,7 +137,7 @@ describe("meeting media bridge", () => {
       },
       { highWaterMark: 0 },
     );
-    const request = new Request(`https://rakazo.example.test${MEETING_MEDIA_PATH}/turn`, {
+    const request = new Request(`https://smith.example.test${MEETING_MEDIA_PATH}/turn`, {
       method: "POST",
       headers,
       body,

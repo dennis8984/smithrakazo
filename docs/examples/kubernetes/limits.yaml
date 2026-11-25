@@ -4,7 +4,7 @@ kind: ResourceQuota
 metadata:
   name: rakazo-computers
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
   namespace: rakazo-sandboxes
 spec:
   hard:
@@ -19,7 +19,7 @@ kind: LimitRange
 metadata:
   name: rakazo-computers
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
   namespace: rakazo-sandboxes
 spec:
   limits:

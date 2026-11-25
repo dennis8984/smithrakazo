@@ -38,7 +38,7 @@ vi.mock("../../api/api", () => ({
 // Like the server's "me" lookup, the outbox owner needs a session.
 vi.mock("../../api/verified-scope", () => ({
   verifiedScope: async () => {
-    if (!store.get("rakazo.session_token")) throw new Error("Unauthorized");
+    if (!store.get("smith.session_token")) throw new Error("Unauthorized");
     return { apiBase: "https://api.example.test", userId: "user-a", spaceId: "space-a" };
   },
 }));
@@ -99,7 +99,7 @@ beforeEach(() => {
 });
 
 it("asks before signing in deletes a rejected session's queue after a restart", async () => {
-  store.set("rakazo.session_token", "fake-session-a");
+  store.set("smith.session_token", "fake-session-a");
   outbox.entries = [waiting()];
   const first = await launch();
   expect(outbox.entries).toHaveLength(1);

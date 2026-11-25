@@ -17,7 +17,7 @@ vi.mock("@rakazo/db", async (original) => ({
 }));
 
 const issuer = "https://identity.example.test";
-const origin = "https://rakazo.example.test";
+const origin = "https://smith.example.test";
 const secret = "offline-test-secret-with-at-least-32-characters";
 const { privateKey, publicKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
 const jwk = { ...publicKey.export({ format: "jwk" }), kid: "test-key", alg: "RS256", use: "sig" };
@@ -396,7 +396,7 @@ describe("OIDC callbacks", () => {
       // The callback's browser has an unrelated web attribution cookie and no native header.
       cookies += `; rakazo_signup_attribution=${encodeURIComponent(JSON.stringify({ surface: "web", utmSource: "unrelated" }))}`;
       const returned = await request(callback);
-      expect(new URL(returned.headers.get("location")!).protocol).toBe("rakazo:");
+      expect(new URL(returned.headers.get("location")!).protocol).toBe("smith:");
       expect(rows("user")[0]).toMatchObject({ signupSurface: surface });
       expect(rows("user")[0]?.signupUtmSource).toBeUndefined();
     },
@@ -731,7 +731,7 @@ describe("OIDC callbacks", () => {
     await request(
       `/expo-authorization-proxy?${new URLSearchParams({ authorizationURL: authorize })}`,
     );
-    expect(new URL((await request(callback)).headers.get("location")!).protocol).toBe("rakazo:");
+    expect(new URL((await request(callback)).headers.get("location")!).protocol).toBe("smith:");
     expect(rows("account").filter((account) => account.providerId === "oidc")).toHaveLength(1);
   });
   it("drops an unverified account's SSO links when its mailbox owner resets the password", async () => {
@@ -790,7 +790,7 @@ describe("OIDC callbacks", () => {
     ).toHaveLength(callbackMarkers);
     const returned = await request(callback);
     const destination = new URL(returned.headers.get("location")!);
-    expect(destination.protocol).toBe("rakazo:");
+    expect(destination.protocol).toBe("smith:");
     const signed = destination.searchParams
       .get("cookie")!
       .match(/(?:__Secure-)?better-auth\.session_token=([^;]+)/)![1]!;
@@ -1358,7 +1358,7 @@ describe("SSO-only account deletion", () => {
       `/callback/oidc?state=${url.searchParams.get("state")}&code=native-reauth`,
     );
     const destination = new URL(returned.headers.get("location")!);
-    expect(destination.protocol).toBe("rakazo:");
+    expect(destination.protocol).toBe("smith:");
     const signed = destination.searchParams
       .get("cookie")!
       .match(/(?:__Secure-)?better-auth\.session_token=([^;]+)/)![1]!;

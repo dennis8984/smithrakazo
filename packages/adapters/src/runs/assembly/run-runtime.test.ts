@@ -48,7 +48,7 @@ describe("runRuntimeEnvFromProcess", () => {
     { NODE_ENV: "test" },
     {
       NODE_ENV: "test",
-      DATA_DIR: "/var/rakazo",
+      DATA_DIR: "/var/smith",
       ENCRYPTION_KEY: "offline-encryption-key-at-least-32-chars",
       COMPOSIO_API_KEY: " composio-key ",
       CURSOR_API_KEY: " cursor-key ",

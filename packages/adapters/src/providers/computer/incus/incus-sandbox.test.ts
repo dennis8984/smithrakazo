@@ -50,7 +50,7 @@ describe("IncusSandboxProvider", () => {
     const created = await provider.provision({ botId: "bot-a", homePath: "/unused" }, context);
 
     expect(created).toMatchObject({ kind: "incus", botId: "bot-a", fresh: true });
-    expect(created.providerRef).toMatch(/^rakazo-[0-9a-f-]{36}$/);
+    expect(created.providerRef).toMatch(/^smith-[0-9a-f-]{36}$/);
     const create = fake.requests.find(
       (entry) => entry.method === "POST" && entry.path.startsWith("/1.0/instances?"),
     );
@@ -64,7 +64,7 @@ describe("IncusSandboxProvider", () => {
         type: "image",
         protocol: "oci",
         server: "https://registry.example.test",
-        alias: "rakazo/computer:v1",
+        alias: "smith/computer:v1",
       },
       config: {
         "user.rakazo-bot-id": "bot-a",
@@ -130,7 +130,7 @@ describe("IncusSandboxProvider", () => {
     });
     await providerFor(fake).provision({ botId: "bot-a", homePath: "/unused" }, context);
     expect(probes).toBe(2);
-    expect(fake.execs[0]?.body).toMatchObject({ user: 1000, group: 1000, cwd: "/home/rakazo" });
+    expect(fake.execs[0]?.body).toMatchObject({ user: 1000, group: 1000, cwd: "/home/smith" });
   });
 
   it("reconnects to a running instance of the same bot without creating one", async () => {

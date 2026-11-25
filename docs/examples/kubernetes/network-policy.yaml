@@ -4,8 +4,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-default-deny
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector: {}
   policyTypes:
@@ -17,7 +17,7 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-computers
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
   namespace: rakazo-sandboxes
 spec:
   podSelector: {}
@@ -28,19 +28,19 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: rakazo
+              kubernetes.io/metadata.name: smith
           podSelector:
             matchLabels:
               app: rakazo-api
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: rakazo
+              kubernetes.io/metadata.name: smith
           podSelector:
             matchLabels:
               app: rakazo-worker
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: rakazo
+              kubernetes.io/metadata.name: smith
           podSelector:
             matchLabels:
               app: rakazo-web
@@ -91,8 +91,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-postgres
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector:
     matchLabels:
@@ -123,8 +123,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-web
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector:
     matchLabels:
@@ -177,8 +177,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-api
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector:
     matchLabels:
@@ -262,8 +262,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-worker
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector:
     matchLabels:
@@ -338,8 +338,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-migrate
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector:
     matchLabels:
@@ -373,8 +373,8 @@ kind: NetworkPolicy
 metadata:
   name: rakazo-bootstrap
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   podSelector:
     matchLabels:

@@ -42,7 +42,7 @@ release ที่มี [role ของฐานข้อมูล](./self-host-
 สำรองข้อมูลและรัน drill กับ backup นั้นก่อน ([การสำรองแบบเข้ารหัส](./self-host-backups.md#การสำรองแบบเข้ารหัสและนอกไซต์)) จากนั้นอัปเดต checkout และรันการอัปเกรดในนาม root:
 
 ```bash
-cd /srv/rakazo
+cd /srv/smith
 git pull --ff-only
 sudo infra/compose/upgrade-postgres.sh
 ```
@@ -148,7 +148,7 @@ API อัปเดตตัวเองไม่ได้ เพราะ image
 
 ```dotenv
 COMPOSE_PROFILES=updater
-RAKAZO_DEPLOY_DIR=/srv/rakazo
+RAKAZO_DEPLOY_DIR=/srv/smith
 RAKAZO_AUTO_UPDATE_INTERVAL_HOURS=6
 ```
 
@@ -220,12 +220,12 @@ fetch("http://127.0.0.1:7092/rollback", {
 
 ## deploy directory ต้องเป็น path เดียว
 
-`RAKAZO_DEPLOY_DIR` ถูก bind mount เข้า updater ที่ path เดียวกับที่อ่านมา (`${RAKAZO_DEPLOY_DIR}:${RAKAZO_DEPLOY_DIR}`) และเรื่องนี้จำเป็นต่อการทำงาน ไม่ใช่แค่ความเรียบร้อย production Compose ตั้งทั้งสองฝั่งเป็น `/srv/rakazo` เป็นค่าเริ่มต้น ตั้งตัวแปรนี้สำหรับโครงสร้างอื่น เมื่อ updater รัน `docker compose -p <project> --file $RAKAZO_DEPLOY_DIR/infra/compose/docker-compose.prod.yml up -d` Compose CLI *ภายใน*คอนเทนเนอร์จะขยาย bind mount แบบ relative ของไฟล์นี้ (`../../.env`, `./Caddyfile.prod`) เทียบกับ path นั้น แล้วส่งผลให้ daemon daemon ต้อง resolve string เดียวกันได้ ไม่อย่างนั้นจะสร้างโฟลเดอร์ว่างเงียบ ๆ ในที่ที่ควรเป็น `.env` และ Caddyfile ของคุณ Compose ให้ใช้ค่า `-p` ที่มีผลใน interpolation ได้ แต่ไม่ใส่ลงในสภาพแวดล้อมของคอนเทนเนอร์อัตโนมัติ ไฟล์ production จึงกำหนด `COMPOSE_PROJECT_NAME` ให้ updater อย่างชัดเจน sidecar ที่รันเดี่ยวตั้ง `RAKAZO_COMPOSE_PROJECT_NAME` แทนได้ ค่าสำรองสุดท้ายคือ `rakazo-prod` ถ้าไม่ส่งค่านี้ต่อ stack ที่เริ่มด้วย `-p something-else` จะถูกปล่อยไว้ ขณะที่ project ที่สองพร้อม volume Postgres ว่างใหม่ขึ้นมาข้าง ๆ
+`RAKAZO_DEPLOY_DIR` ถูก bind mount เข้า updater ที่ path เดียวกับที่อ่านมา (`${RAKAZO_DEPLOY_DIR}:${RAKAZO_DEPLOY_DIR}`) และเรื่องนี้จำเป็นต่อการทำงาน ไม่ใช่แค่ความเรียบร้อย production Compose ตั้งทั้งสองฝั่งเป็น `/srv/smith` เป็นค่าเริ่มต้น ตั้งตัวแปรนี้สำหรับโครงสร้างอื่น เมื่อ updater รัน `docker compose -p <project> --file $RAKAZO_DEPLOY_DIR/infra/compose/docker-compose.prod.yml up -d` Compose CLI *ภายใน*คอนเทนเนอร์จะขยาย bind mount แบบ relative ของไฟล์นี้ (`../../.env`, `./Caddyfile.prod`) เทียบกับ path นั้น แล้วส่งผลให้ daemon daemon ต้อง resolve string เดียวกันได้ ไม่อย่างนั้นจะสร้างโฟลเดอร์ว่างเงียบ ๆ ในที่ที่ควรเป็น `.env` และ Caddyfile ของคุณ Compose ให้ใช้ค่า `-p` ที่มีผลใน interpolation ได้ แต่ไม่ใส่ลงในสภาพแวดล้อมของคอนเทนเนอร์อัตโนมัติ ไฟล์ production จึงกำหนด `COMPOSE_PROJECT_NAME` ให้ updater อย่างชัดเจน sidecar ที่รันเดี่ยวตั้ง `RAKAZO_COMPOSE_PROJECT_NAME` แทนได้ ค่าสำรองสุดท้ายคือ `rakazo-prod` ถ้าไม่ส่งค่านี้ต่อ stack ที่เริ่มด้วย `-p something-else` จะถูกปล่อยไว้ ขณะที่ project ที่สองพร้อม volume Postgres ว่างใหม่ขึ้นมาข้าง ๆ
 
 ค่านี้จึงต้องเป็น path ที่ **daemon** เห็น ซึ่งไม่ใช่ path ที่ shell ของคุณเห็นเสมอไป:
 
-- **Linux** daemon ใช้ filesystem ร่วมกับเครื่อง path ของ checkout จึงเป็นคำตอบ: `/srv/rakazo` เป็นค่าเริ่มต้นและโครงสร้าง production ที่รองรับ ตั้ง `RAKAZO_DEPLOY_DIR` อย่างชัดเจนเมื่อ checkout อยู่ที่อื่น
-- **Docker Desktop (Windows/macOS)** daemon รันใน VM ที่ mount drive ของคุณไว้ที่อื่น บน Windows `C:` อยู่ที่ `/run/desktop/mnt/host/c` checkout ที่ `C:\Users\you\rakazo` จึงเป็น `RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/rakazo` Git บนเครื่องอาจใช้ `core.autocrlf=true` updater ไม่สน diff ที่ต่างกันแค่ CR จึงไม่ขวาง `/apply` ตรวจ mount ก่อน deploy:
+- **Linux** daemon ใช้ filesystem ร่วมกับเครื่อง path ของ checkout จึงเป็นคำตอบ: `/srv/smith` เป็นค่าเริ่มต้นและโครงสร้าง production ที่รองรับ ตั้ง `RAKAZO_DEPLOY_DIR` อย่างชัดเจนเมื่อ checkout อยู่ที่อื่น
+- **Docker Desktop (Windows/macOS)** daemon รันใน VM ที่ mount drive ของคุณไว้ที่อื่น บน Windows `C:` อยู่ที่ `/run/desktop/mnt/host/c` checkout ที่ `C:\Users\you\smith` จึงเป็น `RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/smith` Git บนเครื่องอาจใช้ `core.autocrlf=true` updater ไม่สน diff ที่ต่างกันแค่ CR จึงไม่ขวาง `/apply` ตรวจ mount ก่อน deploy:
 
 ```bash
 docker compose --env-file .env -f infra/compose/docker-compose.prod.yml \

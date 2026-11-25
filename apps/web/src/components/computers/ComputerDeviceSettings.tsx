@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { RakazoDesktop, UserDeviceSummary } from "@rakazo/contracts";
+import type { SmithDesktop, UserDeviceSummary } from "@rakazo/contracts";
 import { secureHttpOrigin } from "@rakazo/contracts/network-host";
 import { Button, Label, Switch } from "@rakazo/ui-web";
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -15,7 +15,7 @@ type ThisComputer = { allowed: boolean; setAllowed: (allowed: boolean) => Promis
 
 /** A remote server pairs this computer; the app-managed local stack runs bots on it directly. */
 async function thisComputerAccess(
-  desktop: RakazoDesktop | undefined,
+  desktop: SmithDesktop | undefined,
 ): Promise<ThisComputer | null> {
   const device = desktop?.device;
   const paired = await device?.state().catch(() => null);
@@ -34,7 +34,7 @@ async function thisComputerAccess(
  * A private-LAN HTTP page never becomes the paired computer. `select` drops that origin, so a
  * switch here would call `setAllowed` and do nothing.
  */
-function plainHttpDesktop(desktop: RakazoDesktop | undefined): boolean {
+function plainHttpDesktop(desktop: SmithDesktop | undefined): boolean {
   if (!desktop?.device || typeof window === "undefined") return false;
   return secureHttpOrigin(window.location.origin) === null;
 }

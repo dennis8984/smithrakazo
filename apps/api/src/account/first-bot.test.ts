@@ -7,7 +7,7 @@ import { ensureFirstBot } from "./first-bot.js";
 const actor: Actor = {
   userId: "user-1",
   spaceId: "space-1",
-  email: "user@rakazo.test",
+  email: "user@smith.test",
   isDeploymentOwner: false,
 };
 

@@ -830,7 +830,7 @@ describe("tickRoutineWatch on a computer", () => {
           },
         },
         // Present on purpose: a vm must not switch to this shell.
-        shell: { platform: "win32", shell: "powershell.exe", home: "C:\\Users\\rakazo" },
+        shell: { platform: "win32", shell: "powershell.exe", home: "C:\\Users\\smith" },
       },
     );
     await checkRoutineWatch(deps, routine);
@@ -1295,11 +1295,11 @@ describe("tickRoutineWatch on a computer", () => {
     const command = "gh api user";
     const shells = [
       {
-        shell: { platform: "win32", shell: "powershell.exe", home: "C:\\Users\\rakazo" },
+        shell: { platform: "win32", shell: "powershell.exe", home: "C:\\Users\\smith" },
         argv: ["powershell.exe", "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", command],
       },
       {
-        shell: { platform: "linux", shell: "/bin/bash", home: "/home/rakazo" },
+        shell: { platform: "linux", shell: "/bin/bash", home: "/home/smith" },
         argv: ["/bin/bash", "-lc", command],
       },
     ];
@@ -1340,7 +1340,7 @@ describe("tickRoutineWatch on a computer", () => {
       { kind: "command", command },
       { stdout: "3\n" },
       { id: "computer-1", scope: "team", kind: "desktop" },
-      { shell: { platform: "win32", shell: "powershell.exe", home: "C:\\Users\\rakazo" } },
+      { shell: { platform: "win32", shell: "powershell.exe", home: "C:\\Users\\smith" } },
     );
     deps.commandRefusal = protectedComputerLifecycleRefusal;
     await checkRoutineWatch(deps, routine);
@@ -1559,7 +1559,7 @@ describe("watchFolder", () => {
   // A team computer refuses "." as a bot path, which failed every files watch live.
   it("is the bot's own folder on a team computer and the workspace on a private one", () => {
     expect(watchFolder("team", "bot-1")).toBe("/home/rakazo/bots/bot-1");
-    expect(watchFolder("dedicated", "bot-1")).toBe("/home/rakazo");
+    expect(watchFolder("dedicated", "bot-1")).toBe("/home/smith");
   });
 });
 

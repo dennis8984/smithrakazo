@@ -105,7 +105,7 @@ test(
     await expect(page.getByRole("heading", { name: "Check your email" })).toBeVisible();
     await captureScreenshot(page, testInfo, "signup-verification-required");
     await page.getByRole("link", { name: "Back to sign in" }).click();
-    await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   },
 );
 
@@ -127,7 +127,7 @@ test(
     await captureScreenshot(page, testInfo, "logged-out-sign-up-phone");
     await page.getByRole("link", { name: "Sign in", exact: true }).click();
     await expect(page).toHaveURL(/\/sign-in$/);
-    await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   },
 );
 
@@ -156,7 +156,7 @@ test("a browser outside the desktop app opens sign-in on its local server", asyn
   );
   await page.goto("/");
   await expect(page).toHaveURL(/\/sign-in$/);
-  await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Sign up", exact: true })).toHaveCount(0);
   await captureScreenshot(page, testInfo, "local-account-sign-in");
 
@@ -177,7 +177,7 @@ test("logout protects bot deep links and sign-in restores the session", async ({
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  const email = `auth-lifecycle-${stamp}@rakazo.test`;
+  const email = `auth-lifecycle-${stamp}@smith.test`;
   const password = "password12";
   const userName = "Auth Lifecycle";
 
@@ -223,7 +223,7 @@ test("logout protects bot deep links and sign-in restores the session", async ({
   };
   page.on("request", trackRefresh);
   await page.getByRole("button", { name: "Log out" }).click();
-  await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   page.off("request", trackRefresh);
   await Promise.all(refreshes);
   await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 250)));
@@ -231,14 +231,14 @@ test("logout protects bot deep links and sign-in restores the session", async ({
   // Someone who has signed in here before reopens the app to sign in, not to a new account.
   await page.goto("/");
   await expect(page).toHaveURL(/\/sign-in$/);
-  await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   await captureScreenshot(page, testInfo, "37-logged-out-returning");
 
   const isProtectedSignIn = (url: URL) =>
     url.pathname === "/sign-in" && url.searchParams.get("next") === protectedBotPath;
   await page.goto(protectedBotPath);
   await expect(page).toHaveURL(isProtectedSignIn);
-  await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   await expect(page.getByText("Chief", { exact: true })).toHaveCount(0);
   await expect(page.getByText(userName, { exact: true })).toHaveCount(0);
   await openEmailSignIn(page);
@@ -300,7 +300,7 @@ test("logout protects bot deep links and sign-in restores the session", async ({
 
 test("changes and recovers an email password", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  const email = `password-recovery-${stamp}@rakazo.test`;
+  const email = `password-recovery-${stamp}@smith.test`;
   const originalPassword = "password12";
   const changedPassword = "changed-password12";
   const resetPassword = "reset-password12";
@@ -377,7 +377,7 @@ test("changes and recovers an email password", async ({ page }, testInfo) => {
       html: string;
     }>;
     return messages.filter(
-      (message) => message.to === email && message.subject === "Reset your Rakazo password",
+      (message) => message.to === email && message.subject === "Reset your Smith password",
     );
   };
   await expect.poll(async () => (await sentToUser()).length).toBeGreaterThan(0);

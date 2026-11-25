@@ -36,7 +36,7 @@ postgres("meeting calendar reconciliation (PostgreSQL)", () => {
       prisma,
       provider: emulator.provider,
       jobs,
-      webOrigin: "https://rakazo.example.test",
+      webOrigin: "https://smith.example.test",
       oauthStateKey: "offline-fixture-key",
       enabled: (space) => space === spaceId,
       buildJoin,
@@ -53,7 +53,7 @@ postgres("meeting calendar reconciliation (PostgreSQL)", () => {
         });
         for (const { userId } of [first, second]) {
           await prisma.user.create({
-            data: { id: userId, name: "Calendar fixture", email: `${userId}@rakazo.test` },
+            data: { id: userId, name: "Calendar fixture", email: `${userId}@smith.test` },
           });
           await prisma.member.create({
             data: { id: randomUUID(), organizationId: org, userId, role: "member", createdAt: now },

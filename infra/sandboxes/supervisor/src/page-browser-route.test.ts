@@ -21,7 +21,7 @@ beforeEach(() => {
   mock.stdin.length = 0;
   mock.inspect.mockResolvedValue({
     Config: {
-      Labels: { "rakazo.managed": "true", "rakazo.botId": "home", "rakazo.spaceId": "space" },
+      Labels: { "smith.managed": "true", "smith.botId": "home", "smith.spaceId": "space" },
     },
   });
   mock.exec.mockImplementation(async (options: { Cmd: string[] }) => ({
@@ -78,7 +78,7 @@ it("resolves the owned display and refuses an older fence before running the hel
     Env: [
       "DISPLAY=:2",
       "RAKAZO_CDP_PORT=9223",
-      "HOME=/home/rakazo",
+      "HOME=/home/smith",
       "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       "RAKAZO_BROWSER_WATCH_STDIN=1",
       "RAKAZO_BROWSER_ARGS_STDIN=1",
@@ -531,7 +531,7 @@ describe("screen setup reuse", () => {
   beforeEach(() => {
     mock.inspect.mockResolvedValue({
       Config: {
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "home", "rakazo.spaceId": "space" },
+        Labels: { "smith.managed": "true", "smith.botId": "home", "smith.spaceId": "space" },
       },
       State: { StartedAt: bootedAt },
     });

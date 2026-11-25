@@ -40,8 +40,8 @@ import {
 } from "./session";
 import { errorText } from "./user-error";
 
-export const SPACE_KEY = "rakazo.space_id";
-export const SPACE_ROLLBACK_KEY = "rakazo.space_rollback";
+export const SPACE_KEY = "smith.space_id";
+export const SPACE_ROLLBACK_KEY = "smith.space_rollback";
 const RPC_TIMEOUT_MS = 8_000;
 export const MAX_MOBILE_AUTH_RESPONSE_BYTES = 256 * 1024;
 export const MAX_MOBILE_RPC_RESPONSE_BYTES = 16 * 1024 * 1024;
@@ -297,7 +297,7 @@ async function withMobileResponse<T>(
     clearTimeout(timer);
   }
 }
-const PENDING_SIGN_OUT_KEY = "rakazo.pending_sign_out";
+const PENDING_SIGN_OUT_KEY = "smith.pending_sign_out";
 /**
  * Better-auth expires a session 7 days after its last use, and the signed-out session is not used
  * again; 30 days also covers longer server overrides.

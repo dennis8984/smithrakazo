@@ -350,10 +350,10 @@ export function GeneralSettingsPanels({
                     <Trans>Original</Trans>
                   </ToggleGroupItem>
                   <ToggleGroupItem
-                    value="rakazo"
+                    value="smith"
                     className="text-body-sm aria-pressed:bg-background aria-pressed:shadow-sm"
                   >
-                    <Trans>Rakazo</Trans>
+                    <Trans>Smith</Trans>
                   </ToggleGroupItem>
                 </ToggleGroup>
                 {botStyleError ? (

@@ -1,5 +1,5 @@
 import type { ChildProcessWithoutNullStreams } from "node:child_process";
-import type { RakazoDesktopSpeechEvent } from "@rakazo/contracts";
+import type { SmithDesktopSpeechEvent } from "@rakazo/contracts";
 import { secureHttpOrigin } from "@rakazo/contracts/network-host";
 import type { WebContents } from "electron";
 import { isLanguageTag } from "../i18n.js";
@@ -63,7 +63,7 @@ export function createSystemSpeech(
         return false;
       if (active) close(active);
       const sender = event.sender;
-      const send = (message: RakazoDesktopSpeechEvent) => {
+      const send = (message: SmithDesktopSpeechEvent) => {
         if (!ended && !sender.isDestroyed()) sender.send(SPEECH_EVENT_CHANNEL, message);
       };
       let ended = false;

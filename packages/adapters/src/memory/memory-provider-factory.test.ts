@@ -160,7 +160,7 @@ describe("SpaceMemoryProviderResolver", () => {
       },
     );
     expect(fetchMock.mock.calls[0]?.[0]).toBe(
-      "http://localhost:6767/memory/ns/rakazo%3Abot-1/search",
+      "http://localhost:6767/memory/ns/smith%3Abot-1/search",
     );
   });
 
@@ -263,7 +263,7 @@ describe("SpaceMemoryProviderResolver", () => {
     );
 
     expect(fetchMock.mock.calls[0]?.[0]).toBe(
-      "https://api.supermemory.ai/ns/rakazo%3Abot-1/search",
+      "https://api.supermemory.ai/ns/smith%3Abot-1/search",
     );
     vi.unstubAllGlobals();
     vi.unstubAllEnvs();

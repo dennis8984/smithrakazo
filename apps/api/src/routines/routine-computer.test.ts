@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { RouterDeps } from "../router.js";
 import { createRouter } from "../router-test-support.js";
 
-const actor = { userId: "user-1", spaceId: "space-1", email: "user@rakazo.test" };
+const actor = { userId: "user-1", spaceId: "space-1", email: "user@smith.test" };
 
 function harness({
   routineOwner = "user-1",

@@ -12,7 +12,7 @@ const APP_IMAGE = "ghcr.example.test/rakazo/app:local";
 const RESTART_POLICIES =
   "docker inspect --format {{.Id}} {{.HostConfig.RestartPolicy.Name}} {{.State.Running}}";
 const DRAIN_SIGNAL =
-  'docker inspect --format {{index .Config.Labels "org.rakazo.run-drain-signal"}}';
+  'docker inspect --format {{index .Config.Labels "org.smith.run-drain-signal"}}';
 const startBeside = (service: string) => [
   `${COMPOSE} up -d --no-deps --no-recreate --scale ${service}=2 ${service}`,
   `${COMPOSE} ps --all --quiet ${service}`,
@@ -455,7 +455,7 @@ describe("production deploy script", () => {
     it("uses the GHCR image of the GitHub repository the checkout tracks by default", () => {
       const deploy = fixture();
       const next = commit(deploy.upstream, "next");
-      const github = "https://github.com/Example/Rakazo.git";
+      const github = "https://github.com/Example/Smith.git";
       git(deploy.checkout, "remote", "set-url", "origin", github);
       // The deploy runs with HOME set to the fixture root, so fetches still reach the local upstream.
       write(

@@ -4,8 +4,8 @@ kind: Deployment
 metadata:
   name: rakazo-postgres
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   replicas: 1
   strategy:
@@ -51,9 +51,9 @@ spec:
                   name: rakazo-secrets
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
-              value: rakazo
+              value: smith
             - name: POSTGRES_DB
-              value: rakazo
+              value: smith
           ports:
             - containerPort: 5432
           readinessProbe:
@@ -74,8 +74,8 @@ kind: Service
 metadata:
   name: rakazo-postgres
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   selector:
     app: rakazo-postgres

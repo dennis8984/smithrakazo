@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import type { RakazoDesktop } from "@rakazo/contracts";
+import type { SmithDesktop } from "@rakazo/contracts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { act } from "react";
@@ -61,7 +61,7 @@ async function render() {
 }
 
 it("clears the macOS window controls in the desktop app", async () => {
-  window.rakazoDesktop = { platform: "darwin" } as RakazoDesktop;
+  window.rakazoDesktop = { platform: "darwin" } as SmithDesktop;
   const view = await render();
   const header = view.firstElementChild!;
   expect(header.classList).toContain("app-drag");
@@ -71,7 +71,7 @@ it("clears the macOS window controls in the desktop app", async () => {
 
 it("keeps the macOS header aligned to the native controls in RTL", async () => {
   document.documentElement.dir = "rtl";
-  window.rakazoDesktop = { platform: "darwin" } as RakazoDesktop;
+  window.rakazoDesktop = { platform: "darwin" } as SmithDesktop;
   const view = await render();
   const header = view.firstElementChild!;
   expect(header.getAttribute("dir")).toBe("ltr");
@@ -90,7 +90,7 @@ it("leaves the header flush and inherited in an RTL browser", async () => {
 
 it("does not override RTL for application-rendered window controls", async () => {
   document.documentElement.dir = "rtl";
-  window.rakazoDesktop = { platform: "win32" } as RakazoDesktop;
+  window.rakazoDesktop = { platform: "win32" } as SmithDesktop;
   const view = await render();
   const header = view.firstElementChild!;
   expect(header.getAttribute("dir")).toBeNull();

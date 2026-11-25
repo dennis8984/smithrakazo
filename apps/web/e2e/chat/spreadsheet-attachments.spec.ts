@@ -13,7 +13,7 @@ import {
 test("Excel files can be attached and uploaded without losing their bytes", async ({
   page,
 }, testInfo) => {
-  await signup(page, `spreadsheet-${Date.now()}@rakazo.test`, "password12", "Sheet Reader");
+  await signup(page, `spreadsheet-${Date.now()}@smith.test`, "password12", "Sheet Reader");
   await completeOnboarding(page);
   const composer = page.getByRole("combobox", { name: /Message/ });
   await expect(composer).toBeVisible();

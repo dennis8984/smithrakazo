@@ -1,7 +1,7 @@
 # Generated from docker-compose.images.yml and docker-compose.standalone.overlay.yml by
 # `node infra/compose/build-standalone.mjs`. Do not edit.
 # Starts with no .env: the first start generates the secrets (docs/self-host.md#from-a-docker-panel).
-name: rakazo
+name: smith
 services:
   postgres:
     image: ${POSTGRES_IMAGE:-postgres:16@sha256:e17e86066e5ef83e0952a9347f5c792b7ece00972e2aa787a6986f471b3dd3d5}
@@ -11,9 +11,9 @@ services:
     pids_limit: 200
     mem_limit: 2g
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-rakazo}
+      POSTGRES_USER: ${POSTGRES_USER:-smith}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
-      POSTGRES_DB: ${POSTGRES_DB:-rakazo}
+      POSTGRES_DB: ${POSTGRES_DB:-smith}
     volumes:
       - pgdata:/var/lib/postgresql/data
       - secrets-postgres:/run/rakazo-secrets:ro
@@ -22,7 +22,7 @@ services:
     healthcheck:
       test:
         - CMD-SHELL
-        - pg_isready -U ${POSTGRES_USER:-rakazo} -d ${POSTGRES_DB:-rakazo}
+        - pg_isready -U ${POSTGRES_USER:-smith} -d ${POSTGRES_DB:-smith}
       interval: 5s
       timeout: 5s
       retries: 20
@@ -149,8 +149,8 @@ services:
     pids_limit: 256
     mem_limit: 1536m
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
-      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
+      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-smith}:${POSTGRES_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
     networks:
       - data
     depends_on:
@@ -183,7 +183,7 @@ services:
       - host.docker.internal:host-gateway
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
       REALTIME_DATABASE_URL:
       DB_POOL_MAX:
       DATA_DIR: /data
@@ -619,7 +619,7 @@ services:
       - host.docker.internal:host-gateway
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
       REALTIME_DATABASE_URL:
       DB_POOL_MAX:
       DATA_DIR: /data

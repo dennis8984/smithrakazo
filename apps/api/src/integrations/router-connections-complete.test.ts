@@ -131,7 +131,7 @@ describe("connections.complete", () => {
             actor: {
               spaceId: "workspace-1",
               userId: "user-1",
-              email: "user@rakazo.test",
+              email: "user@smith.test",
               isDeploymentOwner: true,
             },
           },
@@ -212,7 +212,7 @@ describe("connections.complete", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const handler = new RPCHandler(createRouter(deps));
@@ -299,7 +299,7 @@ describe("connections.complete", () => {
               actor: {
                 spaceId: "workspace-1",
                 userId: "user-1",
-                email: "user@rakazo.test",
+                email: "user@smith.test",
                 isDeploymentOwner: true,
               },
             },
@@ -408,7 +408,7 @@ describe("connections.complete", () => {
         {
           prefix: "/rpc",
           context: {
-            actor: { spaceId, userId, email: `${userId}@rakazo.test`, isDeploymentOwner: true },
+            actor: { spaceId, userId, email: `${userId}@smith.test`, isDeploymentOwner: true },
           },
         },
       );
@@ -541,7 +541,7 @@ describe("connections.complete", () => {
             actor: {
               spaceId: "workspace-1",
               userId: "user-1",
-              email: "user@rakazo.test",
+              email: "user@smith.test",
               isDeploymentOwner: true,
             },
             signal,
@@ -979,7 +979,7 @@ describe("connections.complete", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "user-1",
-            email: "user@rakazo.test",
+            email: "user@smith.test",
             isDeploymentOwner: true,
           },
         } as never,

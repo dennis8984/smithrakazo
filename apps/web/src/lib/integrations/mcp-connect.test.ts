@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import type { RakazoDesktopMcpOAuthCallback, RakazoDesktopOAuthCallback } from "@rakazo/contracts";
+import type { SmithDesktopMcpOAuthCallback, SmithDesktopOAuthCallback } from "@rakazo/contracts";
 import { beforeEach, expect, it, vi } from "vitest";
 import { connectMcpEndpoint, connectMcpOauth, MCP_OAUTH_CHANNEL } from "./mcp-connect";
 
@@ -31,13 +31,13 @@ beforeEach(() => {
 });
 
 it("gives the desktop shell a per-server sign-in window and completes its captured code once", async () => {
-  let captured: ((callback: RakazoDesktopMcpOAuthCallback) => void) | undefined;
+  let captured: ((callback: SmithDesktopMcpOAuthCallback) => void) | undefined;
   const unsubscribe = vi.fn();
   window.rakazoDesktop = {
     platform: "darwin",
     mcpBrowser: {
       clear: vi.fn(),
-      onOAuthCallback: (listener: (callback: RakazoDesktopMcpOAuthCallback) => void) => {
+      onOAuthCallback: (listener: (callback: SmithDesktopMcpOAuthCallback) => void) => {
         captured = listener;
         return unsubscribe;
       },
@@ -95,12 +95,12 @@ it("keeps the browser flow's session-named window and callback page", async () =
 });
 
 it("treats a refusal of this attempt as a cancel and ignores a stale one", async () => {
-  let captured: ((callback: RakazoDesktopMcpOAuthCallback) => void) | undefined;
+  let captured: ((callback: SmithDesktopMcpOAuthCallback) => void) | undefined;
   window.rakazoDesktop = {
     platform: "linux",
     mcpBrowser: {
       clear: vi.fn(),
-      onOAuthCallback: (listener: (callback: RakazoDesktopMcpOAuthCallback) => void) => {
+      onOAuthCallback: (listener: (callback: SmithDesktopMcpOAuthCallback) => void) => {
         captured = listener;
         return () => undefined;
       },
@@ -122,12 +122,12 @@ it("treats a refusal of this attempt as a cancel and ignores a stale one", async
 });
 
 it("opens a catalog server's desktop sign-in window once the server exists", async () => {
-  let captured: ((callback: RakazoDesktopMcpOAuthCallback) => void) | undefined;
+  let captured: ((callback: SmithDesktopMcpOAuthCallback) => void) | undefined;
   window.rakazoDesktop = {
     platform: "darwin",
     mcpBrowser: {
       clear: vi.fn(),
-      onOAuthCallback: (listener: (callback: RakazoDesktopMcpOAuthCallback) => void) => {
+      onOAuthCallback: (listener: (callback: SmithDesktopMcpOAuthCallback) => void) => {
         captured = listener;
         return () => undefined;
       },
@@ -175,14 +175,14 @@ it("returns a catalog server that needs no sign-in without opening a window", as
 });
 
 it("lets the desktop shell finish a sign-in the provider sent to a loopback address", async () => {
-  let loopback: ((callback: RakazoDesktopOAuthCallback) => void) | undefined;
+  let loopback: ((callback: SmithDesktopOAuthCallback) => void) | undefined;
   const releaseLoopback = vi.fn();
   const releaseCallback = vi.fn();
   window.rakazoDesktop = {
     platform: "win32",
     mcpBrowser: { clear: vi.fn(), onOAuthCallback: () => releaseCallback },
     oauth: {
-      onCallback: (listener: (callback: RakazoDesktopOAuthCallback) => void) => {
+      onCallback: (listener: (callback: SmithDesktopOAuthCallback) => void) => {
         loopback = listener;
         return releaseLoopback;
       },

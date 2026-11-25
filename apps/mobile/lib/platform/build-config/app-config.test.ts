@@ -108,7 +108,7 @@ describe("mobile app config", () => {
   });
 
   it("moves iOS bundle ID, team ID, share app group, and EAS extensions, and detaches upstream Expo defaults when no project ID is given", () => {
-    vi.stubEnv("RAKAZO_IOS_BUNDLE_ID", "com.example.rakazo");
+    vi.stubEnv("RAKAZO_IOS_BUNDLE_ID", "com.example.smith");
     vi.stubEnv("RAKAZO_APPLE_TEAM_ID", "TEAM123456");
     const upstream: ExpoConfig = {
       ...config,
@@ -133,7 +133,7 @@ describe("mobile app config", () => {
               ios: {
                 appExtensions: [
                   {
-                    targetName: "RakazoWidgets",
+                    targetName: "SmithWidgets",
                     bundleIdentifier: "com.rakazo.app.widgets",
                   },
                   {
@@ -165,7 +165,7 @@ describe("mobile app config", () => {
       slug: upstream.slug,
       android: upstream.android,
       ios: {
-        bundleIdentifier: "com.example.rakazo",
+        bundleIdentifier: "com.example.smith",
         supportsTablet: true,
         appleTeamId: "TEAM123456",
         associatedDomains: ["webcredentials:app.example.com"],
@@ -175,28 +175,28 @@ describe("mobile app config", () => {
         [
           "expo-sharing",
           {
-            ios: { enabled: true, appGroupId: "group.com.example.rakazo" },
+            ios: { enabled: true, appGroupId: "group.com.example.smith" },
             android: { enabled: true },
           },
         ],
       ],
       extra: {
         ...passkeys.extra,
-        iosAppGroup: "group.com.example.rakazo",
+        iosAppGroup: "group.com.example.smith",
         eas: {
           build: {
             experimental: {
               ios: {
                 appExtensions: [
                   {
-                    targetName: "RakazoWidgets",
-                    bundleIdentifier: "com.example.rakazo.widgets",
+                    targetName: "SmithWidgets",
+                    bundleIdentifier: "com.example.smith.widgets",
                   },
                   {
                     targetName: "expo-sharing-extension",
-                    bundleIdentifier: "com.example.rakazo.expo-sharing-extension",
+                    bundleIdentifier: "com.example.smith.expo-sharing-extension",
                     entitlements: {
-                      "com.apple.security.application-groups": ["group.com.example.rakazo"],
+                      "com.apple.security.application-groups": ["group.com.example.smith"],
                     },
                   },
                   {
@@ -265,7 +265,7 @@ describe("mobile app config", () => {
   });
 
   it("combines self-signed iOS bundle and Expo project overrides without clobbering EAS config", () => {
-    vi.stubEnv("RAKAZO_IOS_BUNDLE_ID", "com.example.rakazo");
+    vi.stubEnv("RAKAZO_IOS_BUNDLE_ID", "com.example.smith");
     vi.stubEnv("RAKAZO_EXPO_PROJECT_ID", "own-project");
     const upstream: ExpoConfig = {
       ...config,
@@ -298,12 +298,12 @@ describe("mobile app config", () => {
       slug: upstream.slug,
       android: upstream.android,
       ios: {
-        bundleIdentifier: "com.example.rakazo",
+        bundleIdentifier: "com.example.smith",
         associatedDomains: ["webcredentials:app.example.com"],
       },
       extra: {
         ...passkeys.extra,
-        iosAppGroup: "group.com.example.rakazo",
+        iosAppGroup: "group.com.example.smith",
         eas: {
           projectId: "own-project",
           build: {
@@ -312,7 +312,7 @@ describe("mobile app config", () => {
                 appExtensions: [
                   {
                     targetName: "AgentNotifications",
-                    bundleIdentifier: "com.example.rakazo.notifications",
+                    bundleIdentifier: "com.example.smith.notifications",
                   },
                 ],
               },

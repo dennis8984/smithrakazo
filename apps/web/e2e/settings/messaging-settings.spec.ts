@@ -168,7 +168,7 @@ test("messaging settings show linked chat apps, channels, connections, and team 
 
   const stamp = Date.now();
   const userName = `Messenger ${stamp}`;
-  await signup(page, `messaging-${stamp}@rakazo.test`, "password12", userName);
+  await signup(page, `messaging-${stamp}@smith.test`, "password12", userName);
   await completeOnboarding(page);
   await page.route("**/rpc/bots/list", async (route) => {
     const response = await route.fetch();
@@ -297,7 +297,7 @@ test("Slack setup has one Connect action that opens workspace authorization", as
   });
   const stamp = Date.now();
   const name = `Slack setup ${stamp}`;
-  await signup(page, `slack-setup-${stamp}@rakazo.test`, "password12", name);
+  await signup(page, `slack-setup-${stamp}@smith.test`, "password12", name);
   await completeOnboarding(page);
   await page.getByRole("button", { name: new RegExp(name) }).click();
   await page.getByRole("button", { name: "Settings", exact: true }).click();

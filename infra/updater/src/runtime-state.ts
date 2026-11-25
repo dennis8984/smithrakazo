@@ -209,7 +209,7 @@ export async function pruneUpdateImages(
       "ps",
       "-a",
       "--format",
-      '{{.Label "com.docker.compose.project"}}\t{{.Label "rakazo.managed"}}',
+      '{{.Label "com.docker.compose.project"}}\t{{.Label "smith.managed"}}',
     ],
     options,
   );

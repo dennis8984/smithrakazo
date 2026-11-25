@@ -51,15 +51,15 @@ import {
 /** Phases between `up-start` and a stop or failure, while the stack runs or restarts. */
 const ACTIVE_PHASES = new Set<DesktopLocalStackPhase>(["starting", "waiting-healthy", "ready"]);
 export const NATIVE_PORTS_FILE = ".native-ports";
-/** The database VM, its network and its volume; computers are `rakazo-<uuid>` with a bot label. */
+/** The database VM, its network and its volume; computers are `smith-<uuid>` with a bot label. */
 export const DATABASE_CONTAINER = "rakazo-postgres";
 /** The image and digest Compose runs, so both stacks run the same database. */
 export const POSTGRES_IMAGE =
   "postgres:16@sha256:e17e86066e5ef83e0952a9347f5c792b7ece00972e2aa787a6986f471b3dd3d5";
 const POSTGRES_PLATFORM = "linux/arm64";
 /** The owner and database. Fixed, so the owner can never be the runtime login whatever the `.env` names. */
-const NATIVE_OWNER = "rakazo";
-const NATIVE_DATABASE = "rakazo";
+const NATIVE_OWNER = "smith";
+const NATIVE_DATABASE = "smith";
 /** Written once a Docker move has copied everything, so a cut-short move reruns. */
 const DOCKER_IMPORTED = ".docker-imported";
 const COMPUTER_IMAGE = "ghcr.io/elie222/rakazo/computer";
@@ -375,9 +375,9 @@ class StartFailure extends Error {
 }
 
 const downloadFailed = () =>
-  t("Downloading Rakazo failed. Check the internet connection, then retry.");
+  t("Downloading Smith failed. Check the internet connection, then retry.");
 const servicesFailed = () =>
-  t("Rakazo services did not start. Check the output below, then retry.");
+  t("Smith services did not start. Check the output below, then retry.");
 
 export class NativeStackController extends StackLifecycle {
   private background: AbortController | null = null;
@@ -719,7 +719,7 @@ export class NativeStackController extends StackLifecycle {
     let existing = await this.inspectDatabase(cli, signal);
     if (existing === null && ports.database !== undefined && ports.database !== holder) {
       throw new StartFailure(
-        t("Your Rakazo data is in a different computer runtime. Quit the one running, then retry."),
+        t("Your Smith data is in a different computer runtime. Quit the one running, then retry."),
       );
     }
     if (ports.database === undefined) {

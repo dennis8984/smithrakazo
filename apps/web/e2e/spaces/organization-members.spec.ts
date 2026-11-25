@@ -20,7 +20,7 @@ test("an owner invites someone to the organization, who joins with a private Spa
   const ownerPage = await owner.newPage();
   const inviteePage = await invitee.newPage();
   const stamp = Date.now();
-  const inviteeEmail = `org-invitee-${stamp}@rakazo.test`;
+  const inviteeEmail = `org-invitee-${stamp}@smith.test`;
   const emailApi = process.env.API_URL ?? "http://127.0.0.1:3110";
   // Workers share one outbox, so read only this address's mail.
   async function lastEmailTo(to: string, subject: RegExp) {
@@ -38,7 +38,7 @@ test("an owner invites someone to the organization, who joins with a private Spa
     return (await matching()).at(-1)!;
   }
 
-  const ownerEmail = `org-owner-${stamp}@rakazo.test`;
+  const ownerEmail = `org-owner-${stamp}@smith.test`;
   await signup(ownerPage, ownerEmail, "password12", "Ada Owner");
   await completeOnboarding(ownerPage);
   // Invitations are emailed only by someone whose own address is verified.
@@ -94,7 +94,7 @@ test("an owner invites someone to the organization, who joins with a private Spa
   const acme = joined.organizations.find((organization) => organization.name === "Acme")!;
   expect(acme.role).toBe("member");
   expect(acme.defaultSpaceId).not.toBe(activeOrganizationId);
-  expect(await inviteePage.evaluate(() => localStorage.getItem("rakazo:space-id"))).toBe(
+  expect(await inviteePage.evaluate(() => localStorage.getItem("smith:space-id"))).toBe(
     acme.defaultSpaceId,
   );
 
@@ -123,7 +123,7 @@ test("an owner invites someone to the organization, who joins with a private Spa
   expect(JSON.stringify(await teamMembers.json())).toContain("Bob Invitee");
 
   // Someone from outside is invited by email, told first that they will see this Space alone.
-  const outsiderEmail = `space-guest-${stamp}@rakazo.test`;
+  const outsiderEmail = `space-guest-${stamp}@smith.test`;
   await spaceSettings.getByRole("button", { name: "Invite", exact: true }).click();
   await ownerPage.getByRole("menuitem", { name: "Invite by email" }).click();
   await spaceSettings.getByRole("textbox", { name: "Email" }).fill(outsiderEmail);

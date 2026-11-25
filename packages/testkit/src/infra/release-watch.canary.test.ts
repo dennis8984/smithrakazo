@@ -54,7 +54,7 @@ describeLive("live release-watch eval (GPT 5.6 Luna + GitHub emulator)", () => {
       method: "POST",
       headers: { "content-type": "application/json", origin: "http://127.0.0.1:5173" },
       body: JSON.stringify({
-        email: `release-watch-${stamp}@rakazo.test`,
+        email: `release-watch-${stamp}@smith.test`,
         password: "password12",
         name: "Release Watch",
       }),
@@ -118,7 +118,7 @@ describeLive("live release-watch eval (GPT 5.6 Luna + GitHub emulator)", () => {
     );
     expect(routines.length).toBeGreaterThan(0);
     const routine =
-      routines.find((row) => /rakazo|release/i.test(`${row.name}\n${row.prompt}`)) ?? routines[0]!;
+      routines.find((row) => /smith|release/i.test(`${row.name}\n${row.prompt}`)) ?? routines[0]!;
 
     const dueAt = new Date(Date.now() - 1_000);
     await handles.prisma.routine.update({

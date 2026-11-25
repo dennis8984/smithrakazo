@@ -7,7 +7,7 @@ import { rpc } from "../api/api";
 import { errorText } from "../api/user-error";
 import { deviceTimeZone } from "../routines/routine";
 
-const keptKey = (userId: string) => `rakazo.timezone-kept.${userId}`;
+const keptKey = (userId: string) => `smith.timezone-kept.${userId}`;
 
 /** Each account's Keep on this device, once read this launch. */
 const kept = new Map<string, KeptTimezone | null>();

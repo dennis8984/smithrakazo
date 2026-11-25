@@ -112,7 +112,7 @@ describe("stop stack left behind", () => {
     stopStackLeftBehind({
       previousMode: "existing",
       mode: "existing",
-      serverUrl: "https://rakazo.example",
+      serverUrl: "https://smith.example",
       stack: running,
       rebuildMenu,
     });
@@ -126,7 +126,7 @@ describe("stop stack left behind", () => {
     stopStackLeftBehind({
       previousMode: "new",
       mode: "existing",
-      serverUrl: "https://rakazo.example",
+      serverUrl: "https://smith.example",
       stack: unflagged,
       rebuildMenu: vi.fn(),
     });
@@ -150,7 +150,7 @@ describe("stop stack left behind", () => {
     stopStackLeftBehind({
       previousMode: "existing",
       mode: "existing",
-      serverUrl: "https://rakazo.example",
+      serverUrl: "https://smith.example",
       stack: pulling,
       rebuildMenu: vi.fn(),
     });
@@ -164,7 +164,7 @@ describe("stop stack left behind", () => {
     stopStackLeftBehind({
       previousMode: "existing",
       mode: "existing",
-      serverUrl: "https://rakazo.example",
+      serverUrl: "https://smith.example",
       stack: missing,
       rebuildMenu: vi.fn(),
     });
@@ -179,7 +179,7 @@ describe("stop stack left behind", () => {
     stopStackLeftBehind({
       previousMode: "existing",
       mode: "existing",
-      serverUrl: "https://rakazo.example",
+      serverUrl: "https://smith.example",
       stack: idle,
       rebuildMenu: vi.fn(),
     });
@@ -197,7 +197,7 @@ describe("stop stack left behind", () => {
       stopStackLeftBehind({
         previousMode: "existing",
         mode: "existing",
-        serverUrl: "https://rakazo.example",
+        serverUrl: "https://smith.example",
         stack: rejecting,
         rebuildMenu,
       });

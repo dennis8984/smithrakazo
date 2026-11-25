@@ -2,7 +2,7 @@ import { bestEffort } from "@rakazo/logging/best-effort";
 import * as SecureStore from "expo-secure-store";
 import { rpc } from "../api/api";
 
-export const DEVICE_VOICE_KEY = "rakazo.device-voice";
+export const DEVICE_VOICE_KEY = "smith.device-voice";
 
 // Counts explicit choices, so a default worked out meanwhile never overwrites one.
 let choices = 0;

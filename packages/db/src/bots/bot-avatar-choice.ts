@@ -94,7 +94,7 @@ export function chooseBotAvatar(
     id: previewId,
   }: { random?: Random; now?: number; family?: number; avatarSet?: BotAvatarSet; id?: string } = {},
 ): { id: string; color: string } {
-  if (avatarSet === "rakazo") {
+  if (avatarSet === "smith") {
     // The logo uses no organic family. Keep automatic ids non-heart for a later
     // Original-set switch, without scanning the roster or balancing unused shapes.
     if (previewId) return { id: previewId, color: color ?? seededLogoAvatarColor(previewId) };

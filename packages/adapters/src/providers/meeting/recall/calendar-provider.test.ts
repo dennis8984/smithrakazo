@@ -6,7 +6,7 @@ const now = new Date("2026-11-18T10:00:00Z");
 const signal = new AbortController().signal;
 
 async function connect(emulator: RecallCalendarEmulator, connectionId: string) {
-  const redirectUri = "https://rakazo.example.test/api/meetings/calendar/oauth/callback";
+  const redirectUri = "https://smith.example.test/api/meetings/calendar/oauth/callback";
   const { provider } = emulator;
   const authorizationUrl = new URL(
     provider.authorizationUrl({
@@ -44,7 +44,7 @@ function schedule(emulator: RecallCalendarEmulator, event: MeetingCalendarEvent,
     event.startsAt,
     {
       sessionId: "fixture-session",
-      botName: "Atlas · Rakazo",
+      botName: "Atlas · Smith",
       meetingUrl: event.meetingUrl,
       platform,
       expiresAt: event.endsAt,

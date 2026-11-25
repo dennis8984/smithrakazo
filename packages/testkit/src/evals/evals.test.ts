@@ -79,7 +79,7 @@ const judgeDown: EvalJudge = async () => {
 };
 
 describe("eval web", () => {
-  it("serves this checkout's docs at the docs URLs the Rakazo skill links", async () => {
+  it("serves this checkout's docs at the docs URLs the Smith skill links", async () => {
     const web = evalWeb();
     const page = await web.fetch(
       { url: "https://rakazo.com/docs/account.md" },
@@ -472,7 +472,7 @@ const PRODUCT_EVIDENCE: Record<string, (e: Evidence, reviewed: Record<string, st
     });
     e.text = reply!;
   },
-  "what-is-rakazo": conversation,
+  "what-is-smith": conversation,
 };
 /** Every reviewed example that is a product case's own judge input, with the evidence behind it. */
 const PRODUCT_REVIEWED = PRODUCT_JUDGE_CALIBRATION.flatMap((anchor) =>

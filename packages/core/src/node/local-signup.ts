@@ -8,5 +8,5 @@ export const LOCAL_SIGNUP_COOKIE = "rakazo_local_signup";
  * server can only create accounts here, never change the host settings the token itself unlocks.
  */
 export function localSignupKey(stackToken: string): string {
-  return createHmac("sha256", stackToken).update("rakazo:local-signup").digest("hex");
+  return createHmac("sha256", stackToken).update("smith:local-signup").digest("hex");
 }

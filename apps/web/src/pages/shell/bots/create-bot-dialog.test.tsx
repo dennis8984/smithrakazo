@@ -96,9 +96,9 @@ describe("CreateBotDialog", () => {
     expect(onCreate.mock.lastCall?.[0]).not.toHaveProperty("id");
   });
 
-  it("sends the Rakazo preview id without an organic family", async () => {
+  it("sends the Smith preview id without an organic family", async () => {
     const onCreate = vi.fn(async (_input: CreateBotDialogInput) => undefined);
-    await render(onCreate, "rakazo");
+    await render(onCreate, "smith");
     await typeName("Scout");
     await click(button("Create"));
     const input = onCreate.mock.lastCall![0];
@@ -109,11 +109,11 @@ describe("CreateBotDialog", () => {
     expect(input.color?.toUpperCase()).toBe(preview.getAttribute("data-color")?.toUpperCase());
   });
 
-  it("preserves an explicitly chosen Rakazo colour through a failed create and retry", async () => {
+  it("preserves an explicitly chosen Smith colour through a failed create and retry", async () => {
     const onCreate = vi
       .fn(async (_input: CreateBotDialogInput) => undefined)
       .mockRejectedValueOnce(new Error("Try again"));
-    await render(onCreate, "rakazo");
+    await render(onCreate, "smith");
     await click(button("Color #00C972"));
     await typeName("Scout");
     await click(button("Create"));
@@ -175,10 +175,10 @@ it("retains the preview identity and colour through rerenders and a retry", asyn
   const onCreate = vi
     .fn(async (_input: CreateBotDialogInput) => undefined)
     .mockRejectedValueOnce(new Error("Try again"));
-  await render(onCreate, "rakazo");
+  await render(onCreate, "smith");
   const colour = document.querySelector(".rakazo-logo-avatar")!.getAttribute("data-color");
   await typeName("First name");
-  await render(onCreate, "rakazo");
+  await render(onCreate, "smith");
   expect(document.querySelector(".rakazo-logo-avatar")!.getAttribute("data-color")).toBe(colour);
   await click(button("Create"));
   const first = onCreate.mock.lastCall![0];

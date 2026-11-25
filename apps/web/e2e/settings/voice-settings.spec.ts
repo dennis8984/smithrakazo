@@ -12,7 +12,7 @@ import {
 test("Voice offers subscription sign-in and reveals the API-key field on request", async ({
   page,
 }, testInfo) => {
-  await signup(page, `voice-sign-in-${Date.now()}@rakazo.test`, "password12", "Voice Preview");
+  await signup(page, `voice-sign-in-${Date.now()}@smith.test`, "password12", "Voice Preview");
   await completeOnboarding(page);
   await openUserSettings(page, "voice");
   const voice = page.getByTestId("voice-settings");
@@ -32,7 +32,7 @@ test("a self-hosted voice connection offers a separate transcription server", as
 }, testInfo) => {
   // The screenshot never submits the form or contacts a speech server.
   const stamp = Date.now();
-  await signup(page, `voice-stt-${stamp}@rakazo.test`, "password12", "Voice Transcription Preview");
+  await signup(page, `voice-stt-${stamp}@smith.test`, "password12", "Voice Transcription Preview");
   await completeOnboarding(page);
   await openUserSettings(page, "voice");
   const voice = page.getByTestId("voice-settings");
@@ -51,7 +51,7 @@ test("a self-hosted voice connection offers a separate transcription server", as
 test("automatic call language is opt-in and persists on this device", async ({
   page,
 }, testInfo) => {
-  await signup(page, `voice-language-${Date.now()}@rakazo.test`, "password12", "Voice Preview");
+  await signup(page, `voice-language-${Date.now()}@smith.test`, "password12", "Voice Preview");
   await completeOnboarding(page);
   await openUserSettings(page, "voice");
   const setting = page.getByRole("switch", { name: "Detect call language automatically" });
@@ -70,7 +70,7 @@ test("read-aloud asks before sharing voice data and cancel sends no speech", asy
   const stamp = Date.now();
   await signup(
     page,
-    `voice-consent-${stamp}@rakazo.test`,
+    `voice-consent-${stamp}@smith.test`,
     "password12",
     "Voice Disclosure Preview",
   );

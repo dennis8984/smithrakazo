@@ -5,12 +5,12 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import type { ElectronApplication } from "@playwright/test";
 import { _electron as electron, expect, test } from "@playwright/test";
-import type { RakazoDesktop } from "@rakazo/contracts";
+import type { SmithDesktop } from "@rakazo/contracts";
 import { shownWindow } from "./shown-window.js";
 
 const fixture = `<!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><title>Rakazo desktop smoke</title></head>
+  <head><meta charset="utf-8"><title>Smith desktop smoke</title></head>
   <body><main>Desktop fixture ready</main></body>
 </html>`;
 
@@ -69,10 +69,10 @@ test("launches with a narrow preload bridge and an isolated renderer", async () 
 
   const page = await shownWindow(app);
   await expect(page.getByText("Desktop fixture ready")).toBeVisible();
-  await expect(page).toHaveTitle("Rakazo desktop smoke");
+  await expect(page).toHaveTitle("Smith desktop smoke");
 
   const renderer = await page.evaluate(async () => {
-    const desktop = (window as typeof window & { rakazoDesktop?: RakazoDesktop }).rakazoDesktop;
+    const desktop = (window as typeof window & { rakazoDesktop?: SmithDesktop }).rakazoDesktop;
 
     return {
       computerKeys: desktop?.computer ? Object.keys(desktop.computer).sort() : [],

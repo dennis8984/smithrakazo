@@ -527,7 +527,7 @@ it("says a ghost bot is waiting on you without marking a read chat unread", () =
     name: "Helper",
     preview: "Hi",
     status: "waiting_input",
-    avatarSet: "rakazo",
+    avatarSet: "smith",
     color: "#8B5CF6",
   } as MobileBot;
   render(

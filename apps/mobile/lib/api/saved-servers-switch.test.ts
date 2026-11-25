@@ -22,7 +22,7 @@ vi.mock("./network-cache.js", () => ({ clearNetworkCache: vi.fn() }));
 const ONE = "https://one.example.test";
 const TWO = "https://two.example.test";
 const ACCESS = { "CF-Access-Client-Id": "id.access", "CF-Access-Client-Secret": "secret" };
-const SAVED_KEY = "rakazo.saved_servers";
+const SAVED_KEY = "smith.saved_servers";
 
 let store: Map<string, string>;
 
@@ -66,8 +66,8 @@ describe("saved servers across a server switch", () => {
   });
 
   it("keeps a server set up before the list existed when it is left for the default", async () => {
-    store.set("rakazo.api_base", ONE);
-    store.set("rakazo.server_headers", JSON.stringify({ apiBase: ONE, headers: ACCESS }));
+    store.set("smith.api_base", ONE);
+    store.set("smith.server_headers", JSON.stringify({ apiBase: ONE, headers: ACCESS }));
     await loadApiBase();
     expect(currentApiBase()).toBe(ONE);
     expect(savedServers()).toEqual([]);
@@ -91,7 +91,7 @@ describe("saved servers across a server switch", () => {
 
   it("lists nothing when the switch fails", async () => {
     vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
-      if (key === "rakazo.api_base") throw new Error("device locked");
+      if (key === "smith.api_base") throw new Error("device locked");
       store.set(key, value);
     });
     await expect(saveApiBase(ONE, ACCESS)).resolves.toEqual({
@@ -119,7 +119,7 @@ describe("saved servers across a server switch", () => {
     await saveApiBase(ONE, ACCESS);
     await saveApiBase(TWO, {});
     await loadSavedServers();
-    store.set("rakazo.api_base", TWO);
+    store.set("smith.api_base", TWO);
     await loadApiBase();
     expect(listed()).toEqual([TWO, ONE]);
   });
@@ -127,7 +127,7 @@ describe("saved servers across a server switch", () => {
   it("leaving a server whose headers did not load keeps the headers it was saved with", async () => {
     await saveApiBase(ONE, ACCESS);
     // The headers value is damaged at launch, so the app holds none for the server it is on.
-    store.set("rakazo.server_headers", "damaged");
+    store.set("smith.server_headers", "damaged");
     await loadApiBase();
     expect(currentApiBase()).toBe(ONE);
     await resetApiBase();

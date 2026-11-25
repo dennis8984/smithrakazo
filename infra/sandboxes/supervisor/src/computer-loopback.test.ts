@@ -104,7 +104,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "other", "rakazo.spaceId": "other" },
+          Labels: { "smith.managed": "true", "smith.botId": "other", "smith.spaceId": "other" },
         },
       }),
       stop: vi.fn(),
@@ -132,7 +132,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: running },
       })),
@@ -172,7 +172,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: true },
       })),
@@ -200,7 +200,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: true },
       })),
@@ -228,7 +228,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: true },
       })),
@@ -262,7 +262,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: running },
       })),
@@ -293,7 +293,7 @@ describe("computer loopback provision lifecycle", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: true },
       })),
@@ -339,7 +339,7 @@ describe("computer loopback provision lifecycle", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+        Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
       },
       HostConfig: {
         NetworkMode: computerNetworkNameFor("bot"),
@@ -401,7 +401,7 @@ describe("computer loopback provision lifecycle", () => {
       expect(options.HostConfig.PortBindings["7070/tcp"]).toEqual(
         enabled ? [{ HostIp: "127.0.0.1", HostPort: "0" }] : undefined,
       );
-      expect(options.HostConfig.Binds).toEqual([`${homePath}:/home/rakazo`]);
+      expect(options.HostConfig.Binds).toEqual([`${homePath}:/home/smith`]);
       expect(options.Env).toContainEqual(
         expect.stringMatching(/^RAKAZO_COMPUTER_CONTROL_TOKEN=.+/),
       );
@@ -473,7 +473,7 @@ describe("provisioning network rollback", () => {
                 expect.objectContaining({
                   Type: "volume",
                   Source: "example_appdata",
-                  Target: "/home/rakazo",
+                  Target: "/home/smith",
                   VolumeOptions: { NoCopy: true, Subpath: "homes/bot" },
                 }),
               ],
@@ -533,7 +533,7 @@ describe("provisioning network rollback", () => {
       inspect: vi.fn().mockResolvedValue({
         Image: "old-image",
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         HostConfig: { PortBindings: {} },
         State: { Running: true },
@@ -637,7 +637,7 @@ describe("restricted egress rekeying", () => {
       Image: "test-image-id",
       Config: {
         User: hostComputerUser(),
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+        Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
       },
       HostConfig: { NetworkMode: botNet, PortBindings: {} },
       State: { Running: false },
@@ -811,7 +811,7 @@ describe("restricted egress rekeying", () => {
     const kill = vi.fn().mockResolvedValue(undefined);
     Object.assign(existing, { stop, kill });
     const peer = {
-      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "rakazo.botId": "other" } } }),
+      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "smith.botId": "other" } } }),
       stop: vi.fn().mockResolvedValue(undefined),
       kill: vi.fn().mockResolvedValue(undefined),
     };
@@ -859,7 +859,7 @@ describe("restricted egress rekeying", () => {
     const kill = vi.fn().mockResolvedValue(undefined);
     Object.assign(existing, { stop, kill });
     const peer = {
-      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "rakazo.botId": "other" } } }),
+      inspect: vi.fn().mockResolvedValue({ Config: { Labels: { "smith.botId": "other" } } }),
       stop: vi.fn().mockResolvedValue(undefined),
       kill: vi.fn().mockResolvedValue(undefined),
     };
@@ -930,13 +930,13 @@ describe("space computer limit enforcement", () => {
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
         // For findBotContainer check
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("smith.botId="))) {
           return [];
         }
         // For countSpaceContainers
         return [
-          { Id: "c1", Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } },
-          { Id: "c2", Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } },
+          { Id: "c1", Labels: { "smith.managed": "true", "smith.spaceId": "space-1" } },
+          { Id: "c2", Labels: { "smith.managed": "true", "smith.spaceId": "space-1" } },
         ];
       },
     );
@@ -956,10 +956,10 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("smith.botId="))) {
           return [];
         }
-        return [{ Id: "c1", Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } }];
+        return [{ Id: "c1", Labels: { "smith.managed": "true", "smith.spaceId": "space-1" } }];
       },
     );
 
@@ -982,9 +982,9 @@ describe("space computer limit enforcement", () => {
         Config: {
           User: hostComputerUser(process.getuid?.(), process.getgid?.()),
           Labels: {
-            "rakazo.managed": "true",
-            "rakazo.botId": "bot-existing",
-            "rakazo.spaceId": "space-1",
+            "smith.managed": "true",
+            "smith.botId": "bot-existing",
+            "smith.spaceId": "space-1",
           },
         },
         State: { Running: true },
@@ -1002,20 +1002,20 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l === "rakazo.botId=bot-existing")) {
+        if (labels.some((l: string) => l === "smith.botId=bot-existing")) {
           return [
             {
               Id: existing.id,
               Labels: {
-                "rakazo.managed": "true",
-                "rakazo.botId": "bot-existing",
-                "rakazo.spaceId": "space-1",
+                "smith.managed": "true",
+                "smith.botId": "bot-existing",
+                "smith.spaceId": "space-1",
               },
             },
           ];
         }
         return [
-          { Id: existing.id, Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" } },
+          { Id: existing.id, Labels: { "smith.managed": "true", "smith.spaceId": "space-1" } },
         ];
       },
     );
@@ -1043,9 +1043,9 @@ describe("space computer limit enforcement", () => {
         Config: {
           User: hostComputerUser(process.getuid?.(), process.getgid?.()),
           Labels: {
-            "rakazo.managed": "true",
-            "rakazo.botId": "bot-detached",
-            "rakazo.spaceId": "space-1",
+            "smith.managed": "true",
+            "smith.botId": "bot-detached",
+            "smith.spaceId": "space-1",
           },
         },
         State: { Running: true },
@@ -1064,14 +1064,14 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l === "rakazo.botId=bot-detached")) {
+        if (labels.some((l: string) => l === "smith.botId=bot-detached")) {
           return [
             {
               Id: existing.id,
               Labels: {
-                "rakazo.managed": "true",
-                "rakazo.botId": "bot-detached",
-                "rakazo.spaceId": "space-1",
+                "smith.managed": "true",
+                "smith.botId": "bot-detached",
+                "smith.spaceId": "space-1",
               },
             },
           ];
@@ -1097,15 +1097,15 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("smith.botId="))) {
           return [];
         }
-        // Legacy managed computer: COMPUTER_IMAGE + workspaceId, no rakazo.managed.
+        // Legacy managed computer: COMPUTER_IMAGE + workspaceId, no smith.managed.
         return [
           {
             Id: "legacy",
             Image: COMPUTER_IMAGE,
-            Labels: { "rakazo.workspaceId": "space-1", "rakazo.botId": "legacy-bot" },
+            Labels: { "smith.workspaceId": "space-1", "smith.botId": "legacy-bot" },
           },
         ];
       },
@@ -1127,12 +1127,12 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("smith.botId="))) {
           return [];
         }
         return Array.from({ length: created }, (_, index) => ({
           Id: `c${index}`,
-          Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" },
+          Labels: { "smith.managed": "true", "smith.spaceId": "space-1" },
         }));
       },
     );
@@ -1170,9 +1170,9 @@ describe("space computer limit enforcement", () => {
         Config: {
           User: hostComputerUser(process.getuid?.(), process.getgid?.()),
           Labels: {
-            "rakazo.managed": "true",
-            "rakazo.botId": "bot-existing",
-            "rakazo.spaceId": "space-1",
+            "smith.managed": "true",
+            "smith.botId": "bot-existing",
+            "smith.spaceId": "space-1",
           },
         },
         State: { Running: true },
@@ -1195,26 +1195,26 @@ describe("space computer limit enforcement", () => {
     mocks.docker.listContainers.mockImplementation(
       async (opts?: { filters?: { label?: string[] } }) => {
         const labels = opts?.filters?.label ?? [];
-        if (labels.some((l: string) => l === "rakazo.botId=bot-existing")) {
+        if (labels.some((l: string) => l === "smith.botId=bot-existing")) {
           return present.has(existing.id)
             ? [
                 {
                   Id: existing.id,
                   Labels: {
-                    "rakazo.managed": "true",
-                    "rakazo.botId": "bot-existing",
-                    "rakazo.spaceId": "space-1",
+                    "smith.managed": "true",
+                    "smith.botId": "bot-existing",
+                    "smith.spaceId": "space-1",
                   },
                 },
               ]
             : [];
         }
-        if (labels.some((l: string) => l.startsWith("rakazo.botId="))) {
+        if (labels.some((l: string) => l.startsWith("smith.botId="))) {
           return [];
         }
         return [...present].map((Id) => ({
           Id,
-          Labels: { "rakazo.managed": "true", "rakazo.spaceId": "space-1" },
+          Labels: { "smith.managed": "true", "smith.spaceId": "space-1" },
         }));
       },
     );
@@ -1254,7 +1254,7 @@ describe("screen release status", () => {
     return {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1292,7 +1292,7 @@ describe("screen release status", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "other", "rakazo.spaceId": "other" },
+          Labels: { "smith.managed": "true", "smith.botId": "other", "smith.spaceId": "other" },
         },
       }),
       exec: vi.fn(),
@@ -1536,7 +1536,7 @@ describe("computer deletion", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": botId, "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": botId, "smith.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -1628,7 +1628,7 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn(async () => ({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: running, StartedAt: boot },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
@@ -1702,7 +1702,7 @@ describe("screen registry across run boundaries", () => {
       const container = {
         inspect: vi.fn(async () => ({
           Config: {
-            Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+            Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
           },
           HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
           State: { Running: true, StartedAt: `boot-${boot}` },
@@ -1783,7 +1783,7 @@ describe("screen registry across run boundaries", () => {
       Image: "old-image",
       Config: {
         User: hostComputerUser(),
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+        Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
       },
       HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
       State: { Running: true, StartedAt: "boot-1" },
@@ -1874,9 +1874,9 @@ describe("screen registry across run boundaries", () => {
           return {
             Config: {
               Labels: {
-                "rakazo.managed": "true",
-                "rakazo.botId": "bot",
-                "rakazo.spaceId": "space",
+                "smith.managed": "true",
+                "smith.botId": "bot",
+                "smith.spaceId": "space",
               },
             },
             HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
@@ -1960,7 +1960,7 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -2009,7 +2009,7 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -2106,7 +2106,7 @@ describe("screen registry across run boundaries", () => {
     const container = {
       inspect: vi.fn().mockResolvedValue({
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         HostConfig: { NetworkMode: computerNetworkNameFor("bot") },
         State: { Running: true },
@@ -2193,7 +2193,7 @@ describe("computer network reclaim", () => {
       inspect: vi.fn(async () => ({
         Id: "computer-full-id",
         Config: {
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         State: { Running: running },
         // Docker keeps a stopped container's endpoint on its network.
@@ -2465,10 +2465,10 @@ describe("computer network reclaim", () => {
         [computerNetworkNameFor("renamed")]: botNetwork(),
       };
       mocks.docker.listNetworks.mockResolvedValue([
-        { Name: computerNetworkNameFor("orphan"), Labels: { "rakazo.botId": "orphan" } },
-        { Name: computerNetworkNameFor("stopped"), Labels: { "rakazo.botId": "stopped" } },
+        { Name: computerNetworkNameFor("orphan"), Labels: { "smith.botId": "orphan" } },
+        { Name: computerNetworkNameFor("stopped"), Labels: { "smith.botId": "stopped" } },
         // The bot label must name the network, since it picks the lock.
-        { Name: computerNetworkNameFor("renamed"), Labels: { "rakazo.botId": "other" } },
+        { Name: computerNetworkNameFor("renamed"), Labels: { "smith.botId": "other" } },
       ]);
       mocks.docker.getNetwork.mockImplementation((name: string) => networks[name]);
       mocks.docker.listContainers.mockImplementation(
@@ -2504,7 +2504,7 @@ describe("computer network reclaim", () => {
       const network = botNetwork();
       mocks.docker.getNetwork.mockReturnValue(network);
       mocks.docker.listNetworks.mockResolvedValue([
-        { Name: botNet, Labels: { "rakazo.botId": "bot" } },
+        { Name: botNet, Labels: { "smith.botId": "bot" } },
       ]);
       mocks.docker.listContainers.mockImplementation(
         async ({ filters }: { filters: { network?: string[] } }) =>
@@ -2533,7 +2533,7 @@ describe("computer network reclaim", () => {
         Image: "image",
         Config: {
           User: hostComputerUser(),
-          Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+          Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
         },
         HostConfig: { NetworkMode: botNet, PortBindings: {} },
         State: { Running: false },
@@ -2596,7 +2596,7 @@ describe("computer network reclaim", () => {
             Name: botNet,
             Labels: {
               "rakazo.computerOwner": computerNetworkOwnerFor(process.env.DATA_DIR!, undefined),
-              "rakazo.botId": "bot",
+              "smith.botId": "bot",
             },
             ...(egress === "restricted"
               ? { Options: { "com.docker.network.bridge.name": computerBridgeNameFor("bot") } }
@@ -2664,7 +2664,7 @@ describe("computer network reclaim", () => {
           Image: "image",
           Config: {
             User: hostComputerUser(),
-            Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+            Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
           },
           HostConfig: { NetworkMode: botNet, PortBindings: {} },
           State: { Running: false },
@@ -2696,7 +2696,7 @@ describe("computer network reclaim", () => {
           Name: botNet,
           Labels: {
             "rakazo.computerOwner": computerNetworkOwnerFor(process.env.DATA_DIR!, undefined),
-            "rakazo.botId": "bot",
+            "smith.botId": "bot",
           },
         },
       ]);
@@ -2730,9 +2730,9 @@ describe("computer network reclaim", () => {
             Config: {
               User: hostComputerUser(),
               Labels: {
-                "rakazo.managed": "true",
-                "rakazo.botId": "bot",
-                "rakazo.spaceId": "space",
+                "smith.managed": "true",
+                "smith.botId": "bot",
+                "smith.spaceId": "space",
               },
             },
             HostConfig: { NetworkMode: botNet, PortBindings: {} },

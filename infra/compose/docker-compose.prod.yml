@@ -15,7 +15,7 @@ x-logging: &logging
 x-app-environment: &app-environment # Runtime
   NODE_ENV: production
   # The app's own login, subject to row-level security (docs/self-host-configuration.md#database-roles).
-  DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+  DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
   REALTIME_DATABASE_URL:
   DB_POOL_MAX:
   DATA_DIR: /data
@@ -389,9 +389,9 @@ services:
     pids_limit: 200
     mem_limit: ${POSTGRES_MEMORY_LIMIT:-2560m}
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-rakazo}
+      POSTGRES_USER: ${POSTGRES_USER:-smith}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-      POSTGRES_DB: ${POSTGRES_DB:-rakazo}
+      POSTGRES_DB: ${POSTGRES_DB:-smith}
     volumes:
       # Postgres 18 keeps each major version's cluster in /var/lib/postgresql/<major>/docker.
       - postgres:/var/lib/postgresql
@@ -402,7 +402,7 @@ services:
     networks:
       - data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rakazo} -d ${POSTGRES_DB:-rakazo}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-smith} -d ${POSTGRES_DB:-smith}"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -488,8 +488,8 @@ services:
     pids_limit: 256
     mem_limit: 1536m
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
-      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
+      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-smith}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
     networks:
       - data
     depends_on:
@@ -783,8 +783,8 @@ services:
       # declared here. The sidecar must target the project the operator actually started.
       COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-rakazo-prod}
       # Must equal the host path it is mounted from, or every relative bind mount in this file would
-      # resolve somewhere else. /srv/rakazo is the supported Linux production layout.
-      RAKAZO_DEPLOY_DIR: ${RAKAZO_DEPLOY_DIR:-/srv/rakazo}
+      # resolve somewhere else. /srv/smith is the supported Linux production layout.
+      RAKAZO_DEPLOY_DIR: ${RAKAZO_DEPLOY_DIR:-/srv/smith}
       # A deployment that layers an overlay has to be reconciled with the same file list and the
       # same services the operator runs by hand, so these are read from the environment rather
       # than pinned to the base stack. Defaults reproduce the previous behaviour exactly.
@@ -802,7 +802,7 @@ services:
       SENTRY_RELEASE: ${SENTRY_RELEASE:-}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${RAKAZO_DEPLOY_DIR:-/srv/rakazo}:${RAKAZO_DEPLOY_DIR:-/srv/rakazo}
+      - ${RAKAZO_DEPLOY_DIR:-/srv/smith}:${RAKAZO_DEPLOY_DIR:-/srv/smith}
     networks:
       - control
     healthcheck:

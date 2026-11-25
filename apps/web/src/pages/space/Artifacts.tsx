@@ -69,7 +69,7 @@ import { useRedrawAtMidnight } from "../shell/chat/use-redraw-at-midnight";
 type ViewMode = "grid" | "list";
 type DateFilter = "all" | "today" | "week" | "month";
 const viewModePreference = createStoredPreference<ViewMode>({
-  key: "rakazo:artifacts-view-mode",
+  key: "smith:artifacts-view-mode",
   parse: (raw) => (raw === "list" ? "list" : "grid"),
   serialize: (mode) => mode,
 });

@@ -4,7 +4,7 @@ import { captureScreenshot, completeOnboarding, openBotPanel, signup } from "../
 test("the full-window computer saves a screenshot of the bot's screen", async ({
   page,
 }, testInfo) => {
-  await signup(page, `screenshot-${Date.now()}@rakazo.test`, "password12", "Shots");
+  await signup(page, `screenshot-${Date.now()}@smith.test`, "password12", "Shots");
   await completeOnboarding(page);
 
   await openBotPanel(page);

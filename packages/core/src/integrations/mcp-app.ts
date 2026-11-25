@@ -24,7 +24,7 @@ const SOURCE = /^(https|wss):\/\/(\*\.)?([^/:]+)(?::(\d{1,5}))?\/?$/;
  * The declared origins an app may reach, as CSP sources. Only public names over https (or wss
  * for connections): no IP literals, local or internal names, single-label hosts, bare wildcards,
  * or any host in `excludeHosts` (the app's own), so a declaration cannot point the view at the
- * person's network or at Rakazo itself.
+ * person's network or at Smith itself.
  */
 export function mcpAppDomains(
   values: unknown,
@@ -241,7 +241,7 @@ export function createMcpAppHost(options: McpAppHostOptions) {
       case "ui/initialize":
         return reply(id, {
           protocolVersion: MCP_APP_PROTOCOL_VERSION,
-          hostInfo: { name: "rakazo", version: "1.0.0" },
+          hostInfo: { name: "smith", version: "1.0.0" },
           hostCapabilities: {
             openLinks: {},
             message: { text: {} },

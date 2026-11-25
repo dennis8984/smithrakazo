@@ -35,7 +35,7 @@ describe("MCP server deletion", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const handler = new RPCHandler(createRouter(deps));
@@ -178,7 +178,7 @@ describe("MCP prepared credential updates", () => {
     const actor = {
       spaceId: "space",
       userId: "user",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const client = createRouterClient(createRouter(deps), { context: { actor } as never });
@@ -259,7 +259,7 @@ describe("MCP pre-registered OAuth client", () => {
         }),
       },
       user: {
-        findUnique: vi.fn(async () => ({ email: "owner@rakazo.test", emailVerified: true })),
+        findUnique: vi.fn(async () => ({ email: "owner@smith.test", emailVerified: true })),
       },
       deploymentSettings: { findUnique: vi.fn().mockResolvedValue({ ownerUserId: "owner-1" }) },
       $executeRaw: vi.fn(async () => 1),
@@ -286,14 +286,14 @@ describe("MCP pre-registered OAuth client", () => {
         mcpAllowPrivateEndpoint: isDeploymentOwner,
         mcpStdioEnabled: true,
         mcpStdioAllowedCommands: allowedCommands,
-        adminEmails: ["owner@rakazo.test"],
+        adminEmails: ["owner@smith.test"],
       },
       dataDir: "/tmp/rakazo-router-test",
     } as unknown as RouterDeps;
     const actor = {
       spaceId: "workspace-1",
       userId: isDeploymentOwner ? "owner-1" : "member-1",
-      email: "owner@rakazo.test",
+      email: "owner@smith.test",
       isDeploymentOwner,
     } satisfies Actor;
     return {
@@ -1000,7 +1000,7 @@ describe("MCP loopback endpoints", () => {
     return {
       spaceId: "workspace-1",
       userId: isDeploymentOwner ? "owner-1" : "member-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner,
     };
   }

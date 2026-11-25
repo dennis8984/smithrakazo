@@ -68,7 +68,7 @@ async function selectAndRelease(
 
 test("selecting a text span quotes it into a reply", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `quote-${stamp}@rakazo.test`, "password12", "Quote Tester");
+  await signup(page, `quote-${stamp}@smith.test`, "password12", "Quote Tester");
   await completeOnboarding(page);
 
   const transcript = page.getByTestId("transcript");
@@ -186,7 +186,7 @@ test("selecting a text span quotes it into a reply", async ({ page }, testInfo) 
 
 test("an armed reply survives the parent paging out of the transcript", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `quote-evict-${stamp}@rakazo.test`, "password12", "Quote Tester");
+  await signup(page, `quote-evict-${stamp}@smith.test`, "password12", "Quote Tester");
   await completeOnboarding(page);
 
   const transcript = page.getByTestId("transcript");
@@ -266,7 +266,7 @@ test("an armed reply survives the parent paging out of the transcript", async ({
 
 test("triple-clicking the last paragraph of the latest reply quotes it", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `quote-triple-${stamp}@rakazo.test`, "password12", "Quote Tester");
+  await signup(page, `quote-triple-${stamp}@smith.test`, "password12", "Quote Tester");
   await completeOnboarding(page);
 
   const composer = page.getByRole("combobox", { name: /Message/ });
@@ -289,7 +289,7 @@ test("triple-clicking the last paragraph of the latest reply quotes it", async (
 
 test("quoting a second message retargets the armed reply", async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `quote-switch-${stamp}@rakazo.test`, "password12", "Quote Tester");
+  await signup(page, `quote-switch-${stamp}@smith.test`, "password12", "Quote Tester");
   await completeOnboarding(page);
 
   const transcript = page.getByTestId("transcript");

@@ -41,27 +41,27 @@ describe("pickLeastUsed", () => {
 });
 
 describe("chooseBotAvatar", () => {
-  it("derives a Rakazo colour from the chosen persistent id, independently of roster order", () => {
+  it("derives a Smith colour from the chosen persistent id, independently of roster order", () => {
     for (let seed = 1; seed <= 30; seed++) {
       const chosen = chooseBotAvatar([], undefined, {
-        avatarSet: "rakazo",
+        avatarSet: "smith",
         random: seeded(seed),
         now: 0,
       });
       expect(chosen.color).toBe(seededLogoAvatarColor(chosen.id));
       expect(
-        chooseBotAvatar([], undefined, { avatarSet: "rakazo", random: seeded(seed), now: 0 }),
+        chooseBotAvatar([], undefined, { avatarSet: "smith", random: seeded(seed), now: 0 }),
       ).toEqual(chosen);
     }
   });
 
   it("uses the supplied preview identity for both the final id and generated colour", () => {
     const id = "c0123456789abcdef01234567";
-    expect(chooseBotAvatar([], undefined, { avatarSet: "rakazo", id })).toEqual({
+    expect(chooseBotAvatar([], undefined, { avatarSet: "smith", id })).toEqual({
       id,
       color: seededLogoAvatarColor(id),
     });
-    expect(chooseBotAvatar([], "#123456", { avatarSet: "rakazo", id })).toEqual({
+    expect(chooseBotAvatar([], "#123456", { avatarSet: "smith", id })).toEqual({
       id,
       color: "#123456",
     });
@@ -75,10 +75,10 @@ describe("chooseBotAvatar", () => {
     });
   });
 
-  it("keeps an explicit Rakazo appearance", () => {
+  it("keeps an explicit Smith appearance", () => {
     const color = "#8B5CF6::shape_3";
     expect(
-      chooseBotAvatar([], color, { avatarSet: "rakazo", random: seeded(1), now: 0 }).color,
+      chooseBotAvatar([], color, { avatarSet: "smith", random: seeded(1), now: 0 }).color,
     ).toBe(color);
   });
 

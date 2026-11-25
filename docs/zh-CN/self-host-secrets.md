@@ -31,7 +31,7 @@ openssl rand -hex 32   # BETTER_AUTH_SECRET、ENCRYPTION_KEY、SCREEN_PROXY_SECR
 
 源码检出版本的 `.env.example` 也要求 `POSTGRES_PASSWORD` 和 `POSTGRES_APP_PASSWORD`（同样是 `openssl rand -hex 16` 格式），用于 `infra/compose/docker-compose.yml`。使用可选 `docker-compose.postgres-host.yml` 叠加层时，请把它们放入宿主机侧的 `DATABASE_MIGRATION_URL` 和 `DATABASE_URL`。密码必须可安全放入 URI：Compose 会像镜像栈一样把它插值进 `DATABASE_URL`。`openssl rand` 生成的十六进制是安全的；`@ : / ? # %` 等字符不安全。
 
-已有的源码检出版本 `pgdata` 卷会保留首次初始化时的用户、密码和数据库（常见为旧的硬编码 `rakazo` / `rakazo`）。请把这些值保留在 `.env` 中，或用 `ALTER ROLE` / 重命名就地修改。只有在已有备份（或数据可丢弃）之后才应重建卷；`docker compose down -v` 会删除所有 Postgres 状态。
+已有的源码检出版本 `pgdata` 卷会保留首次初始化时的用户、密码和数据库（常见为旧的硬编码 `smith` / `smith`）。请把这些值保留在 `.env` 中，或用 `ALTER ROLE` / 重命名就地修改。只有在已有备份（或数据可丢弃）之后才应重建卷；`docker compose down -v` 会删除所有 Postgres 状态。
 
 源码检出版本的 `.env.example` 注释要求 64 位十六进制的 `ENCRYPTION_KEY`；已发布镜像安装器通过 `openssl rand -hex 32` 生成 32 字节（64 个十六进制字符）。无论采用哪种方式，都请使用足够长的独立随机值。不要在多个变量之间复用同一个字符串。
 

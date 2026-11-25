@@ -24,7 +24,7 @@ original stamp is missing before clearing that stamp's staging directory.
 
 For backups created by `scripts/backup.sh`, use an empty database in the development
 Compose stack. Both scripts use the Postgres container’s `POSTGRES_USER` and `POSTGRES_DB` settings
-(defaulting to `rakazo` in Compose). The script validates and extracts the homes archive in a clean sibling directory
+(defaulting to `smith` in Compose). The script validates and extracts the homes archive in a clean sibling directory
 before touching the database, then stops the API, worker, and supervisor. It rejects a `data/`
 path that is a symlink or a non-directory. Stop bot computers and any other processes that
 write to this database or tree before running the script.
@@ -49,7 +49,7 @@ A failure after the SQL commit cannot roll back the database automatically. Leav
 application stopped, preserve both trees, and recover a matching database before moving the
 rollback tree back to `data/`. Keep a separate database backup from before recovery if you
 need that rollback. This script does not consume the production snapshot's custom-format
-`rakazo.dump` or `appdata.tgz`.
+`smith.dump` or `appdata.tgz`.
 
 ```bash
 ./scripts/restore.sh backups/<stamp>
@@ -59,7 +59,7 @@ need that rollback. This script does not consume the production snapshot's custo
 
 For the single-VM production layout, install `infra/compose/backup-prod.sh` as
 `/usr/local/sbin/rakazo-backup` and enable the supplied `rakazo-backup.timer`. It creates a verified
-Postgres custom-format dump plus an application-data archive under `/var/backups/rakazo`, with mode
+Postgres custom-format dump plus an application-data archive under `/var/backups/smith`, with mode
 `0600`. It keeps up to `RAKAZO_BACKUP_KEEP` verified snapshots (default `3`), bounded by
 `RAKAZO_BACKUP_MAX_GB` (default `50` GiB), and reserves `RAKAZO_BACKUP_MIN_FREE_GB` (default `5`
 GiB) of free disk space. Before starting, it removes abandoned partial snapshots and excess history,
@@ -70,7 +70,7 @@ verified snapshot when capacity is insufficient, caps output file sizes, and rem
 partial snapshot. Local snapshots alone do not survive losing the host; encrypt them and copy them
 off-site as described below.
 
-The scheduled backup uses `/srv/rakazo` by default. For another deployment directory, set
+The scheduled backup uses `/srv/smith` by default. For another deployment directory, set
 `RAKAZO_DEPLOY_DIR=/absolute/path/to/checkout` in a root-owned `/etc/rakazo/backup.env`
 (mode `0600`). The service reads this optional file on each run; the script uses the selected
 checkout's `.env` and production Compose file. If the stack was started with a custom `-p`,
@@ -98,7 +98,7 @@ sudo chmod 755 /usr/local/sbin/rakazo-backup
 for unit in rakazo-backup.service rakazo-backup.timer; do
   sudo curl -fsSL "$base/systemd/$unit" -o "/etc/systemd/system/$unit"
 done
-sudo install -d -m 700 /etc/rakazo
+sudo install -d -m 700 /etc/smith
 printf '\nRAKAZO_DEPLOY_DIR=%s\n' "$PWD" | sudo tee -a /etc/rakazo/backup.env >/dev/null
 sudo chmod 600 /etc/rakazo/backup.env
 sudo systemctl daemon-reload
@@ -149,7 +149,7 @@ RAKAZO_BACKUP_AGE_RECIPIENTS=age1exampleprimaryrecipient age1examplerecoveryreci
 # or: RAKAZO_BACKUP_AGE_RECIPIENTS_FILE=/etc/rakazo/backup-recipients.txt
 ```
 
-With recipients set, each snapshot holds `rakazo.dump.age`, `appdata.tgz.age`, `SOURCE_SIZE_KB`,
+With recipients set, each snapshot holds `smith.dump.age`, `appdata.tgz.age`, `SOURCE_SIZE_KB`,
 and `SHA256SUMS`. `pg_dump` and `tar` stream straight into age, so plaintext never touches disk.
 Verification needs no private key: `pg_restore --list` and `tar -t` read the same plaintext stream
 while it is encrypted, each file must carry an age header, and the checksums cover the encrypted
@@ -204,7 +204,7 @@ snapshot and volume names first. `VOLUME` must name the volume the API currently
 `/data`, which can differ when the stack uses another project name.
 
 For a [published-images install](#published-images-installs), run the same steps from its
-deployment directory in place of `/srv/rakazo`, with
+deployment directory in place of `/srv/smith`, with
 `COMPOSE="sudo docker compose --env-file .env -f docker-compose.images.yml"` (add `-f` for each
 overlay you layer) and `VOLUME=rakazo_appdata`. That stack's `supervisor` also writes to the
 volume, so stop and start `api worker web supervisor` wherever the steps name `api worker web`.
@@ -215,10 +215,10 @@ umask 077
 COMPOSE="sudo docker compose --env-file .env -f infra/compose/docker-compose.prod.yml"
 VOLUME=rakazo-prod_appdata
 
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE stop api worker web"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE stop api worker web"
 ROLLBACK_DUMP="$(mktemp "$PWD/before-restore.dump.XXXXXX")"
 if ! ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'pg_dump -Fc -U \"\$POSTGRES_USER\" \"\$POSTGRES_DB\"'" \
+  "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'pg_dump -Fc -U \"\$POSTGRES_USER\" \"\$POSTGRES_DB\"'" \
   > "$ROLLBACK_DUMP"; then
   printf 'Pre-restore dump failed. Do not use the partial file at %s. Keep the application stopped.\n' "$ROLLBACK_DUMP" >&2
   exit 1
@@ -232,13 +232,13 @@ printf 'Record this rollback pair:\nDatabase dump: %s\nData tree on deploy@app.e
 age -d -i rakazo-backup.key <stamp>/appdata.tgz.age | ssh deploy@app.example.com \
   "sudo tar -xzf - --numeric-owner -C '$RESTORE/staged'"
 
-age -d -i rakazo-backup.key <stamp>/rakazo.dump.age | ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'pg_restore --clean --if-exists --no-owner --exit-on-error --single-transaction -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\"'"
+age -d -i rakazo-backup.key <stamp>/smith.dump.age | ssh deploy@app.example.com \
+  "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'pg_restore --clean --if-exists --no-owner --exit-on-error --single-transaction -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\"'"
 
 ssh deploy@app.example.com \
   "sudo mv -- '$APPDATA' '$RESTORE/previous' && sudo mv -- '$RESTORE/staged' '$APPDATA'"
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE up -d --force-recreate --wait --pull never api worker web"
+  "cd /srv/smith && $COMPOSE up -d --force-recreate --wait --pull never api worker web"
 ```
 
 The archive must extract successfully before the SQL import starts. The clean staging directory
@@ -263,7 +263,7 @@ recorded `$RESTORE/previous` tree back to `$APPDATA` and recreate the applicatio
 If the first directory move failed, the old tree is still at `$APPDATA`. Inspect both paths
 before moving anything. Switching the tree alone does not roll back the database.
 
-Plaintext snapshots use `cat` in place of `age -d` and the filenames `rakazo.dump` and
+Plaintext snapshots use `cat` in place of `age -d` and the filenames `smith.dump` and
 `appdata.tgz`. Use the same clean-directory procedure.
 
 To restore into a new stack, create the `rakazo_app` role before the procedure above. The dump
@@ -272,8 +272,8 @@ stops without it. Do not run the migrations first: tables newer than the snapsho
 the restore. The procedure's final start applies them.
 
 ```bash
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE up -d --wait postgres"
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -c \"CREATE ROLE rakazo_app NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE\"'"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE up -d --wait postgres"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -c \"CREATE ROLE rakazo_app NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE\"'"
 ```
 
 ## Point-in-time recovery
@@ -351,11 +351,11 @@ unless it names a zone:
 
 ```bash
 COMPOSE="sudo docker compose --env-file .env -f infra/compose/docker-compose.prod.yml"
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE stop api worker web pitr postgres"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE stop api worker web pitr postgres"
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && sudo infra/compose/pitr.sh restore '2026-01-31 09:41:00+00' rakazo-prod_postgres" \
+  "cd /srv/smith && sudo infra/compose/pitr.sh restore '2026-01-31 09:41:00+00' rakazo-prod_postgres" \
   < rakazo-backup.key
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE up -d --wait"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE up -d --wait"
 ```
 
 The restore uses the newest base backup that finished before the target, replays WAL up to it, and
@@ -364,7 +364,7 @@ CI deploys during recovery. Once the restored database checks out, remove the ol
 
 ```bash
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE run --rm --no-deps --entrypoint sh postgres -c 'rm -rf \"\$PGDATA\".before-restore-*'"
+  "cd /srv/smith && $COMPOSE run --rm --no-deps --entrypoint sh postgres -c 'rm -rf \"\$PGDATA\".before-restore-*'"
 ```
 
 To turn it off, remove `pitr` from `COMPOSE_PROFILES`, then run `sudo infra/compose/pitr.sh disable`.
@@ -373,7 +373,7 @@ settings. Uploaded backups stay in the bucket.
 
 ## Moving an account between installs
 
-To move from Rakazo Cloud to your own install (or back), use **Settings → Export data** on the
+To move from Smith Cloud to your own install (or back), use **Settings → Export data** on the
 old install and **Import data** on the new one. The export is a zip of every space you belong
 to: bots, chats, files, memory, routines, skills, bot workspace files and, in spaces you own,
 the board. Content is decrypted inside the zip, so keep it private. Importing creates new

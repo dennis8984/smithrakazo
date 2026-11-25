@@ -173,7 +173,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
         KUBERNETES_SANDBOX_CPU_LIMIT: "2",
         KUBERNETES_SANDBOX_MEMORY_LIMIT: "4Gi",
         KUBERNETES_SANDBOX_POD_LABELS: '{"team":"bots"}',
-        KUBERNETES_SANDBOX_POD_ANNOTATIONS: '{"example.test/owner":"rakazo"}',
+        KUBERNETES_SANDBOX_POD_ANNOTATIONS: '{"example.test/owner":"smith"}',
         KUBERNETES_SANDBOX_READY_TIMEOUT_MS: "90000",
       }),
     ).toMatchObject({
@@ -183,7 +183,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
       kubernetesCpuLimit: "2",
       kubernetesMemoryLimit: "4Gi",
       kubernetesPodLabels: { team: "bots" },
-      kubernetesPodAnnotations: { "example.test/owner": "rakazo" },
+      kubernetesPodAnnotations: { "example.test/owner": "smith" },
       kubernetesReadyTimeoutMs: 90_000,
     });
     expect(sandboxProviderOptionsFromEnv({}).kubernetesNamespace).toBeUndefined();
@@ -196,7 +196,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
         INCUS_SANDBOX_CLIENT_CERT: "client-cert-line-1\\nclient-cert-line-2",
         INCUS_SANDBOX_CLIENT_KEY: "client-key-line-1\nclient-key-line-2",
         INCUS_SANDBOX_SERVER_CERT: "server-cert-line-1\\nserver-cert-line-2",
-        INCUS_SANDBOX_PROJECT: "rakazo",
+        INCUS_SANDBOX_PROJECT: "smith",
         INCUS_SANDBOX_COMPUTER_IMAGE: "ghcr.io/elie222/rakazo/computer:v1.2.3",
         INCUS_SANDBOX_CPU_LIMIT: "1",
         INCUS_SANDBOX_MEMORY_LIMIT: "1536MiB",
@@ -207,7 +207,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
       incusClientCert: "client-cert-line-1\nclient-cert-line-2",
       incusClientKey: "client-key-line-1\nclient-key-line-2",
       incusServerCert: "server-cert-line-1\nserver-cert-line-2",
-      incusProject: "rakazo",
+      incusProject: "smith",
       incusComputerImage: "ghcr.io/elie222/rakazo/computer:v1.2.3",
       incusCpuLimit: "1",
       incusMemoryLimit: "1536MiB",
@@ -220,12 +220,12 @@ describe("sandboxProviderOptionsFromEnv", () => {
     expect(
       sandboxProviderOptionsFromEnv({
         KUBERNETES_SANDBOX_HOME_CLAIM: "rakazo-data",
-        KUBERNETES_SANDBOX_HOME_COLOCATE_NAMESPACE: "rakazo",
+        KUBERNETES_SANDBOX_HOME_COLOCATE_NAMESPACE: "smith",
         KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS: '{"app":"rakazo-api"}',
       }),
     ).toMatchObject({
       kubernetesHomeClaim: "rakazo-data",
-      kubernetesHomeColocateNamespace: "rakazo",
+      kubernetesHomeColocateNamespace: "smith",
       kubernetesHomeColocateLabels: { app: "rakazo-api" },
     });
     expect(() =>

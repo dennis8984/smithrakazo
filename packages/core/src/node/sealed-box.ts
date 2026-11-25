@@ -9,7 +9,7 @@ import {
   randomBytes,
 } from "node:crypto";
 
-const INFO = Buffer.from("rakazo sealed box v1");
+const INFO = Buffer.from("smith sealed box v1");
 const TAG_BYTES = 16;
 /** An X25519 public key as unpadded base64url: 32 bytes. */
 export const SEALED_BOX_PUBLIC_KEY = /^[A-Za-z0-9_-]{43}$/;

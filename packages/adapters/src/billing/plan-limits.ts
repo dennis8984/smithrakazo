@@ -129,7 +129,7 @@ const READERS: Record<string, Reader> = {
         await getJson(fetchImpl, "https://chatgpt.com/backend-api/wham/usage", {
           authorization: `Bearer ${credential.access}`,
           "chatgpt-account-id": accountId,
-          originator: "rakazo",
+          originator: "smith",
         }),
       );
     },

@@ -97,7 +97,7 @@ export default function NewBot() {
 
   // The logo has no studio shapes; drop one picked while the Original set was shown.
   useEffect(() => {
-    if (currentSet === "rakazo")
+    if (currentSet === "smith")
       setLook((current) => ({ ...current, color: botLookState(current.color).color }));
   }, [currentSet]);
 

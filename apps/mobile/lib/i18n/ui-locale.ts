@@ -28,7 +28,7 @@ export const UI_LOCALES = AppLocaleSchema.options.filter((locale): locale is UiL
   (SHIPPED_LOCALES as readonly string[]).includes(locale),
 );
 
-export const UI_LOCALE_STORAGE_KEY = "rakazo.uiLocale";
+export const UI_LOCALE_STORAGE_KEY = "smith.uiLocale";
 
 export function htmlLangForLocale(locale: string): string {
   return locale === "zh-CN" ? "zh-CN" : locale;

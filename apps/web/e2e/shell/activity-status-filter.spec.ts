@@ -4,7 +4,7 @@ import { captureScreenshot, chooseOption, completeOnboarding, signup } from "../
 test("Activity can find a failure before the same chat's latest success", async ({
   page,
 }, testInfo) => {
-  await signup(page, `activity-status-${Date.now()}@rakazo.test`, "password12", "Activity");
+  await signup(page, `activity-status-${Date.now()}@smith.test`, "password12", "Activity");
   await completeOnboarding(page);
   const composer = page.getByPlaceholder("Message Chief");
   const send = page.getByRole("button", { name: "Send", exact: true });

@@ -43,7 +43,7 @@ test.afterEach(async ({ page }) => {
 test("an admin sets the model for everyone without a model of their own", async ({
   page,
 }, testInfo) => {
-  await signup(page, `deployment-model-${randomUUID()}@rakazo.test`, "password12", "Admin");
+  await signup(page, `deployment-model-${randomUUID()}@smith.test`, "password12", "Admin");
   await completeOnboarding(page);
   await page.route("**/rpc/me", asAdmin);
   await page.route("**/rpc/bootstrap", asAdmin);
@@ -78,7 +78,7 @@ test("an admin sets the model for everyone without a model of their own", async 
 });
 
 test("members who are not admins never see it", async ({ page }) => {
-  await signup(page, `deployment-model-member-${randomUUID()}@rakazo.test`, "password12", "Member");
+  await signup(page, `deployment-model-member-${randomUUID()}@smith.test`, "password12", "Member");
   await completeOnboarding(page);
   await openUserSettings(page, "models");
   await expect(page.getByTestId("model-role-main")).toBeVisible();

@@ -40,10 +40,10 @@ export async function runContainerCommand(
     AttachStdout: true,
     AttachStderr: true,
     ...(options.signal ? { AttachStdin: true } : {}),
-    WorkingDir: options.workingDir ?? "/home/rakazo",
+    WorkingDir: options.workingDir ?? "/home/smith",
     Env: options.env ?? [
       "DISPLAY=:1",
-      "HOME=/home/rakazo",
+      "HOME=/home/smith",
       "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     ],
   });
@@ -168,8 +168,8 @@ export async function writeContainerFile(
     AttachStdin: true,
     AttachStdout: true,
     AttachStderr: true,
-    WorkingDir: "/home/rakazo",
-    Env: ["HOME=/home/rakazo"],
+    WorkingDir: "/home/smith",
+    Env: ["HOME=/home/smith"],
   });
   const stream = await exec.start({ hijack: true, stdin: true });
   const chunks: Buffer[] = [];

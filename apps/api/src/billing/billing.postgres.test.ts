@@ -24,10 +24,10 @@ describePostgres("billing service (PostgreSQL)", () => {
   const owner: Actor = {
     userId: ownerId,
     spaceId,
-    email: `${ownerId}@rakazo.test`,
+    email: `${ownerId}@smith.test`,
     isDeploymentOwner: false,
   };
-  const member: Actor = { ...owner, userId: memberId, email: `${memberId}@rakazo.test` };
+  const member: Actor = { ...owner, userId: memberId, email: `${memberId}@smith.test` };
   const emulator = new BillingEmulator();
   const events: Array<[string, AnalyticsEvent]> = [];
   const analytics: ProductAnalytics = {
@@ -49,7 +49,7 @@ describePostgres("billing service (PostgreSQL)", () => {
     const createdAt = new Date();
     for (const id of [ownerId, memberId]) {
       await prisma.user.create({
-        data: { id, name: id, email: `${id}@rakazo.test`, emailVerified: false },
+        data: { id, name: id, email: `${id}@smith.test`, emailVerified: false },
       });
     }
     await prisma.organization.create({
@@ -151,7 +151,7 @@ describePostgres("billing service (PostgreSQL)", () => {
     // A member joined, and the recount after it never ran.
     const joinedId = `${memberId}-unrecounted`;
     await prisma.user.create({
-      data: { id: joinedId, name: "Late", email: `${joinedId}@rakazo.test`, emailVerified: false },
+      data: { id: joinedId, name: "Late", email: `${joinedId}@smith.test`, emailVerified: false },
     });
     await prisma.member.create({
       data: {
@@ -321,7 +321,7 @@ describePostgres("billing service (PostgreSQL)", () => {
       data: {
         id: inviteeId,
         name: "Invitee",
-        email: `${inviteeId}@rakazo.test`,
+        email: `${inviteeId}@smith.test`,
         emailVerified: true,
       },
     });
@@ -340,7 +340,7 @@ describePostgres("billing service (PostgreSQL)", () => {
       const actor = {
         ...owner,
         userId: inviteeId,
-        email: `${inviteeId}@rakazo.test`,
+        email: `${inviteeId}@smith.test`,
         spaceId: invited,
       };
       await billing.claimReferral(actor, `ref-${suffix}`);

@@ -19,8 +19,8 @@ const context: AdapterContext = {
 };
 
 const key = "mk_test_key_123";
-const BOT = "rakazo:bot:bot-1";
-const SPACE = "rakazo:space:space-1";
+const BOT = "smith:bot:bot-1";
+const SPACE = "smith:space:space-1";
 
 interface Atom {
   id: string;
@@ -102,7 +102,7 @@ describe("Mnemoverse recall", () => {
     const { calls } = mnemoverse([
       { id: "a", domain: BOT, content: "Likes tea" },
       { id: "b", domain: SPACE, content: "Team uses UTC" },
-      { id: "c", domain: "rakazo:space:space-2", content: "Another Space" },
+      { id: "c", domain: "smith:space:space-2", content: "Another Space" },
     ]);
     const result = await recallOf("shared");
     expect(result.ok && result.value.map((item) => item.id).sort()).toEqual(["a", "b"]);
@@ -240,7 +240,7 @@ describe("Mnemoverse recall", () => {
         Response.json({
           items: [
             { atom_id: "own", content: "Likes tea", relevance: 0.5, domain: BOT },
-            { atom_id: "other", content: "Not yours", relevance: 0.9, domain: "rakazo:bot:bot-2" },
+            { atom_id: "other", content: "Not yours", relevance: 0.9, domain: "smith:bot:bot-2" },
           ],
         }),
     });
@@ -437,7 +437,7 @@ describe("Mnemoverse save", () => {
     await save();
     const domains = calls.map((call) => (call.body as { domain: string }).domain);
     const domain = domains[0];
-    expect(domain).toBe(`rakazo:bot:${createHash("sha256").update(longBot).digest("hex")}`);
+    expect(domain).toBe(`smith:bot:${createHash("sha256").update(longBot).digest("hex")}`);
     expect(domain?.length).toBeLessThanOrEqual(100);
     expect(domains[1]).toBe(domain);
   });
@@ -477,8 +477,8 @@ describe("Mnemoverse forget", () => {
 
   it("will not delete a memory that sits in another bot's or Space's domain", async () => {
     const { atoms, calls } = mnemoverse([
-      { id: ATOM_OTHER, domain: "rakazo:bot:bot-2", content: "Not yours" },
-      { id: ATOM_FOREIGN, domain: "personal-notes", content: "Not Rakazo's" },
+      { id: ATOM_OTHER, domain: "smith:bot:bot-2", content: "Not yours" },
+      { id: ATOM_FOREIGN, domain: "personal-notes", content: "Not Smith's" },
     ]);
     expect((await forget(ATOM_OTHER, "shared")).ok).toBe(false);
     expect((await forget(ATOM_FOREIGN, "shared")).ok).toBe(false);
@@ -488,7 +488,7 @@ describe("Mnemoverse forget", () => {
 
   it("refuses a citation from another domain before asking the service", async () => {
     const { fetchMock } = mnemoverse([{ id: ATOM_A, domain: BOT, content: "Likes tea" }]);
-    const result = await forget(ATOM_A, "isolated", { entity: "rakazo:bot:bot-2" });
+    const result = await forget(ATOM_A, "isolated", { entity: "smith:bot:bot-2" });
     expect(result.ok).toBe(false);
     expect(fetchMock).not.toHaveBeenCalled();
   });

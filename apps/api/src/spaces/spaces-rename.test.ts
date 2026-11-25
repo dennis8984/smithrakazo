@@ -10,7 +10,7 @@ import { handleRpcError } from "../rpc-errors.js";
 const actor = {
   spaceId: "space-current",
   userId: "user-1",
-  email: "user@rakazo.test",
+  email: "user@smith.test",
   isDeploymentOwner: false,
 } satisfies Actor;
 

@@ -136,18 +136,18 @@ describe("store review prompt", () => {
   it("leaves the saved state alone when it cannot be read", async () => {
     const review = await engaged();
     await review.askForReviewIfDue(() => true);
-    const saved = store.get("rakazo.store-review");
+    const saved = store.get("smith.store-review");
     review.resetStoreReviewForTests();
 
     failRead.on = true;
     review.noteRunCompleted();
     await expect(review.askForReviewIfDue(() => true)).rejects.toThrow("keychain locked");
-    expect(store.get("rakazo.store-review")).toBe(saved);
+    expect(store.get("smith.store-review")).toBe(saved);
 
     failRead.on = false;
     await review.askForReviewIfDue(() => true);
     expect(native.requestReview).toHaveBeenCalledOnce();
-    expect(JSON.parse(store.get("rakazo.store-review") ?? "{}").askedAt).toBe(start + DAY);
+    expect(JSON.parse(store.get("smith.store-review") ?? "{}").askedAt).toBe(start + DAY);
   });
 
   it("keeps the chance when the inbox or the app left view before the prompt", async () => {

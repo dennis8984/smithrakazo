@@ -7,7 +7,7 @@ import { createRouter } from "../router.js";
 const actor: Actor = {
   spaceId: "space-1",
   userId: "user-1",
-  email: "user@rakazo.test",
+  email: "user@smith.test",
   isDeploymentOwner: true,
 };
 
@@ -116,7 +116,7 @@ function meDeps(labs: string[], deploymentLabs: string[] = []) {
   const prisma = {
     user: {
       findUniqueOrThrow: vi.fn(async () => ({
-        email: "user@rakazo.test",
+        email: "user@smith.test",
         name: "Test",
         avatarStyle: "robot",
         labs: saved,

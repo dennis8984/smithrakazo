@@ -41,7 +41,7 @@ const publishWorkflow = parse(readFileSync(publishWorkflowFile, "utf8")) as {
 const interpolated = (name: string, fallback = "") => `\${${name}:-${fallback}}`;
 
 const appServices = ["api", "worker", "web", "supervisor", "migrate"] as const;
-const FIRST_PARTY_IMAGE = /ghcr\.io\/elie222\/rakazo\/([a-z0-9][a-z0-9._-]*)/g;
+const FIRST_PARTY_IMAGE = /ghcr\.io\/elie222\/smith\/([a-z0-9][a-z0-9._-]*)/g;
 
 function firstPartyImageNames(value: unknown): string[] {
   if (typeof value !== "string") return [];
@@ -117,7 +117,7 @@ describe("the images compose file", () => {
       interpolated("RAKAZO_UPDATE_SERVICES", "supervisor,computer"),
     );
     expect(updater?.volumes).toContain(
-      `${interpolated("RAKAZO_DEPLOY_DIR", "/srv/rakazo")}:${interpolated("RAKAZO_DEPLOY_DIR", "/srv/rakazo")}`,
+      `${interpolated("RAKAZO_DEPLOY_DIR", "/srv/smith")}:${interpolated("RAKAZO_DEPLOY_DIR", "/srv/smith")}`,
     );
     expect(compose.services.api?.environment?.RAKAZO_UPDATER_TOKEN).toBeUndefined();
     expect(compose.services.worker?.environment?.RAKAZO_UPDATER_TOKEN).toBeUndefined();

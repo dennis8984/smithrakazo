@@ -20,7 +20,7 @@ vi.mock("electron", () => ({
 vi.mock("../system/monitoring.js", () => ({ reportDesktopError: vi.fn() }));
 vi.mock("./setup-store.js", () => ({ writeSetup: vi.fn() }));
 
-const SERVER = "https://rakazo.example";
+const SERVER = "https://smith.example";
 const FAILURE = "Could not open that server. The server page did not become ready.";
 
 function fakeWindow() {

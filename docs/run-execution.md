@@ -27,7 +27,7 @@ claims nothing new meanwhile. A turn that finishes a step while its process is
 stopping does not start another: it saves the turn, with the reply built so far, and
 hands the run back, and the next process resumes with the next model call; if that
 fails, the turn goes on where it is. A turn whose step was its last simply ends. A stopping API requeues its runs at once on SIGTERM. `deploy-main.sh`
-instead sends a replaced API the signal its image's `org.rakazo.run-drain-signal`
+instead sends a replaced API the signal its image's `org.smith.run-drain-signal`
 label names: it closes its listener, so the proxy sends requests and live streams to
 the new API, and drains its runs the same way. A SIGTERM during that drain hands them
 back at once.

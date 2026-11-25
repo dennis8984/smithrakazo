@@ -5,7 +5,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 const repoRoot = path.resolve(import.meta.dirname, "../../../..");
-const OWNER_URL = "postgres://owner:fake-owner-password@postgres:5432/rakazo";
+const OWNER_URL = "postgres://owner:fake-owner-password@postgres:5432/smith";
 const temporaryDirectories: string[] = [];
 
 afterEach(() => {
@@ -51,7 +51,7 @@ exit 0
       HOME: root,
       COMMAND_LOG: log,
       DATABASE_MIGRATION_URL: OWNER_URL,
-      DATABASE_URL: "postgres://app:fake-app-password@postgres:5432/rakazo",
+      DATABASE_URL: "postgres://app:fake-app-password@postgres:5432/smith",
       ...overrides,
     },
     encoding: "utf8",

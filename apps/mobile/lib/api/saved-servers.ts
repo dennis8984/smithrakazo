@@ -2,7 +2,7 @@ import { parseServerHeaders } from "@rakazo/contracts";
 import * as SecureStore from "expo-secure-store";
 import { defaultApiBase, normalizeApiBase } from "./endpoint";
 
-const SAVED_SERVERS_KEY = "rakazo.saved_servers";
+const SAVED_SERVERS_KEY = "smith.saved_servers";
 export const MAX_SAVED_SERVERS = 5;
 
 /** A server the device has used before, with the custom headers it was configured with. */

@@ -13,7 +13,7 @@ test("settings identifies the computer bound to bots among two connected compute
 }, testInfo) => {
   await signup(
     page,
-    `computer-binding-${randomUUID()}@rakazo.test`,
+    `computer-binding-${randomUUID()}@smith.test`,
     "password12",
     "Computer Settings",
   );

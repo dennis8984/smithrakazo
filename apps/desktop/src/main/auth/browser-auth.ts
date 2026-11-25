@@ -1,6 +1,6 @@
 import type { Server } from "node:http";
 import { createServer } from "node:http";
-import type { RakazoDesktopOAuthCallback } from "@rakazo/contracts";
+import type { SmithDesktopOAuthCallback } from "@rakazo/contracts";
 import { t } from "../i18n.js";
 import type { IpcHandler } from "../ipc/ipc.js";
 import { LOOPBACK_HOSTS, mcpLoopbackRefusalFrom } from "./oauth-callback.js";
@@ -11,7 +11,7 @@ export async function openBrowserAuth(
   options: {
     signal: AbortSignal;
     openExternal: (url: string) => Promise<unknown>;
-    onCallback: (callback: RakazoDesktopOAuthCallback) => void;
+    onCallback: (callback: SmithDesktopOAuthCallback) => void;
     onClose?: () => void;
   },
 ): Promise<void> {
@@ -85,7 +85,7 @@ export async function openBrowserAuth(
           // The user declined at the provider: nothing will ever arrive, so stop listening.
           if (ours && mcpLoopbackRefusalFrom(target.href)) {
             consumed = true;
-            response.end(t("You can close this tab and return to Rakazo."), close);
+            response.end(t("You can close this tab and return to Smith."), close);
             return;
           }
           if (
@@ -94,11 +94,11 @@ export async function openBrowserAuth(
             !code ||
             target.searchParams.has("error")
           ) {
-            response.writeHead(400).end(t("Sign-in callback rejected. Return to Rakazo to retry."));
+            response.writeHead(400).end(t("Sign-in callback rejected. Return to Smith to retry."));
             return;
           }
           consumed = true;
-          response.end(t("You can close this tab and return to Rakazo."), close);
+          response.end(t("You can close this tab and return to Smith."), close);
           options.onCallback({ code, state });
         });
         server.requestTimeout = 10_000;

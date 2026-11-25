@@ -212,7 +212,7 @@ describe("boxd computers", () => {
     );
     const url = new URL(screen.url!);
 
-    expect(url.origin).toMatch(/^https:\/\/screen\.rakazo-[0-9a-f]{20}\.boxd\.test$/);
+    expect(url.origin).toMatch(/^https:\/\/screen\.smith-[0-9a-f]{20}\.boxd\.test$/);
     expect(url.pathname).toBe("/vnc.html");
     expect(url.searchParams.get("path")).toMatch(/token=view-/);
     expect(probe).toHaveBeenCalledTimes(2);

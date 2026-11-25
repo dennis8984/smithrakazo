@@ -31,7 +31,7 @@ test.afterEach(async ({ page }) => {
 test("model settings cleanup frames", { tag: "@nightly" }, async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   const stamp = Date.now();
-  await signup(page, `model-cleanup-${stamp}@rakazo.test`, "password12", "Model Preview");
+  await signup(page, `model-cleanup-${stamp}@smith.test`, "password12", "Model Preview");
   await completeOnboarding(page);
 
   // Keep account persistence real; the harness supplies offline provider verification.
@@ -250,7 +250,7 @@ test("connects, lists, and uses an OpenAI-compatible endpoint", async ({ page },
     // the fake endpoint from settings instead, so skip that step on the client.
     const skipModelStep = process.env.AGENT_RUNTIME === "pi";
     if (skipModelStep) await page.route("**/rpc/me", fulfillWithoutModelStep);
-    await signup(page, `local-model-${stamp}@rakazo.test`, "password12", userName);
+    await signup(page, `local-model-${stamp}@smith.test`, "password12", userName);
     await completeOnboarding(page);
     if (skipModelStep) await page.unroute("**/rpc/me", fulfillWithoutModelStep);
 
@@ -400,7 +400,7 @@ test("connects, lists, and uses an OpenAI-compatible endpoint", async ({ page },
 
 test("a rejected subscription sign-in asks to sign in again", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `reconnect-${stamp}@rakazo.test`, "password12", "Reconnect Preview");
+  await signup(page, `reconnect-${stamp}@smith.test`, "password12", "Reconnect Preview");
   await completeOnboarding(page);
   await page.route("**/rpc/models/credentials", (route) =>
     route.fulfill({
@@ -472,7 +472,7 @@ test("a refused private model server names the setting that allows it", async ({
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `private-model-${stamp}@rakazo.test`, "password12", "Private Model Preview");
+  await signup(page, `private-model-${stamp}@smith.test`, "password12", "Private Model Preview");
   await completeOnboarding(page);
   // The e2e server allows private endpoints, so replay the refusal a default install sends.
   const message =
@@ -494,7 +494,7 @@ test("a refused private model server names the setting that allows it", async ({
 test("project-scoped model connection keeps its routing after reopening", async ({
   page,
 }, testInfo) => {
-  await signup(page, `model-project-${Date.now()}@rakazo.test`, "password12", "Model Preview");
+  await signup(page, `model-project-${Date.now()}@smith.test`, "password12", "Model Preview");
   await completeOnboarding(page);
   await openUserSettings(page, "models");
   const dialog = await openModelConnection(page, "Google Vertex AI");
@@ -522,7 +522,7 @@ test("project-scoped model connection keeps its routing after reopening", async 
 
 test("model funding connections", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `model-funding-${stamp}@rakazo.test`, "password12", "Model Settings");
+  await signup(page, `model-funding-${stamp}@smith.test`, "password12", "Model Settings");
   await completeOnboarding(page);
   const model = {
     provider: "example",
@@ -562,14 +562,14 @@ test("model funding connections", async ({ page }, testInfo) => {
   await openUserSettings(page, "models");
   const main = page.getByTestId("model-role-main");
   await main.getByRole("button", { name: "Change Reasoning model", exact: true }).click();
-  await expect(page.locator("[cmdk-group]").filter({ hasText: "Rakazo credits" })).toBeVisible();
+  await expect(page.locator("[cmdk-group]").filter({ hasText: "Smith credits" })).toBeVisible();
   await captureScreenshot(page, testInfo, "model-funding-connections-picker");
   await page
     .locator("[cmdk-group]")
-    .filter({ hasText: "Rakazo credits" })
+    .filter({ hasText: "Smith credits" })
     .getByRole("option", { name: "Reasoning model", exact: true })
     .click();
-  await expect(main.getByTestId("model-role-row-1")).toContainText("Rakazo credits");
+  await expect(main.getByTestId("model-role-row-1")).toContainText("Smith credits");
   expect(settings.primary).toEqual({
     provider: model.provider,
     modelId: model.id,
@@ -594,7 +594,7 @@ test("image and video models are chosen from the connections that make them", as
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `media-models-${stamp}@rakazo.test`, "password12", "Media Models");
+  await signup(page, `media-models-${stamp}@smith.test`, "password12", "Media Models");
   await completeOnboarding(page);
   // A media-capable key connection, without a real key or the provider's live catalog.
   await page.route("**/rpc/models/credentials", async (route) => {
@@ -672,7 +672,7 @@ test("an approval default the deployment pays for reads as included", async ({
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `approval-included-${stamp}@rakazo.test`, "password12", "Model Settings");
+  await signup(page, `approval-included-${stamp}@smith.test`, "password12", "Model Settings");
   await completeOnboarding(page);
   const included = {
     provider: "example",
@@ -758,7 +758,7 @@ test("a device-code sign-in shows its setup before issuing the code", async ({
   await page.route("**/rpc/models/completeOAuth", (route) =>
     route.fulfill({ json: { json: { status: "pending" } } }),
   );
-  await signup(page, `device-code-${stamp}@rakazo.test`, "password12", "Device Code Preview");
+  await signup(page, `device-code-${stamp}@smith.test`, "password12", "Device Code Preview");
   await chooseOption(page.getByLabel("Provider", { exact: true }), "ChatGPT subscription");
   await expect(
     page.getByText("Turn on device code sign-in in ChatGPT security settings"),
@@ -810,7 +810,7 @@ test("a pasted-code sign-in opens its page from a click and then takes the code"
   await page.route("**/rpc/models/completeOAuth", (route) =>
     route.fulfill({ json: { json: { status: "pending" } } }),
   );
-  await signup(page, `paste-code-${stamp}@rakazo.test`, "password12", "Paste Code Preview");
+  await signup(page, `paste-code-${stamp}@smith.test`, "password12", "Paste Code Preview");
   await chooseOption(page.getByLabel("Provider", { exact: true }), "Claude subscription");
   await page.getByRole("button", { name: "Sign in with Claude" }).click();
   const open = page.getByRole("link", { name: "Open auth.example.test" });

@@ -30,9 +30,9 @@ describe("parseDeepLink", () => {
 
   it.each([
     ["empty string", ""],
-    ["non-rakazo scheme", "https://example.com/app/bot-1"],
+    ["non-smith scheme", "https://example.com/app/bot-1"],
     ["javascript scheme", "javascript:alert(1)"],
-    ["opaque rakazo without slashes", "rakazo:app/bot-1"],
+    ["opaque smith without slashes", "smith:app/bot-1"],
     ["unknown host billing", "rakazo://billing"],
     ["unknown host sign-in", "rakazo://sign-in"],
     ["unknown host mcp-oauth", "rakazo://mcp-oauth?code=123"],
@@ -66,10 +66,10 @@ describe("parseDeepLink", () => {
 });
 
 describe("extractDeepLinkFromArgv", () => {
-  it("picks the last valid deep link and ignores invalid rakazo links or flags", () => {
+  it("picks the last valid deep link and ignores invalid smith links or flags", () => {
     expect(
       extractDeepLinkFromArgv([
-        "/usr/bin/rakazo",
+        "/usr/bin/smith",
         "rakazo://app/bot-first",
         "rakazo://billing",
         "--flag=rakazo://app/ignored",
@@ -84,7 +84,7 @@ describe("extractDeepLinkFromArgv", () => {
 
   it("returns null when no valid deep link is present", () => {
     expect(
-      extractDeepLinkFromArgv(["Rakazo.exe", "--headless", "rakazo://billing", "https://x.test"]),
+      extractDeepLinkFromArgv(["Smith.exe", "--headless", "rakazo://billing", "https://x.test"]),
     ).toBeNull();
   });
 });
@@ -93,8 +93,8 @@ describe("resolveDeepLinkTarget", () => {
   it("resolves against the configured server origin and never lets the link pick an origin", () => {
     const link = parseDeepLink("rakazo://app/bot-123?m=msg-9#top");
     expect(link).not.toBeNull();
-    expect(resolveDeepLinkTarget(link!, "https://rakazo.example:8443/some/old/path")).toBe(
-      "https://rakazo.example:8443/app/bot-123?m=msg-9#top",
+    expect(resolveDeepLinkTarget(link!, "https://smith.example:8443/some/old/path")).toBe(
+      "https://smith.example:8443/app/bot-123?m=msg-9#top",
     );
     expect(resolveDeepLinkTarget(link!, "http://127.0.0.1:45173")).toBe(
       "http://127.0.0.1:45173/app/bot-123?m=msg-9#top",
@@ -112,7 +112,7 @@ describe("resolveDeepLinkTarget", () => {
 });
 
 describe("navigateWindowToDeepLink", () => {
-  function fakeWindow(currentUrl = "https://rakazo.example/app/other") {
+  function fakeWindow(currentUrl = "https://smith.example/app/other") {
     const loadURL = vi.fn(() => Promise.resolve());
     return {
       isDestroyed: vi.fn(() => false),
@@ -130,32 +130,32 @@ describe("navigateWindowToDeepLink", () => {
   }
 
   it("loads the resolved in-app URL on the existing window", () => {
-    const win = fakeWindow("https://rakazo.example/app/other");
+    const win = fakeWindow("https://smith.example/app/other");
     const link = parseDeepLink("rakazo://app/bot-42")!;
-    expect(navigateWindowToDeepLink(win, link, "https://rakazo.example")).toBe(true);
-    expect(win.webContents.loadURL).toHaveBeenCalledWith("https://rakazo.example/app/bot-42");
+    expect(navigateWindowToDeepLink(win, link, "https://smith.example")).toBe(true);
+    expect(win.webContents.loadURL).toHaveBeenCalledWith("https://smith.example/app/bot-42");
   });
 
   it("skips reloading when the window is already on the exact target URL", () => {
-    const win = fakeWindow("https://rakazo.example/app/bot-42");
+    const win = fakeWindow("https://smith.example/app/bot-42");
     const link = parseDeepLink("rakazo://app/bot-42")!;
-    expect(navigateWindowToDeepLink(win, link, "https://rakazo.example")).toBe(true);
+    expect(navigateWindowToDeepLink(win, link, "https://smith.example")).toBe(true);
     expect(win.webContents.loadURL).not.toHaveBeenCalled();
   });
 
   it("loads the latest target when a navigation is already in progress", () => {
-    const win = fakeWindow("https://rakazo.example/app/bot-42");
+    const win = fakeWindow("https://smith.example/app/bot-42");
     win.webContents.isLoadingMainFrame.mockReturnValue(true);
     const link = parseDeepLink("rakazo://app/bot-42")!;
-    expect(navigateWindowToDeepLink(win, link, "https://rakazo.example")).toBe(true);
-    expect(win.webContents.loadURL).toHaveBeenCalledWith("https://rakazo.example/app/bot-42");
+    expect(navigateWindowToDeepLink(win, link, "https://smith.example")).toBe(true);
+    expect(win.webContents.loadURL).toHaveBeenCalledWith("https://smith.example/app/bot-42");
   });
 
   it("returns false when the window is destroyed or no target server is set", () => {
     const destroyed = fakeWindow();
     (destroyed.isDestroyed as ReturnType<typeof vi.fn>).mockReturnValue(true);
     const link = parseDeepLink("rakazo://app/bot-42")!;
-    expect(navigateWindowToDeepLink(destroyed, link, "https://rakazo.example")).toBe(false);
+    expect(navigateWindowToDeepLink(destroyed, link, "https://smith.example")).toBe(false);
     expect(destroyed.webContents.loadURL).not.toHaveBeenCalled();
 
     const alive = fakeWindow();
@@ -173,7 +173,7 @@ describe("navigateWindowToDeepLink", () => {
     const aborted = Object.assign(new Error("ERR_ABORTED"), { code: "ERR_ABORTED", errno: -3 });
     win.webContents.loadURL.mockRejectedValueOnce(aborted);
     const link = parseDeepLink("rakazo://app/bot-42")!;
-    expect(navigateWindowToDeepLink(win, link, "https://rakazo.example")).toBe(true);
+    expect(navigateWindowToDeepLink(win, link, "https://smith.example")).toBe(true);
     await flush();
     expect(warn).not.toHaveBeenCalled();
   });
@@ -184,7 +184,7 @@ describe("navigateWindowToDeepLink", () => {
     const failure = new Error("ERR_CONNECTION_REFUSED");
     win.webContents.loadURL.mockRejectedValueOnce(failure);
     const link = parseDeepLink("rakazo://app/bot-42")!;
-    expect(navigateWindowToDeepLink(win, link, "https://rakazo.example")).toBe(true);
+    expect(navigateWindowToDeepLink(win, link, "https://smith.example")).toBe(true);
     await vi.waitFor(() => {
       expect(warn).toHaveBeenCalledWith("best effort failed: navigate to desktop deep link", {
         error: failure,

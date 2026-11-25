@@ -59,7 +59,7 @@ describe("instabox computer backend", () => {
     expect(computer).toMatchObject({ kind: "instabox", fresh: true });
     const machine = emulator.computers.get(computer.id)!;
     expect(machine.template).toBe(INSTABOX_COMPUTER_TEMPLATE);
-    expect(machine.metadata).toMatchObject({ botId: "bot", rakazo: "computer" });
+    expect(machine.metadata).toMatchObject({ botId: "bot", smith: "computer" });
     expect(machine.published).toEqual(new Set([6100]));
     expect(emulator.commands[0]).toContain("ln -s");
     const screen = await provider.connectScreen(computer, { view: "stream" }, ctx);

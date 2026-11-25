@@ -168,7 +168,7 @@ describe("content-free product analytics", () => {
       AnalyticsEvent.safeParse({ name: "model_connected", method: "api_key", provider: "openai" })
         .success,
     ).toBe(true);
-    for (const app of ["Work Gmail", "user@rakazo.test", ""]) {
+    for (const app of ["Work Gmail", "user@smith.test", ""]) {
       expect(AnalyticsEvent.safeParse({ name: "tool_connected", app }).success).toBe(false);
     }
     expect(AnalyticsEvent.safeParse({ name: "tool_connected", app: "gmail" }).success).toBe(true);

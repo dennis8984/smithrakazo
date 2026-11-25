@@ -16,12 +16,12 @@ describe("Android call foreground service", () => {
     const manifest = source("AndroidManifest.xml");
     expect(manifest).toContain("android.permission.FOREGROUND_SERVICE_MICROPHONE");
     expect(manifest).toContain("android.permission.WAKE_LOCK");
-    expect(manifest).toContain('android:name=".RakazoCallService"');
+    expect(manifest).toContain('android:name=".SmithCallService"');
     expect(manifest).toContain('android:foregroundServiceType="microphone"');
   });
 
   it("starts immediately as a foreground service and holds a partial wake lock", () => {
-    const service = source("java/com/rakazo/notifications/RakazoCallService.kt");
+    const service = source("java/com/rakazo/notifications/SmithCallService.kt");
     expect(service).toContain("startForeground");
     expect(service).toContain("FOREGROUND_SERVICE_TYPE_MICROPHONE");
     expect(service).toContain("PowerManager.PARTIAL_WAKE_LOCK");
@@ -46,7 +46,7 @@ describe("Android call foreground service", () => {
   });
 
   it("uses the saved app locale for call notification strings and keeps a supplied title", () => {
-    const service = source("java/com/rakazo/notifications/RakazoCallService.kt");
+    const service = source("java/com/rakazo/notifications/SmithCallService.kt");
     expect(service).toContain(
       "val copyContext = localizedContext(this, NotificationStorage(this).locale)",
     );
@@ -98,7 +98,7 @@ describe("Android call foreground service", () => {
 
   // call-card-keep-awake.test.tsx covers the call card starting the service instead of keep-awake.
   it("is exposed to the JS bridge", () => {
-    const module = source("java/com/rakazo/notifications/RakazoNotificationsModule.kt");
+    const module = source("java/com/rakazo/notifications/SmithNotificationsModule.kt");
     expect(module).toContain('AsyncFunction("startCall")');
     expect(module).toContain('AsyncFunction("stopCall")');
   });

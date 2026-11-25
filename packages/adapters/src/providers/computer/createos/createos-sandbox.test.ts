@@ -970,10 +970,10 @@ describe("CreateOSSandboxProvider", () => {
       if ((init?.method ?? "GET") === "POST" && url.pathname.endsWith("/exec")) {
         const command = (JSON.parse(String(init?.body)) as { args: string[] }).args[3] ?? "";
         if (command.includes("os.listdir")) {
-          const listing = command.includes("/.rakazo")
+          const listing = command.includes("/.smith")
             ? JSON.stringify([{ name: "screens.json", kind: "file", size: 2 }])
             : JSON.stringify([
-                { name: ".rakazo", kind: "dir", size: 0 },
+                { name: ".smith", kind: "dir", size: 0 },
                 { name: "notes.txt", kind: "file", size: 5 },
               ]);
           return jsonResponse({ result: { stdout: listing, exit_code: 0 } });

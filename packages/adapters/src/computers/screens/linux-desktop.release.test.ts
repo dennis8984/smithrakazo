@@ -34,8 +34,8 @@ type Result = { code: number; stdout: string; stderr?: string };
 function host(result: Result | ((command: string) => Result), commands: string[] = []) {
   return {
     environment: async () => ({
-      homeDir: "/home/rakazo",
-      workspaceDir: "/home/rakazo",
+      homeDir: "/home/smith",
+      workspaceDir: "/home/smith",
       browserProfilesDir: "/home/rakazo/.browser-profiles",
       displayStart: 1,
     }),

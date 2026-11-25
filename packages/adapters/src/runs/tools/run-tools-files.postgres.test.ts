@@ -30,7 +30,7 @@ postgres("attach_file (PostgreSQL)", () => {
     root = await mkdtemp(path.join(tmpdir(), "rakazo-attach-file-"));
     run = await fixture(async () => {
       await prisma.user.create({
-        data: { id: userId, name: "Attach tester", email: `${id}@rakazo.test` },
+        data: { id: userId, name: "Attach tester", email: `${id}@smith.test` },
       });
       await prisma.organization.create({
         data: { id: organizationId, name: "Attach tests", slug: id, createdAt: new Date() },

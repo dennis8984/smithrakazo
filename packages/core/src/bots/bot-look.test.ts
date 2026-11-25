@@ -21,8 +21,8 @@ describe("newBotLook", () => {
 
   it("keeps the preview's look through creation", () => {
     const look = { id: "c".padEnd(25, "a"), color: "#2A92FE", identity: "look-3-0" };
-    expect(newBotPreviewIdentity("rakazo", look)).toBe(look.id);
-    expect(newBotLookInput("rakazo", look)).toEqual({ color: look.color, id: look.id });
+    expect(newBotPreviewIdentity("smith", look)).toBe(look.id);
+    expect(newBotLookInput("smith", look)).toEqual({ color: look.color, id: look.id });
     expect(newBotPreviewIdentity("organic", look)).toBe(look.identity);
     expect(newBotLookInput("organic", look)).toEqual({
       color: look.color,
@@ -30,7 +30,7 @@ describe("newBotLook", () => {
     });
     const shaped = { ...look, color: "#2A92FE::shape_2" };
     expect(newBotLookInput("organic", shaped)).toEqual({ color: shaped.color });
-    expect(newBotLookInput("rakazo", shaped)).toEqual({ color: look.color, id: look.id });
+    expect(newBotLookInput("smith", shaped)).toEqual({ color: look.color, id: look.id });
   });
 });
 

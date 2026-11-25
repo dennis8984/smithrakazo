@@ -253,7 +253,7 @@ export default function General() {
               onChange={updateBotStyle}
               options={[
                 { value: "organic", label: t`Original` },
-                { value: "rakazo", label: t`Rakazo` },
+                { value: "smith", label: t`Smith` },
               ]}
               value={(botStyle.pending ? botStyle.input : me.botAvatarSet) ?? ""}
             />

@@ -12,9 +12,9 @@ vi.mock("./rpc", () => {
     bots: {
       claimEmailAddress: async ({ name }: { name: string }) => {
         calls.push(
-          spaceId === undefined ? window.localStorage.getItem("rakazo:space-id") : spaceId,
+          spaceId === undefined ? window.localStorage.getItem("smith:space-id") : spaceId,
         );
-        return { address: `${name}@bots.rakazo.test` };
+        return { address: `${name}@bots.smith.test` };
       },
     },
   });
@@ -22,7 +22,7 @@ vi.mock("./rpc", () => {
     createSpaceRpc: clientForSpace,
     rpc: clientForSpace(undefined),
     rpcForSpace: (spaceId: string) => clientForSpace(spaceId),
-    selectedSpaceId: () => window.localStorage.getItem("rakazo:space-id"),
+    selectedSpaceId: () => window.localStorage.getItem("smith:space-id"),
   };
 });
 
@@ -60,7 +60,7 @@ afterEach(async () => {
 });
 
 async function render(spaceId: string | null | undefined, selectedSpaceId: string) {
-  window.localStorage.setItem("rakazo:space-id", selectedSpaceId);
+  window.localStorage.setItem("smith:space-id", selectedSpaceId);
   await act(async () => {
     root.render(
       <SpaceRpcProvider spaceId={spaceId}>
@@ -87,7 +87,7 @@ describe("SpaceRpcProvider", () => {
     { parentSpaceId: "space-a", expected: "space-a" },
     { parentSpaceId: null, expected: null },
   ])("inherits the parent scope when a nested provider is unset", async (scenario) => {
-    window.localStorage.setItem("rakazo:space-id", "space-b");
+    window.localStorage.setItem("smith:space-id", "space-b");
     await act(async () => {
       root.render(
         <SpaceRpcProvider spaceId={scenario.parentSpaceId}>

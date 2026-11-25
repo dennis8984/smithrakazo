@@ -18,7 +18,7 @@ import {
 test("Integrations installs a plugin, completes real broker OAuth against a fake provider, and removes its children", async ({
   page,
 }, testInfo) => {
-  await signup(page, `marketplace-${Date.now()}@rakazo.test`, "password12", "Marketplace Test");
+  await signup(page, `marketplace-${Date.now()}@smith.test`, "password12", "Marketplace Test");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   let cancel = true;
@@ -173,7 +173,7 @@ test("Integrations installs a plugin, completes real broker OAuth against a fake
 test("shows directly registered MCP servers in Integrations without catalog connections", async ({
   page,
 }, testInfo) => {
-  await signup(page, `direct-mcp-list-${Date.now()}@rakazo.test`, "password12", "Direct MCP List");
+  await signup(page, `direct-mcp-list-${Date.now()}@smith.test`, "password12", "Direct MCP List");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -369,7 +369,7 @@ test("integration fallback icons preserve non-BMP initials", async ({ page }, te
       },
     }),
   );
-  await signup(page, `unicode-icons-${Date.now()}@rakazo.test`, "password12", "Unicode Icons");
+  await signup(page, `unicode-icons-${Date.now()}@smith.test`, "password12", "Unicode Icons");
   await completeOnboarding(page);
   await page.getByRole("button", { name: "Connect apps", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Integrations", exact: true });
@@ -412,7 +412,7 @@ test("an app that is also a chat app here leads to messaging settings", async ({
       json: { json: { enabled: true, providers: ["chatty"], openSignup: false, identities: [] } },
     }),
   );
-  await signup(page, `chat-app-hint-${Date.now()}@rakazo.test`, "password12", "Chat App Hint");
+  await signup(page, `chat-app-hint-${Date.now()}@smith.test`, "password12", "Chat App Hint");
   await completeOnboarding(page);
   await page.getByRole("button", { name: "Connect apps", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Integrations", exact: true });
@@ -425,7 +425,7 @@ test("an app that is also a chat app here leads to messaging settings", async ({
 });
 
 test("Skills search explains an empty result", async ({ page }, testInfo) => {
-  await signup(page, `skills-search-${Date.now()}@rakazo.test`, "password12", "Skills Search");
+  await signup(page, `skills-search-${Date.now()}@smith.test`, "password12", "Skills Search");
   await completeOnboarding(page);
   await page.getByTestId("user-menu-trigger").click();
   await page.getByRole("button", { name: "Skills", exact: true }).click();

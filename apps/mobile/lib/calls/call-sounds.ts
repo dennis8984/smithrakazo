@@ -3,9 +3,9 @@ import * as SecureStore from "expo-secure-store";
 import { activateVoiceAudio, callAudioActive } from "../voice/voice";
 import { nextWaitUnit } from "./wait-pattern";
 
-export const CALL_SOUNDS_KEY = "rakazo.call-sounds";
-export const WAIT_SOUND_KEY = "rakazo.wait-sound";
-export const CALL_GREETING_KEY = "rakazo.call-greeting";
+export const CALL_SOUNDS_KEY = "smith.call-sounds";
+export const WAIT_SOUND_KEY = "smith.wait-sound";
+export const CALL_GREETING_KEY = "smith.call-greeting";
 
 export type CallCue = "start" | "end";
 

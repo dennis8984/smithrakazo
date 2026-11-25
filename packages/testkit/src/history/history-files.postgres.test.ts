@@ -87,7 +87,7 @@ describe.skipIf(!enabled)("earlier files through history tools", () => {
         method: "POST",
         headers: { "content-type": "application/json", origin },
         body: JSON.stringify({
-          email: `history-files-${randomUUID()}@rakazo.test`,
+          email: `history-files-${randomUUID()}@smith.test`,
           password: "password12",
           name: "History files fixture",
         }),

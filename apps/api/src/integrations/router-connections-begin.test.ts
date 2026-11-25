@@ -64,7 +64,7 @@ describe("connections.begin", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const handler = new RPCHandler(createRouter(deps));
@@ -191,7 +191,7 @@ describe("connections.begin", () => {
             actor: {
               spaceId: "workspace-1",
               userId: "user-1",
-              email: "user@rakazo.test",
+              email: "user@smith.test",
               isDeploymentOwner: true,
             },
           },
@@ -760,7 +760,7 @@ describe("connections.begin", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "user-1",
-            email: "user@rakazo.test",
+            email: "user@smith.test",
             isDeploymentOwner: true,
           },
         },
@@ -805,7 +805,7 @@ describe("integration setup authorization", () => {
             actor: {
               userId: "user",
               spaceId: "space",
-              email: "user@rakazo.test",
+              email: "user@smith.test",
               isDeploymentOwner: owner,
             },
           },
@@ -839,7 +839,7 @@ describe("integration setup authorization", () => {
           actor: {
             userId: "member",
             spaceId: "space",
-            email: "member@rakazo.test",
+            email: "member@smith.test",
             isDeploymentOwner: false,
           },
         },

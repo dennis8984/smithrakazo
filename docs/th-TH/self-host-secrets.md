@@ -31,7 +31,7 @@ openssl rand -hex 32   # BETTER_AUTH_SECRET, ENCRYPTION_KEY, SCREEN_PROXY_SECRET
 
 `.env.example` ของ source checkout ก็ต้องมี `POSTGRES_PASSWORD` และ `POSTGRES_APP_PASSWORD` (รูปแบบ `openssl rand -hex 16` เหมือนกัน) สำหรับ `infra/compose/docker-compose.yml` ให้ใส่ค่าเหล่านี้ใน `DATABASE_MIGRATION_URL` และ `DATABASE_URL` ฝั่งโฮสต์เมื่อใช้ overlay `docker-compose.postgres-host.yml` ที่ไม่บังคับ รหัสผ่านต้องปลอดภัยใน URI เพราะ Compose แทนค่าลงใน `DATABASE_URL` แบบเดียวกับ stack ของ images ค่า hex จาก `openssl rand` ปลอดภัย แต่อักขระอย่าง `@ : / ? # %` ไม่ปลอดภัย
 
-volume `pgdata` ของ source checkout ที่มีอยู่จะคง user, password และ database จากการ init ครั้งแรก (มักเป็นค่า hardcode เดิม `rakazo` / `rakazo`) เก็บค่าเหล่านั้นไว้ใน `.env` หรือเปลี่ยนในที่ด้วย `ALTER ROLE` / rename สร้าง volume ใหม่เฉพาะหลังสำรองข้อมูลแล้ว (หรือเมื่อข้อมูลทิ้งได้) `docker compose down -v` จะลบ state ของ Postgres ทั้งหมด
+volume `pgdata` ของ source checkout ที่มีอยู่จะคง user, password และ database จากการ init ครั้งแรก (มักเป็นค่า hardcode เดิม `smith` / `smith`) เก็บค่าเหล่านั้นไว้ใน `.env` หรือเปลี่ยนในที่ด้วย `ALTER ROLE` / rename สร้าง volume ใหม่เฉพาะหลังสำรองข้อมูลแล้ว (หรือเมื่อข้อมูลทิ้งได้) `docker compose down -v` จะลบ state ของ Postgres ทั้งหมด
 
 `.env.example` ของ source checkout ระบุในคอมเมนต์ให้ใช้ `ENCRYPTION_KEY` แบบ **64 hex** ส่วนตัวติดตั้ง published images ใช้ hex 32 ไบต์ (64 ตัวอักษร hex) ผ่าน `openssl rand -hex 32` ไม่ว่าแบบไหน ควรใช้ค่าสุ่มยาวที่ไม่ขึ้นต่อกัน อย่าใช้สตริงเดียวกันกับหลายคีย์
 

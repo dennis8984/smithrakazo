@@ -10,7 +10,7 @@ import {
 } from "../helpers/helpers";
 
 test("routine changes leave one-line rows in the chat", async ({ page }, testInfo) => {
-  await signup(page, `routine-rows-${Date.now()}@rakazo.test`, "password12", "Routine rows");
+  await signup(page, `routine-rows-${Date.now()}@smith.test`, "password12", "Routine rows");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   const rows = page.getByTestId("routine-event-row");
@@ -55,7 +55,7 @@ test("routine changes leave one-line rows in the chat", async ({ page }, testInf
 });
 
 test("a webhook routine's row shows its URL and key to the creator", async ({ page }, testInfo) => {
-  await signup(page, `routine-key-${Date.now()}@rakazo.test`, "password12", "Routine key");
+  await signup(page, `routine-key-${Date.now()}@smith.test`, "password12", "Routine key");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   const hook = await rpc<{ secret: string; path: string }>(page, "bots/rotateWebhookSecret", {

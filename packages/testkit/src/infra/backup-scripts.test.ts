@@ -46,8 +46,8 @@ function fixture() {
     let source = readFileSync(path.join(repoRoot, script), "utf8");
     if (script.endsWith("backup-prod.sh")) {
       // Relocate only the fixed output directory: never write to real host backups.
-      expect(source).toContain('BACKUP_ROOT="/var/backups/rakazo"');
-      source = source.replace('BACKUP_ROOT="/var/backups/rakazo"', `BACKUP_ROOT="${snapshots}"`);
+      expect(source).toContain('BACKUP_ROOT="/var/backups/smith"');
+      source = source.replace('BACKUP_ROOT="/var/backups/smith"', `BACKUP_ROOT="${snapshots}"`);
     }
     write(path.join(checkout, script), source);
   }
@@ -70,8 +70,8 @@ if (args[0] === "inspect") {
   // Run the actual container-side shell, with fake database clients and env.
   const result = spawnSync("/bin/sh", args.slice(args.indexOf("sh") + 1), {
     env: { ...process.env,
-      POSTGRES_USER: process.env.FAKE_POSTGRES_USER ?? "rakazo",
-      POSTGRES_DB: process.env.FAKE_POSTGRES_DB ?? "rakazo",
+      POSTGRES_USER: process.env.FAKE_POSTGRES_USER ?? "smith",
+      POSTGRES_DB: process.env.FAKE_POSTGRES_DB ?? "smith",
     },
     stdio: "inherit",
   });
@@ -317,7 +317,7 @@ function contents(archive: string) {
 
 describe("development database configuration", () => {
   it.each([
-    ["rakazo", "rakazo"],
+    ["smith", "smith"],
     ["admin with spaces", "db with $dollar; punctuation"],
   ])("uses container credentials %j / %j for backup and restore", (user, database) => {
     const f = fixture();
@@ -358,7 +358,7 @@ describe("development backup failures", () => {
     const result = f.run("scripts/backup.sh", [stamp]);
     expect(result.status, result.stderr).toBe(0);
     const output = path.join(f.checkout, "backups", stamp);
-    expect(readFileSync(path.join(output, "rakazo.sql"), "utf8")).toContain("CREATE TABLE");
+    expect(readFileSync(path.join(output, "smith.sql"), "utf8")).toContain("CREATE TABLE");
     expect(contents(path.join(output, "homes.tgz"))).toContain("data/home.txt");
     expect(f.commands()[0]!.includes("--env-file")).toBe(hasEnv);
     if (hasEnv) expect(f.commands()[0]).toContain(path.join(f.checkout, ".env"));
@@ -378,10 +378,10 @@ describe("development backup failures", () => {
         path.join(outside, "snapshot"),
       ];
       for (const directory of directories) {
-        write(path.join(directory, "rakazo.sql"), "existing database backup");
+        write(path.join(directory, "smith.sql"), "existing database backup");
         write(path.join(directory, "homes.tgz"), "existing homes backup");
         chmodSync(directory, 0o755);
-        chmodSync(path.join(directory, "rakazo.sql"), 0o644);
+        chmodSync(path.join(directory, "smith.sql"), 0o644);
         chmodSync(path.join(directory, "homes.tgz"), 0o640);
       }
       symlinkSync(outside, path.join(backups, "link"));
@@ -394,13 +394,13 @@ describe("development backup failures", () => {
       for (const [index, directory] of directories.entries()) {
         expect(readdirSync(directory).sort()).toEqual(entries[index]);
         expect(statSync(directory).mode & 0o777).toBe(0o755);
-        expect(readFileSync(path.join(directory, "rakazo.sql"), "utf8")).toBe(
+        expect(readFileSync(path.join(directory, "smith.sql"), "utf8")).toBe(
           "existing database backup",
         );
         expect(readFileSync(path.join(directory, "homes.tgz"), "utf8")).toBe(
           "existing homes backup",
         );
-        expect(statSync(path.join(directory, "rakazo.sql")).mode & 0o777).toBe(0o644);
+        expect(statSync(path.join(directory, "smith.sql")).mode & 0o777).toBe(0o644);
         expect(statSync(path.join(directory, "homes.tgz")).mode & 0o777).toBe(0o640);
       }
     },
@@ -411,11 +411,11 @@ describe("development backup failures", () => {
     write(path.join(f.checkout, "data/home.txt"), "example home");
     const output = path.join(f.checkout, "backups/private");
     if (reuse) {
-      write(path.join(output, "rakazo.sql"), "old dump");
+      write(path.join(output, "smith.sql"), "old dump");
       write(path.join(output, "homes.tgz"), "old archive");
       chmodSync(path.dirname(output), 0o777);
       chmodSync(output, 0o777);
-      chmodSync(path.join(output, "rakazo.sql"), 0o666);
+      chmodSync(path.join(output, "smith.sql"), 0o666);
       chmodSync(path.join(output, "homes.tgz"), 0o666);
     }
     const result = spawnSync(
@@ -431,9 +431,9 @@ describe("development backup failures", () => {
     expect(result.status, result.stderr).toBe(0);
     expect(statSync(path.dirname(output)).mode & 0o777).toBe(0o700);
     expect(statSync(output).mode & 0o777).toBe(0o700);
-    expect(statSync(path.join(output, "rakazo.sql")).mode & 0o777).toBe(0o600);
+    expect(statSync(path.join(output, "smith.sql")).mode & 0o777).toBe(0o600);
     expect(statSync(path.join(output, "homes.tgz")).mode & 0o777).toBe(0o600);
-    expect(readFileSync(path.join(output, "rakazo.sql"), "utf8")).toContain("CREATE TABLE");
+    expect(readFileSync(path.join(output, "smith.sql"), "utf8")).toContain("CREATE TABLE");
     expect(contents(path.join(output, "homes.tgz"))).toContain("data/home.txt");
   });
 
@@ -444,7 +444,7 @@ describe("development backup failures", () => {
     const f = fixture();
     mkdirSync(path.join(f.checkout, "data"));
     const output = path.join(f.checkout, "backups/example");
-    for (const name of ["rakazo.sql", "homes.tgz"]) {
+    for (const name of ["smith.sql", "homes.tgz"]) {
       write(path.join(output, name), "old backup");
       chmodSync(path.join(output, name), 0o666);
     }
@@ -455,7 +455,7 @@ describe("development backup failures", () => {
     expect(result.status).toBe(status);
     expect(result.stdout).not.toContain("Backup written");
     expect(statSync(output).mode & 0o777).toBe(0o700);
-    for (const name of ["rakazo.sql", "homes.tgz"]) {
+    for (const name of ["smith.sql", "homes.tgz"]) {
       expect(readFileSync(path.join(output, name), "utf8")).toBe("old backup");
       expect(statSync(path.join(output, name)).mode & 0o777).toBe(0o600);
     }
@@ -468,20 +468,20 @@ describe("development backup failures", () => {
     const target = path.join(f.root, "outside");
     const output = path.join(f.checkout, "backups/example");
     if (kind === "directory") {
-      write(path.join(target, "rakazo.sql"), "keep this");
+      write(path.join(target, "smith.sql"), "keep this");
       mkdirSync(path.dirname(output), { recursive: true });
       symlinkSync(target, output);
     } else {
       write(target, "keep this");
       mkdirSync(output, { recursive: true });
-      symlinkSync(target, path.join(output, "rakazo.sql"));
+      symlinkSync(target, path.join(output, "smith.sql"));
     }
 
     const result = f.run("scripts/backup.sh", ["example"]);
 
     expect(result.status).not.toBe(0);
     expect(
-      readFileSync(kind === "directory" ? path.join(target, "rakazo.sql") : target, "utf8"),
+      readFileSync(kind === "directory" ? path.join(target, "smith.sql") : target, "utf8"),
     ).toBe("keep this");
     expect(f.commands()).toEqual([]);
   });
@@ -490,14 +490,14 @@ describe("development backup failures", () => {
     const f = fixture();
     write(path.join(f.checkout, "data/home.txt"), "new home");
     const output = path.join(f.checkout, "backups/example");
-    write(path.join(output, "rakazo.sql"), "old dump");
+    write(path.join(output, "smith.sql"), "old dump");
     write(path.join(output, "homes.tgz"), "old archive");
     const move = path.join(f.root, "bin/mv");
     write(move, '#!/bin/bash\n[[ "$1" != */new ]] || exit 23\nexec /bin/mv "$@"\n');
     chmodSync(move, 0o755);
 
     expect(f.run("scripts/backup.sh", ["example"]).status).toBe(23);
-    expect(readFileSync(path.join(output, "rakazo.sql"), "utf8")).toBe("old dump");
+    expect(readFileSync(path.join(output, "smith.sql"), "utf8")).toBe("old dump");
     expect(readFileSync(path.join(output, "homes.tgz"), "utf8")).toBe("old archive");
   });
 
@@ -572,7 +572,7 @@ describe("development restore failures", () => {
   function restoreFixture() {
     const f = fixture();
     const snapshot = path.join(f.checkout, "backups/example");
-    write(path.join(snapshot, "rakazo.sql"), "CREATE TABLE example (id integer);\n");
+    write(path.join(snapshot, "smith.sql"), "CREATE TABLE example (id integer);\n");
     writeFileSync(path.join(snapshot, "homes.tgz"), homesArchive);
     write(path.join(f.checkout, "data/home.txt"), "current home");
     return f;
@@ -847,20 +847,20 @@ PATH=/usr/bin:/bin exec mv "$@"
 describe("production backup deployment and archive behavior", () => {
   it.each([false, true])("uses the configured deployment directory: %s", (custom) => {
     const f = fixture();
-    const deployment = custom ? f.checkout : "/srv/rakazo";
+    const deployment = custom ? f.checkout : "/srv/smith";
     const result = f.run(
       "infra/compose/backup-prod.sh",
       [],
       custom ? { RAKAZO_DEPLOY_DIR: deployment } : {},
     );
     expect(result.status, result.stderr).toBe(0);
-    expect(result.stdout).toContain("Verified Rakazo backup");
+    expect(result.stdout).toContain("Verified Smith backup");
     expect(result.stderr).toContain("not encrypted");
     expect(readdirSync(result.stdout.trim().split("written to ")[1]!).sort()).toEqual([
       "SHA256SUMS",
       "SOURCE_SIZE_KB",
       "appdata.tgz",
-      "rakazo.dump",
+      "smith.dump",
     ]);
     for (const command of f.commands().filter((args) => args[0] === "compose")) {
       expect(command.slice(0, 5)).toEqual([
@@ -894,7 +894,7 @@ describe("production backup deployment and archive behavior", () => {
       if (override) write(path.join(f.checkout, "docker-compose.override.yml"), "services: {}\n");
       const result = f.run("infra/compose/backup-prod.sh", [], { RAKAZO_DEPLOY_DIR: f.checkout });
       expect(result.status, result.stderr).toBe(0);
-      expect(result.stdout).toContain("Verified Rakazo backup");
+      expect(result.stdout).toContain("Verified Smith backup");
       const commands = f.commands().filter((args) => args[0] === "compose");
       expect(commands.length).toBeGreaterThan(0);
       for (const command of commands) {
@@ -1026,7 +1026,7 @@ describe("production backup deployment and archive behavior", () => {
     const result = f.run("infra/compose/backup-prod.sh", [], { CHANGED_TAR: "1" });
     expect(result.status, result.stderr).toBe(0);
     expect(result.stderr).toContain("file changed as we read it");
-    expect(result.stdout).toContain("Verified Rakazo backup");
+    expect(result.stdout).toContain("Verified Smith backup");
     const snapshot = result.stdout.trim().split("written to ")[1]!;
     expect(contents(path.join(snapshot, "appdata.tgz"))).toContain("home.txt");
     expect(existsSync(path.join(snapshot, "SHA256SUMS"))).toBe(true);
@@ -1040,7 +1040,7 @@ describe("production backup deployment and archive behavior", () => {
       const f = fixture();
       const result = f.run("infra/compose/backup-prod.sh", [], failure);
       expect(result.status).not.toBe(0);
-      expect(result.stdout).not.toContain("Verified Rakazo backup");
+      expect(result.stdout).not.toContain("Verified Smith backup");
       expect(snapshotNames(f.snapshots)).toEqual([]);
     },
   );
@@ -1100,7 +1100,7 @@ describe("production backup deployment and archive behavior", () => {
     write(path.join(last, "SHA256SUMS"), "verified");
     write(path.join(last, "SOURCE_SIZE_KB"), "10485760\n");
     write(path.join(last, "appdata.tgz"), "archive");
-    write(path.join(last, "rakazo.dump"), "dump");
+    write(path.join(last, "smith.dump"), "dump");
     const du = path.join(f.root, "bin/du");
     write(
       du,
@@ -1137,7 +1137,7 @@ fi
 free=52428800
 for snapshot in "${f.snapshots}"/*; do
   if [[ -f "$snapshot/SOURCE_SIZE_KB" && ! -f "$snapshot/SHA256SUMS" ]]; then
-    if [[ "${output}" == dump || -f "$snapshot/rakazo.dump" ]]; then free=1048584; fi
+    if [[ "${output}" == dump || -f "$snapshot/smith.dump" ]]; then free=1048584; fi
   fi
 done
 echo "Filesystem Blocks Used Available Capacity Mounted"
@@ -1150,7 +1150,7 @@ echo "/dev/fake 104857600 0 $free 0% /"
         ...(output === "dump" ? { OVERSIZE_DUMP: "1" } : { OVERSIZE_ARCHIVE: "1" }),
       });
       expect(result.status).not.toBe(0);
-      expect(result.stdout).not.toContain("Verified Rakazo backup");
+      expect(result.stdout).not.toContain("Verified Smith backup");
       expect(snapshotNames(f.snapshots)).toEqual(["20261017T000000Z"]);
       expect(readFileSync(path.join(last, "SHA256SUMS"), "utf8")).toBe("verified");
     },
@@ -1159,7 +1159,7 @@ echo "/dev/fake 104857600 0 $free 0% /"
   it("does not multiply a large database dump by appdata growth", () => {
     const f = fixture();
     const last = path.join(f.snapshots, "20261017T000000Z");
-    for (const file of ["SHA256SUMS", "rakazo.dump", "appdata.tgz"])
+    for (const file of ["SHA256SUMS", "smith.dump", "appdata.tgz"])
       write(path.join(last, file), "verified");
     write(path.join(last, "SOURCE_SIZE_KB"), "102400");
     const du = path.join(f.root, "bin/du");
@@ -1168,7 +1168,7 @@ echo "/dev/fake 104857600 0 $free 0% /"
       `#!/bin/bash
 case "$2" in
   "$FAKE_APPDATA") size=1048576 ;;
-  "${last}/rakazo.dump") size=10485760 ;;
+  "${last}/smith.dump") size=10485760 ;;
   "${last}/appdata.tgz") size=102400 ;;
   "${last}") size=10588160 ;;
   *) exec /usr/bin/du "$@" ;;
@@ -1197,7 +1197,7 @@ exec /usr/bin/sync "$@"
       chmodSync(sync, 0o755);
       const result = f.run("infra/compose/backup-prod.sh");
       expect(result.status).not.toBe(0);
-      expect(result.stdout).not.toContain("Verified Rakazo backup");
+      expect(result.stdout).not.toContain("Verified Smith backup");
       expect(snapshotNames(f.snapshots)).toEqual(["20261017T000000Z"]);
     },
   );
@@ -1240,7 +1240,7 @@ exec /usr/bin/sync "$@"
       },
     );
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain("Another Rakazo backup is running");
+    expect(result.stderr).toContain("Another Smith backup is running");
   });
 
   it("rejects a non-positive retention", () => {
@@ -1279,17 +1279,17 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
         "SHA256SUMS",
         "SOURCE_SIZE_KB",
         "appdata.tgz.age",
-        "rakazo.dump.age",
+        "smith.dump.age",
       ]);
-      for (const name of ["rakazo.dump.age", "appdata.tgz.age"]) {
+      for (const name of ["smith.dump.age", "appdata.tgz.age"]) {
         const sealed = readFileSync(path.join(snapshot, name), "utf8");
         expect(sealed.startsWith("age-encryption.org/v1\n-> fake age1fakeprimary\n")).toBe(true);
         expect(sealed).toContain("-> fake age1fakerecovery");
       }
-      expect(readFileSync(path.join(snapshot, "rakazo.dump.age"), "utf8")).not.toContain(
+      expect(readFileSync(path.join(snapshot, "smith.dump.age"), "utf8")).not.toContain(
         "custom-format dump",
       );
-      expect(readFileSync(path.join(snapshot, "SHA256SUMS"), "utf8")).toContain("rakazo.dump.age");
+      expect(readFileSync(path.join(snapshot, "SHA256SUMS"), "utf8")).toContain("smith.dump.age");
       expect(existsSync(path.join(f.snapshots, ".encrypted"))).toBe(true);
 
       // The drill runs where the private key lives and rejects any other identity.
@@ -1342,7 +1342,7 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
     });
     expect(allowed.status, allowed.stderr).toBe(0);
     expect(allowed.stderr).toContain("not encrypted");
-    expect(existsSync(path.join(snapshotOf(allowed), "rakazo.dump"))).toBe(true);
+    expect(existsSync(path.join(snapshotOf(allowed), "smith.dump"))).toBe(true);
   });
 
   it("does not publish a snapshot when sealing fails", () => {
@@ -1356,7 +1356,7 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
       RAKAZO_BACKUP_AGE_RECIPIENTS: recipients,
     });
     expect(result.status).not.toBe(0);
-    expect(result.stdout).not.toContain("Verified Rakazo backup");
+    expect(result.stdout).not.toContain("Verified Smith backup");
     expect(snapshotNames(f.snapshots)).toEqual([]);
     expect(existsSync(path.join(f.snapshots, ".encrypted"))).toBe(false);
   });
@@ -1376,8 +1376,8 @@ describe("encrypted production backups", { timeout: 20_000 }, () => {
 });
 
 describe("off-site copies", { timeout: 20_000 }, () => {
-  const remote = "offsite:rakazo/";
-  const remoteDir = (f: ReturnType<typeof fixture>) => path.join(f.env.FAKE_REMOTE, "rakazo");
+  const remote = "offsite:smith/";
+  const remoteDir = (f: ReturnType<typeof fixture>) => path.join(f.env.FAKE_REMOTE, "smith");
   const rcloneCalls = (f: ReturnType<typeof fixture>) =>
     existsSync(f.env.RCLONE_LOG) ? readFileSync(f.env.RCLONE_LOG, "utf8").trim().split("\n") : [];
 
@@ -1385,7 +1385,7 @@ describe("off-site copies", { timeout: 20_000 }, () => {
     const f = fixture();
     for (const stamp of ["20261014T000000Z", "20261015T000000Z", "20261016T000000Z"])
       write(path.join(remoteDir(f), stamp, "SHA256SUMS"), "sums");
-    write(path.join(remoteDir(f), "20261017T000000Z/rakazo.dump.age"), "partial");
+    write(path.join(remoteDir(f), "20261017T000000Z/smith.dump.age"), "partial");
     write(path.join(remoteDir(f), "notes/keep.txt"), "not a snapshot");
     const result = f.run("infra/compose/backup-prod.sh", [], {
       RAKAZO_BACKUP_AGE_RECIPIENTS: recipients,
@@ -1394,7 +1394,7 @@ describe("off-site copies", { timeout: 20_000 }, () => {
     });
     expect(result.status, result.stderr).toBe(0);
     const stamp = path.basename(snapshotOf(result));
-    expect(result.stdout).toContain(`Copied to offsite:rakazo/${stamp}`);
+    expect(result.stdout).toContain(`Copied to offsite:smith/${stamp}`);
     expect(readdirSync(path.join(remoteDir(f), stamp)).sort()).toEqual(
       readdirSync(snapshotOf(result)).sort(),
     );
@@ -1429,7 +1429,7 @@ describe("off-site copies", { timeout: 20_000 }, () => {
       ...settings,
     });
     expect(result.status).toBe(1);
-    expect(result.stdout).toContain("Verified Rakazo backup");
+    expect(result.stdout).toContain("Verified Smith backup");
     expect(result.stderr).toContain(`Off-site copy failed: ${message}`);
     expect(existsSync(path.join(snapshotOf(result), "SHA256SUMS"))).toBe(true);
     if (message.includes("require")) expect(rcloneCalls(f)).toEqual([]);
@@ -1475,7 +1475,7 @@ describe.skipIf(!realAge)("encrypted production backups with real age", { timeou
     const snapshot = snapshotOf(result);
     const dump = execFileSync(
       path.join(tools, "age"),
-      ["--decrypt", "-i", key, path.join(snapshot, "rakazo.dump.age")],
+      ["--decrypt", "-i", key, path.join(snapshot, "smith.dump.age")],
       { encoding: "utf8" },
     );
     expect(dump).toContain("fake custom-format dump");

@@ -2,7 +2,7 @@ import { t } from "@lingui/core/macro";
 import { hostMatchesPasskeyRpId } from "@rakazo/core";
 import { WebAuthnAbortService } from "@simplewebauthn/browser";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import type { RakazoDesktop } from "../platform/desktop";
+import type { SmithDesktop } from "../platform/desktop";
 import { desktopBridge } from "../platform/desktop";
 import { authErrorText } from "../query/user-error";
 import { fetchAuthCapabilities } from "./auth-capabilities";
@@ -12,7 +12,7 @@ type PasskeyBrowser = {
   credential?: {
     isUserVerifyingPlatformAuthenticatorAvailable?: () => Promise<boolean>;
   };
-  desktop?: Pick<RakazoDesktop, "platform" | "passkeys">;
+  desktop?: Pick<SmithDesktop, "platform" | "passkeys">;
 };
 
 function currentBrowser(): PasskeyBrowser {

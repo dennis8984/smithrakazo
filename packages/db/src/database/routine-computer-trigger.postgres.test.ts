@@ -37,7 +37,7 @@ describePostgres("a routine's computer approval (PostgreSQL)", () => {
       });
       for (const id of [ids.userId, ids.otherUserId]) {
         await prisma.user.create({
-          data: { id, name: id, email: `${id}@rakazo.test`, emailVerified: false },
+          data: { id, name: id, email: `${id}@smith.test`, emailVerified: false },
         });
       }
       for (const id of [ids.botId, ids.otherBotId]) {

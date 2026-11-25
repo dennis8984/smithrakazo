@@ -537,19 +537,19 @@ it("saves an Original choice even when the saved style is absent", async () => {
 });
 
 it("puts the bot style back and releases it when the save fails", async () => {
-  account.me = { ...account.me, botAvatarSet: "rakazo" };
+  account.me = { ...account.me, botAvatarSet: "smith" };
   const { screen } = await renderAccount(General);
   const { saving } = holdPreferenceSave();
   await act(async () => botStyleButton(screen, "Original").click());
   // A second choice while the first is saving is not sent.
-  await act(async () => botStyleButton(screen, "Rakazo").click());
+  await act(async () => botStyleButton(screen, "Smith").click());
   expect(
     vi.mocked(rpc).mock.calls.filter(([method]) => method === "preferences/update"),
   ).toHaveLength(1);
   await act(async () => saving.reject(new Error("offline")));
   await act(flush);
   expect(Alert.alert).toHaveBeenCalledWith("Couldn't update bot style");
-  expect(botStyleButton(screen, "Rakazo").getAttribute("aria-pressed")).toBe("true");
+  expect(botStyleButton(screen, "Smith").getAttribute("aria-pressed")).toBe("true");
   expect(
     screen.querySelector('[aria-label="Bot style"][data-disabled]')?.getAttribute("data-disabled"),
   ).toBe("false");
@@ -586,7 +586,7 @@ async function renderAccount(Screen: () => ReactNode = Account) {
 
 it("navigates to sign-in while a silent server still owes the sign-out delivery", async () => {
   const actual = await vi.importActual<typeof ApiAuth>("../auth/api-auth");
-  const store = new Map<string, string>([["rakazo.session_token", "session-token"]]);
+  const store = new Map<string, string>([["smith.session_token", "session-token"]]);
   vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => store.get(key) ?? null);
   vi.mocked(SecureStore.setItemAsync).mockImplementation(async (key, value) => {
     store.set(key, value);
@@ -607,8 +607,8 @@ it("navigates to sign-in while a silent server still owes the sign-out delivery"
 
     // The screen leaves before the request timeout fires; the device is signed out.
     expect(replaceWithSignIn).toHaveBeenCalled();
-    expect(store.has("rakazo.session_token")).toBe(false);
-    expect(JSON.parse(store.get("rakazo.pending_sign_out") ?? "[]")).toHaveLength(1);
+    expect(store.has("smith.session_token")).toBe(false);
+    expect(JSON.parse(store.get("smith.pending_sign_out") ?? "[]")).toHaveLength(1);
 
     // The delivery still runs: it times out and the record waits for retry.
     await vi.advanceTimersByTimeAsync(8_000);
@@ -616,7 +616,7 @@ it("navigates to sign-in while a silent server still owes the sign-out delivery"
       "http://127.0.0.1:3100/api/auth/sign-out",
       expect.anything(),
     );
-    expect(JSON.parse(store.get("rakazo.pending_sign_out") ?? "[]")).toHaveLength(1);
+    expect(JSON.parse(store.get("smith.pending_sign_out") ?? "[]")).toHaveLength(1);
   } finally {
     vi.useRealTimers();
   }
@@ -635,12 +635,12 @@ it("offers a store update beside the version only when one is available", async 
 
 it("offers rating the app only on store builds", async () => {
   const view = await renderAccount();
-  expect(view.button("Rate Rakazo")).toBeUndefined();
+  expect(view.button("Rate Smith")).toBeUndefined();
   act(() => root?.unmount());
 
   storeReview.url = "https://apps.apple.com/app/rakazo/id6801531099?action=write-review";
   const rateable = await renderAccount();
-  await rateable.press("Rate Rakazo");
+  await rateable.press("Rate Smith");
   expect(storeReview.open).toHaveBeenCalled();
 });
 

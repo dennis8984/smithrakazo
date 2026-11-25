@@ -2,7 +2,7 @@
 
 [English](../self-host-production.md) | ไทย
 
-รัน Rakazo บนเซิร์ฟเวอร์สาธารณะ พร้อม HTTPS อัตโนมัติ โฮสต์ที่ผ่านการ hardening และ deploy แบบไม่มี downtime
+รัน Smith บนเซิร์ฟเวอร์สาธารณะ พร้อม HTTPS อัตโนมัติ โฮสต์ที่ผ่านการ hardening และ deploy แบบไม่มี downtime
 
 สำหรับคลัสเตอร์ node เดียว ดู [การติดตั้ง Kubernetes / k3s](../self-host-kubernetes.md) การวาง login gate แบบใช้ cookie ไว้หน้า deployment ใดก็ตาม ต้องใช้ [screen routing ที่รู้จัก capability](../self-host-kubernetes.md#add-a-login-gate-without-breaking-the-computer) ด้วย เพราะ iframe ของหน้าจออาจไม่มี cookie ชั้นนอกแม้ผู้ใช้ลงชื่อเข้าใช้แล้ว
 
@@ -19,7 +19,7 @@ sudo --preserve-env=SSH_CONNECTION DEPLOY_USER=deploy bash infra/compose/harden-
 โฮสต์ production ยังใช้ `infra/compose/docker-daemon.json` เพื่อเปิด live restore, จำกัดขนาด log ของ container บนเครื่อง, ตั้ง no-new-privileges เป็นค่าเริ่มต้น และใช้เส้นทาง NAT ของ kernel แทน userland proxy ของ Docker
 
 1. ชี้ record `A`/`AAAA` เช่น `app.example.com` ไปที่ VM และอนุญาต TCP 80/443 กับ UDP 443 ขาเข้า ถ้าใช้ Cloudflare ให้เปิด proxy พร้อม TLS แบบ **Full (strict)** และคัดลอก `Caddyfile.cloudflare.example` ไปไว้ที่ path ที่ผู้ดูแลควบคุมนอก checkout สาธารณะ ตั้ง `CADDYFILE_PATH` เป็น absolute path นั้น ตัวอย่างจะทิ้ง request ของแอปที่ไม่ได้มาจาก [ช่วง IP ที่ Cloudflare เผยแพร่](https://www.cloudflare.com/ips/) ปรับช่วงเหล่านั้นให้ตรงทุกครั้งที่ Cloudflare ประกาศการเปลี่ยนแปลง Cloudflare Tunnel ใช้แทน listener เว็บสาธารณะได้
-2. clone repository บน VM แล้วสร้าง `.env` ที่ root ด้วยค่าสำหรับ production เท่านั้น อย่างน้อยต้องตั้ง `POSTGRES_PASSWORD`, `BETTER_AUTH_SECRET`, `ENCRYPTION_KEY`, `SCREEN_PROXY_SECRET`, `OPENROUTER_API_KEY`, API key ของ sandbox provider ที่เลือก, `RAKAZO_HOST` และ origin สาธารณะทั้งสาม ตั้ง `RAKAZO_DEPLOY_DIR` เมื่อ checkout ไม่ได้อยู่ที่ค่าเริ่มต้นบน Linux คือ `/srv/rakazo` ใช้ค่าสุ่มที่ปลอดภัยใน URL สำหรับ credential ของฐานข้อมูล ถ้าเปิด profile `updater` ให้ตั้ง `RAKAZO_UPDATER_TOKEN` เฉพาะ (อย่างน้อย 32 ตัวอักษร) ที่ไม่ซ้ำกับ `BETTER_AUTH_SECRET`, `SANDBOX_SUPERVISOR_TOKEN` และ `SCREEN_PROXY_SECRET` ด้วย
+2. clone repository บน VM แล้วสร้าง `.env` ที่ root ด้วยค่าสำหรับ production เท่านั้น อย่างน้อยต้องตั้ง `POSTGRES_PASSWORD`, `BETTER_AUTH_SECRET`, `ENCRYPTION_KEY`, `SCREEN_PROXY_SECRET`, `OPENROUTER_API_KEY`, API key ของ sandbox provider ที่เลือก, `RAKAZO_HOST` และ origin สาธารณะทั้งสาม ตั้ง `RAKAZO_DEPLOY_DIR` เมื่อ checkout ไม่ได้อยู่ที่ค่าเริ่มต้นบน Linux คือ `/srv/smith` ใช้ค่าสุ่มที่ปลอดภัยใน URL สำหรับ credential ของฐานข้อมูล ถ้าเปิด profile `updater` ให้ตั้ง `RAKAZO_UPDATER_TOKEN` เฉพาะ (อย่างน้อย 32 ตัวอักษร) ที่ไม่ซ้ำกับ `BETTER_AUTH_SECRET`, `SANDBOX_SUPERVISOR_TOKEN` และ `SCREEN_PROXY_SECRET` ด้วย
 3. จำกัดการสมัครด้วย allowlist ขณะที่บริการยังเป็นส่วนตัว:
 
 ```env
@@ -37,9 +37,9 @@ SANDBOX_PROVIDER=e2b
 AGENT_RUNTIME=pi
 WAKEUP_DRIVER=graphile
 DATA_DIR=/data
-# Absolute path of this checkout as the Docker daemon sees it. /srv/rakazo is the Linux default;
+# Absolute path of this checkout as the Docker daemon sees it. /srv/smith is the Linux default;
 # set this explicitly for every other layout. See "The deploy directory must be one path" in Upgrading.
-RAKAZO_DEPLOY_DIR=/srv/rakazo
+RAKAZO_DEPLOY_DIR=/srv/smith
 RAKAZO_IMAGE_TAG=local
 # Optional: required only with `--profile updater`.
 # RAKAZO_UPDATER_TOKEN=replace-with-32-plus-character-updater-token
@@ -89,7 +89,7 @@ Caddy หาที่อยู่ของไคลเอนต์ก่อน `
 
 การ deploy จะสตาร์ท container ใหม่ของ API, เว็บ และ worker ข้างตัวที่ทำงานอยู่ และหยุดตัวเก่าเมื่อตัวใหม่ healthy แล้วเท่านั้น การ deploy จึงไม่ทำให้เว็บล่มหรือแชทหยุดชะงัก จากนั้นรอ `https://$RAKAZO_HOST/health` และ rollback เมื่อล้มเหลวโดยคืน image ที่ container ก่อนหน้าใช้ worker เก่าไม่ถูกหยุด มันทำงานที่กำลังรันอยู่ให้เสร็จได้นานสูงสุด 45 นาที ขณะที่ตัวใหม่รับงานใหม่ และการ deploy จะรอมันก่อนจบ release ก่อนหน้ายังทำงานอยู่หลัง migration รัน migration จึงต้องใช้งานกับมันได้: เพิ่มก่อน แล้วค่อย drop หรือ rename ใน deploy ครั้งถัดไป การ pull, build และ start มีเวลาจำกัด ขั้นที่ค้างจึงทำให้ deploy ล้มเหลวแทนการถือ lock ไว้ deploy ที่พบว่า lock ถูกถืออยู่จะจบด้วยค่าไม่เป็นศูนย์ deploy จะไม่เริ่มถ้าพื้นที่ว่างน้อยกว่า `RAKAZO_DEPLOY_MIN_FREE_GB` (ค่าเริ่มต้น `5`) และหลัง rollout ที่ healthy จะเก็บ app image ปัจจุบันและก่อนหน้าไว้ (ตัวก่อนหน้าติด tag `rakazo-rollback`) ลบ image ที่ไม่มี tag และตัด build cache ที่ build สำรองทิ้งไว้ให้เหลือ `RAKAZO_DEPLOY_BUILD_CACHE_GB` (ค่าเริ่มต้น 8 GB)
 
-สำหรับ checkout นอก `/srv/rakazo` ให้ใส่ `RAKAZO_DEPLOY_DIR=/absolute/path` (และค่าตั้งใดก็ได้ข้างต้น) ใน `/etc/rakazo/deploy.env` ที่ root เป็นเจ้าของและผู้ใช้ deploy อ่านได้ launcher รัน `infra/compose/deploy-main.sh` จาก `origin/main` การเปลี่ยนแปลงของ deploy จึงมีผลใน deploy ครั้งถัดไป มีเพียงการเปลี่ยนตัว launcher เองที่ต้องรัน `sudo install -m 0755 infra/compose/deploy-launcher.sh /usr/local/sbin/rakazo-deploy-main`
+สำหรับ checkout นอก `/srv/smith` ให้ใส่ `RAKAZO_DEPLOY_DIR=/absolute/path` (และค่าตั้งใดก็ได้ข้างต้น) ใน `/etc/rakazo/deploy.env` ที่ root เป็นเจ้าของและผู้ใช้ deploy อ่านได้ launcher รัน `infra/compose/deploy-main.sh` จาก `origin/main` การเปลี่ยนแปลงของ deploy จึงมีผลใน deploy ครั้งถัดไป มีเพียงการเปลี่ยนตัว launcher เองที่ต้องรัน `sudo install -m 0755 infra/compose/deploy-launcher.sh /usr/local/sbin/rakazo-deploy-main`
 
 ## Docker computer บน production stack
 

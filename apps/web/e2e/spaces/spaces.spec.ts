@@ -11,7 +11,7 @@ test("a new space starts empty, is renamed in its settings, and is deleted with 
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `spaces-delete-${stamp}@rakazo.test`, "password12", "Space Owner");
+  await signup(page, `spaces-delete-${stamp}@smith.test`, "password12", "Space Owner");
   await completeOnboarding(page);
 
   const sidebar = page.locator("aside").first();
@@ -123,7 +123,7 @@ test("deleting the last bot in a space stays in the app after first use", {
   tag: "@nightly",
 }, async ({ page }) => {
   const stamp = Date.now();
-  await signup(page, `spaces-empty-${stamp}@rakazo.test`, "password12", "Space Owner");
+  await signup(page, `spaces-empty-${stamp}@smith.test`, "password12", "Space Owner");
   await completeOnboarding(page);
   const [chief] = await rpc<Array<{ id: string }>>(page, "bots/list", {});
   expect(chief).toBeTruthy();
@@ -183,7 +183,7 @@ test("deleting the last bot in a space stays in the app after first use", {
 });
 
 test("deleting every bot leaves an empty space instead of a new Chief", async ({ page }) => {
-  await signup(page, `spaces-cleared-${Date.now()}@rakazo.test`, "password12", "Space Owner");
+  await signup(page, `spaces-cleared-${Date.now()}@smith.test`, "password12", "Space Owner");
   await completeOnboarding(page);
   const [chief] = await rpc<Array<{ id: string }>>(page, "bots/list", {});
   expect(chief).toBeTruthy();

@@ -23,7 +23,7 @@ export interface DesktopUpdateState {
   checkedAt: string | null;
 }
 
-export interface RakazoDesktopUpdate {
+export interface SmithDesktopUpdate {
   state: () => Promise<DesktopUpdateState>;
   check: () => Promise<DesktopUpdateState>;
   download: () => Promise<DesktopUpdateState>;
@@ -31,7 +31,7 @@ export interface RakazoDesktopUpdate {
   install: () => Promise<DesktopUpdateState>;
 }
 
-export interface RakazoDesktopOAuthCallback {
+export interface SmithDesktopOAuthCallback {
   code: string;
   state?: string;
 }
@@ -43,14 +43,14 @@ export interface RakazoDesktopOAuthCallback {
 export const MCP_SIGNIN_WINDOW_PREFIX = "rakazo-mcp-signin:";
 
 /** A code the app's own MCP callback page carried, captured before that page loads. */
-export interface RakazoDesktopMcpOAuthCallback {
+export interface SmithDesktopMcpOAuthCallback {
   serverId: string;
   /** Null when the provider refused or the user declined. */
   code: string | null;
   state: string;
 }
 
-export interface RakazoDesktopDevice {
+export interface SmithDesktopDevice {
   /** Null until paired. */
   deviceId: string | null;
   name: string;
@@ -62,7 +62,7 @@ export interface RakazoDesktopDevice {
  * `result` carries the session's whole text so far, `error` a Web Speech error code,
  * and `end` always comes last.
  */
-export type RakazoDesktopSpeechEvent =
+export type SmithDesktopSpeechEvent =
   | { session: number; type: "result"; text: string }
   | { session: number; type: "error"; error: string }
   | { session: number; type: "end" };
@@ -90,7 +90,7 @@ export function isDesktopMenuCommand(value: unknown): value is DesktopMenuComman
   return (DESKTOP_MENU_COMMANDS as readonly unknown[]).includes(value);
 }
 
-export interface RakazoDesktop {
+export interface SmithDesktop {
   /** Optional for older desktop releases. Returns false when the native write is refused. */
   clipboard?: {
     writeText: (text: string) => Promise<boolean>;
@@ -109,9 +109,9 @@ export interface RakazoDesktop {
   /** Optional for compatibility with older desktop releases. */
   device?: {
     /** Null when the app shows its own local server. */
-    state: () => Promise<RakazoDesktopDevice | null>;
+    state: () => Promise<SmithDesktopDevice | null>;
     /** Turning it on asks with a native prompt the page cannot answer. */
-    setAllowed: (allowed: boolean) => Promise<RakazoDesktopDevice | null>;
+    setAllowed: (allowed: boolean) => Promise<SmithDesktopDevice | null>;
   };
   /** Absent on older desktop releases, whose menus carry no app commands. */
   menu?: {
@@ -133,7 +133,7 @@ export interface RakazoDesktop {
   };
   /** Absent on older desktop releases. */
   server?: {
-    /** Opens the desktop setup window to pick another Rakazo server. */
+    /** Opens the desktop setup window to pick another Smith server. */
     change: () => Promise<void>;
   };
   /** Absent on older desktop releases, which have no Settings… menu item. */
@@ -151,7 +151,7 @@ export interface RakazoDesktop {
     /** Ends the utterance: its final text and `end` still arrive. */
     stop: (session: number) => Promise<void>;
     abort: (session: number) => Promise<void>;
-    onEvent: (listener: (event: RakazoDesktopSpeechEvent) => void) => () => void;
+    onEvent: (listener: (event: SmithDesktopSpeechEvent) => void) => () => void;
   };
   /**
    * The browser each MCP server signs in through. Every server gets its own
@@ -165,7 +165,7 @@ export interface RakazoDesktop {
      * Codes captured from that browser's redirect to the app callback, which has
      * no app session of its own. Returns an unsubscribe function.
      */
-    onOAuthCallback: (listener: (callback: RakazoDesktopMcpOAuthCallback) => void) => () => void;
+    onOAuthCallback: (listener: (callback: SmithDesktopMcpOAuthCallback) => void) => () => void;
   };
   platform: string;
   /** Absent on older frameless releases, which still need in-app controls. */
@@ -176,7 +176,7 @@ export interface RakazoDesktop {
     toggleMaximize: () => Promise<void>;
     state: () => Promise<{ minimized: boolean; maximized: boolean; fullScreen: boolean }>;
   };
-  update: RakazoDesktopUpdate;
+  update: SmithDesktopUpdate;
   oauth: {
     /**
      * Open system-browser auth. A redirect_uri must be HTTP loopback with state;
@@ -188,12 +188,12 @@ export interface RakazoDesktop {
      * Authorization codes captured from the system browser or a legacy popup.
      * Returns an unsubscribe function.
      */
-    onCallback: (listener: (callback: RakazoDesktopOAuthCallback) => void) => () => void;
+    onCallback: (listener: (callback: SmithDesktopOAuthCallback) => void) => () => void;
   };
 }
 
 /**
- * How the desktop app was pointed at a Rakazo server during first-run setup.
+ * How the desktop app was pointed at a Smith server during first-run setup.
  * `new` is the Docker Compose stack this app installs and runs on the same computer.
  */
 export type DesktopInstanceMode = "new" | "existing";
@@ -207,7 +207,7 @@ export interface DesktopSetup {
 
 export interface DesktopSetupState {
   defaultLocalUrl: string;
-  /** Hosted Rakazo origin, saved as an `existing` server when chosen. */
+  /** Hosted Smith origin, saved as an `existing` server when chosen. */
   cloudUrl: string;
   saved: DesktopSetup | null;
   /** Present when a saved or newly selected server could not be reopened. */
@@ -264,7 +264,7 @@ export type DesktopSetupLink = "docker-download";
  * Bridge exposed only to the first-run setup window. The app window keeps the
  * narrower `rakazoDesktop` bridge so a connected server can never re-point the app.
  */
-export interface RakazoSetup {
+export interface SmithSetup {
   /** Used only to reserve space for native window controls in the local setup UI. */
   platform: string;
   /** The page's language and its translations, keyed by the English text; empty for English. */

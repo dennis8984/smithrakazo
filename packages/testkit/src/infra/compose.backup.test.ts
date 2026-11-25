@@ -17,7 +17,7 @@ function compose(args: string[], options?: Parameters<typeof execFileSync>[2]) {
   return execFileSync("docker", [...composeBaseArgs(repoRoot), ...args], options);
 }
 
-const psql = (sqlArgs: string[]) => ["exec", "-T", "postgres", "psql", "-U", "rakazo", ...sqlArgs];
+const psql = (sqlArgs: string[]) => ["exec", "-T", "postgres", "psql", "-U", "smith", ...sqlArgs];
 
 const SIDE_DATABASE = `rakazo_restore_${randomUUID().replaceAll("-", "")}`;
 
@@ -67,7 +67,7 @@ describeBackup("compose backup and restore", () => {
         timeout: 60_000,
         env: { ...process.env, RAKAZO_BACKUP_SKIP_HOMES: "1" },
       });
-      const dump = path.join(repoRoot, "backups", stamp, "rakazo.sql");
+      const dump = path.join(repoRoot, "backups", stamp, "smith.sql");
       expect(existsSync(dump)).toBe(true);
       const sql = readFileSync(dump, "utf8");
       expect(sql).toMatch(/CREATE TABLE|CREATE TABLE IF NOT EXISTS/i);

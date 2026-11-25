@@ -107,8 +107,8 @@ export function hasComputerIdentity(
   botId: string,
   spaceId: string,
 ) {
-  const labeledSpaceId = labels?.["rakazo.spaceId"] ?? labels?.["rakazo.workspaceId"];
-  return labels?.["rakazo.botId"] === botId && labeledSpaceId === spaceId;
+  const labeledSpaceId = labels?.["smith.spaceId"] ?? labels?.["smith.workspaceId"];
+  return labels?.["smith.botId"] === botId && labeledSpaceId === spaceId;
 }
 
 export function hasValidBearerToken(authorization: string | undefined, expectedToken: string) {
@@ -551,7 +551,7 @@ export function containerActionStep(
 }
 
 /** Image label of computers whose control service takes aimed and sideways scrolls. */
-export const AIMED_SCROLL_CONTROL_LABEL = "rakazo.control.aimedScroll";
+export const AIMED_SCROLL_CONTROL_LABEL = "smith.control.aimedScroll";
 
 /**
  * Whether a computer's control service can run these actions. One built before aimed and
@@ -591,7 +591,7 @@ export function normalizeWorkspaceRelative(value: string) {
 }
 
 export function workspaceTarget(relative: string) {
-  return relative ? path.posix.join("/home/rakazo", relative) : "/home/rakazo";
+  return relative ? path.posix.join("/home/smith", relative) : "/home/smith";
 }
 
 export function sandboxTimeoutCommand(argv: string[], timeoutMs: number, completionMarker: string) {
@@ -773,7 +773,7 @@ export function computerCommandEnv(
     ...(layout
       ? [`DISPLAY=${layout.display}`, `RAKAZO_CDP_PORT=${layout.debugPort}`]
       : ["DISPLAY="]),
-    "HOME=/home/rakazo",
+    "HOME=/home/smith",
     "PATH=/home/rakazo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     "NPM_CONFIG_PREFIX=/home/rakazo/.local",
     "PIP_USER=1",
@@ -820,6 +820,6 @@ export function isManagedComputer(
   image: string,
 ) {
   const labels = info.Config.Labels ?? {};
-  const managed = labels["rakazo.managed"] === "true" || info.Config.Image === image;
+  const managed = labels["smith.managed"] === "true" || info.Config.Image === image;
   return managed && hasComputerIdentity(labels, botId, spaceId);
 }

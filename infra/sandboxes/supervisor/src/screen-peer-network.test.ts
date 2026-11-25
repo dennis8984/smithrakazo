@@ -56,7 +56,7 @@ function fixture() {
     inspect: vi.fn().mockResolvedValue({
       Id: "computer",
       Config: {
-        Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+        Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
       },
       HostConfig: { NetworkMode: "bot-network" },
       State: { Running: true },

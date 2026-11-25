@@ -48,7 +48,7 @@ describeBreakdown("usage.breakdown", () => {
   afterEach(() => vi.useRealTimers());
 
   it("attributes usage to bots, counts a run once across its subagents and honours every filter", async () => {
-    const cookie = await signup(app, `usage-breakdown-${stamp}@rakazo.test`, "Breakdown");
+    const cookie = await signup(app, `usage-breakdown-${stamp}@smith.test`, "Breakdown");
     const create = (name: string) =>
       rpc<{ id: string }>(app, cookie, "bots/create", {
         name,
@@ -113,7 +113,7 @@ describeBreakdown("usage.breakdown", () => {
     });
     await rpc(app, cookie, "bots/remove", { botId: gone.id, deleteMemories: false });
 
-    const other = await signup(app, `usage-breakdown-other-${stamp}@rakazo.test`, "Other");
+    const other = await signup(app, `usage-breakdown-other-${stamp}@smith.test`, "Other");
     const otherBot = await rpc<{ id: string }>(app, other, "bots/create", {
       name: "Elsewhere",
       title: "",
@@ -307,7 +307,7 @@ describeBreakdown("usage.breakdown", () => {
   }, 150000);
 
   it("splits usage by the routine that started each run", async () => {
-    const cookie = await signup(app, `usage-breakdown-routine-${stamp}@rakazo.test`, "Routines");
+    const cookie = await signup(app, `usage-breakdown-routine-${stamp}@smith.test`, "Routines");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Brief",
       title: "",
@@ -398,7 +398,7 @@ describeBreakdown("usage.breakdown", () => {
   });
 
   it("counts own-key media in cost and models without making token totals unknown", async () => {
-    const cookie = await signup(app, `usage-media-${stamp}@rakazo.test`, "Media");
+    const cookie = await signup(app, `usage-media-${stamp}@smith.test`, "Media");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Painter",
       title: "",
@@ -453,7 +453,7 @@ describeBreakdown("usage.breakdown", () => {
   ])("cuts today and day buckets at midnight in %s", async (timezone, hours) => {
     vi.setSystemTime(new Date("2026-01-31T09:59:30.000Z"));
     const offset = hours * 60 * 60 * 1000;
-    const cookie = await signup(app, `usage-breakdown-tz-${stamp}-${hours}@rakazo.test`, "Zoned");
+    const cookie = await signup(app, `usage-breakdown-tz-${stamp}-${hours}@smith.test`, "Zoned");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Zoned",
       title: "",

@@ -1,4 +1,4 @@
-# Self-hosting Rakazo
+# Self-hosting Smith
 
 Run the API, worker, web app, database and bot computers on a machine you control.
 Other self-hosted AI agents are compared on the [self-hosted AI agent](https://rakazo.com/self-hosted-ai-agent/#other-agents) page.
@@ -9,7 +9,7 @@ English | [简体中文](./zh-CN/self-host.md)
 
 ## What you need
 
-- A server with 2 vCPUs and 4 GB of RAM. Rakazo itself uses about 1 GB; each running bot computer
+- A server with 2 vCPUs and 4 GB of RAM. Smith itself uses about 1 GB; each running bot computer
   can use up to 2 GB (`RAKAZO_COMPUTER_MEMORY`), so add memory for several busy bots or use a
   remote computer provider.
 - Docker Engine 26 or newer with the Compose plugin, curl and OpenSSL. On Linux, running the
@@ -24,7 +24,7 @@ Pull Postgres and `ghcr.io/elie222/rakazo/app` into any empty folder. No clone o
 Requires Docker Engine 26+ (API 1.45+ for bot home volume subpaths), the Compose plugin, curl, and OpenSSL.
 
 ```bash
-mkdir -p rakazo && cd rakazo &&
+mkdir -p smith && cd smith &&
 curl -fsSLO https://raw.githubusercontent.com/elie222/rakazo/main/infra/compose/install-images.sh &&
 bash install-images.sh
 ```
@@ -95,7 +95,7 @@ generated one, so set it before the first start or not at all: a changed databas
 `ENCRYPTION_KEY` breaks an existing install.
 
 Set `RAKAZO_PUBLIC_URL` to the address people open, such as `https://app.example.com`, whenever
-they reach Rakazo by anything but `127.0.0.1`: it sets `BETTER_AUTH_URL`, `WEB_ORIGIN` and `API_URL`
+they reach Smith by anything but `127.0.0.1`: it sets `BETTER_AUTH_URL`, `WEB_ORIGIN` and `API_URL`
 and allows its host, and without it the app refuses that address. Optional variables:
 
 - `OPENROUTER_API_KEY`, or add a model in the app after signup.
@@ -103,7 +103,7 @@ and allows its host, and without it the app refuses that address. Optional varia
   When the panel's proxy reaches the `web` service on port 5173 over Docker's network, leave it.
   To open the app directly at the server's address, set `RAKAZO_WEB_BIND=0.0.0.0` and
   `RAKAZO_PUBLIC_URL=http://<server-address>:5173`. That serves sign-in over plain HTTP, so use it
-  only to try Rakazo and put TLS in front before real use.
+  only to try Smith and put TLS in front before real use.
 
 The `secrets` volume holds `ENCRYPTION_KEY`, so back it up with the database: encrypted content
 cannot be read without it. Removing the stack's volumes deletes both.
@@ -121,12 +121,12 @@ If the installer, Compose downloads, or image pulls are blocked, use the
 Hosts such as DigitalOcean, Vultr, Akamai (Linode), Hetzner and Hostinger take a cloud-init
 "user data" script when you create a server. Create an Ubuntu 22.04 or newer server of the
 [size above](#what-you-need), paste [`infra/cloud-init/user-data.yaml`](../infra/cloud-init/user-data.yaml)
-into that field, and Rakazo installs itself into `/opt/rakazo` on first boot with no SSH.
+into that field, and Smith installs itself into `/opt/smith` on first boot with no SSH.
 `/var/log/cloud-init-output.log` shows progress.
 
 Its two settings are optional. `OPENROUTER_API_KEY` gives everyone a model; user data stays readable
 from the host's metadata service, so you may prefer to connect a model in the app instead. Without
-`RAKAZO_DOMAIN`, Rakazo listens only on the server's loopback: open an SSH tunnel with
+`RAKAZO_DOMAIN`, Smith listens only on the server's loopback: open an SSH tunnel with
 `ssh -N -L 5173:127.0.0.1:5173 root@SERVER_IP` and browse to `http://127.0.0.1:5173`.
 
 To serve it publicly, point a domain's DNS at the server and run:
@@ -155,7 +155,7 @@ The script is safe to rerun, and the login message repeats the next step.
 
 On Windows, if an older clone with `core.autocrlf=true` leaves the computer pane hung on boot (`bash\r` in sandbox logs): from a clean worktree, set `git config core.autocrlf false`, run `git add --renormalize . && git checkout -- .`, then rebuild with `pnpm sandbox:build`.
 
-Compose runs Postgres, the sandbox supervisor (Docker socket), API, worker, and a Vite preview of the web app. Bot computers are sibling containers (`rakazo/computer:local`) on separate per-bot networks; only the supervisor and screen proxy join each one. The API process does not get an unrestricted Docker socket; the supervisor owns the lifecycle.
+Compose runs Postgres, the sandbox supervisor (Docker socket), API, worker, and a Vite preview of the web app. Bot computers are sibling containers (`smith/computer:local`) on separate per-bot networks; only the supervisor and screen proxy join each one. The API process does not get an unrestricted Docker socket; the supervisor owns the lifecycle.
 
 Postgres stays on the Compose network only (not published on the host), matching the images
 compose. Credentials come from `.env` (`POSTGRES_PASSWORD` is required). Prefer a URI-safe value
@@ -180,7 +180,7 @@ Other builds and platforms use Docker Compose and the published images (see [Pub
 
 On headless Linux hosts running the API and worker directly, install Fontconfig and a Latin font for PNG chart labels. On Debian and Ubuntu, install `fontconfig` and `fonts-dejavu-core`.
 
-For source development in WSL, keep the checkout and `data` directory in the Linux filesystem (for example, `~/rakazo`), and run `pnpm dev` as your normal user. The host-run supervisor matches bot container UID/GID to that user. If Docker Desktop container IPs are unreachable, set `SANDBOX_CONTROL_VIA_LOOPBACK=true` in `.env`; this publishes the token-protected control service on a random loopback port. Leave this unset for the Compose-hosted supervisor.
+For source development in WSL, keep the checkout and `data` directory in the Linux filesystem (for example, `~/smith`), and run `pnpm dev` as your normal user. The host-run supervisor matches bot container UID/GID to that user. If Docker Desktop container IPs are unreachable, set `SANDBOX_CONTROL_VIA_LOOPBACK=true` in `.env`; this publishes the token-protected control service on a random loopback port. Leave this unset for the Compose-hosted supervisor.
 
 Compose bot homes mount only their own subdirectory of the application volume using Docker volume semantics. Docker's internal volume paths are never used as host bind mounts.
 
@@ -271,4 +271,4 @@ paths or message content; servers, bots and runs appear only as short hashes.
 
 When a user asks their bot to report a bug or send feedback, the report is saved on your server
 in the `feedback_reports` table, with the chat, bot and run it came from. Nothing is sent to the
-Rakazo project.
+Smith project.

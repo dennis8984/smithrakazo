@@ -42,8 +42,8 @@ describe("Android mobile platform contract", () => {
       mobileRoot,
       "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications",
     );
-    const service = readFileSync(resolve(nativeRoot, "RakazoNotificationService.kt"), "utf8");
-    const module = readFileSync(resolve(nativeRoot, "RakazoNotificationsModule.kt"), "utf8");
+    const service = readFileSync(resolve(nativeRoot, "SmithNotificationService.kt"), "utf8");
+    const module = readFileSync(resolve(nativeRoot, "SmithNotificationsModule.kt"), "utf8");
     const allowlist = readFileSync(resolve(nativeRoot, "EndpointAllowlist.kt"), "utf8");
     expect(service).toContain("android.requestPromotedOngoing");
     expect(service).toContain("liveStatusIcon(primary, avatarStyle)");
@@ -55,7 +55,7 @@ describe("Android mobile platform contract", () => {
     expect(service).toContain("if (!isAllowedNotificationEndpoint(endpoint)) throw IOException");
     expect(module).toContain("android.settings.APP_NOTIFICATION_PROMOTION_SETTINGS");
     expect(module).not.toContain("settings.copy(liveConnection = false)");
-    expect(module).toContain("RakazoNotificationService.clearSession(context)");
+    expect(module).toContain("SmithNotificationService.clearSession(context)");
     expect(module).toContain("isAllowedNotificationEndpoint(endpoint)");
     expect(module).toContain("storage.spaceId = spaceId");
     expect(allowlist).toContain("isAllowedNotificationEndpoint");
@@ -105,7 +105,7 @@ describe("Android mobile platform contract", () => {
     expect(service).not.toContain("private fun postCompletion(");
     expect(service).toContain('"rakazo://group-thread?groupId=');
     expect(service).toMatch(/&spaceId=\$\{Uri\.encode\(run\.spaceId\)\}/);
-    expect(service).toContain('putString("rakazo.spaceId", run.spaceId)');
+    expect(service).toContain('putString("smith.spaceId", run.spaceId)');
     expect(service).toMatch(/&threadId=\$\{Uri\.encode\(run\.threadId\)\}/);
     expect(service).toContain('if (run.groupId != null) put("groupId", run.groupId)');
     expect(service).toContain('if (message.optString("runId") != run.runId) continue');
@@ -117,7 +117,7 @@ describe("Android mobile platform contract", () => {
     const service = readFileSync(
       resolve(
         mobileRoot,
-        "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications/RakazoNotificationService.kt",
+        "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications/SmithNotificationService.kt",
       ),
       "utf8",
     );
@@ -130,7 +130,7 @@ describe("Android mobile platform contract", () => {
     expect(service).toMatch(
       /private fun showLive\(active: List<RunRecord>[\s\S]*val primary = active\.first\(\)/,
     );
-    expect(service).toContain('putString("rakazo.botId", run.botId)');
+    expect(service).toContain('putString("smith.botId", run.botId)');
     expect(service).toMatch(/if \(working\.isEmpty\(\)\) \{[\s\S]*stop\(\)[\s\S]*return[\s\S]*\}/);
   });
 
@@ -138,7 +138,7 @@ describe("Android mobile platform contract", () => {
     const service = readFileSync(
       resolve(
         mobileRoot,
-        "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications/RakazoNotificationService.kt",
+        "modules/rakazo-notifications/android/src/main/java/com/rakazo/notifications/SmithNotificationService.kt",
       ),
       "utf8",
     );

@@ -60,7 +60,7 @@ describe("right panel preferences", () => {
       setItem: (key: string, value: string) => entries.set(key, value),
     });
     const key = rightPanelStorageKey("user-a", "space-a", "bot", "bot-a");
-    expect(key).toBe("rakazo:right-panel-state:user-a:space-a:bot:bot-a");
+    expect(key).toBe("smith:right-panel-state:user-a:space-a:bot:bot-a");
     writeRightPanelState(key, "settings");
     writeRightPanelState(key, "create-group");
     expect(readRightPanelState(key)).toEqual({ panel: "settings" });

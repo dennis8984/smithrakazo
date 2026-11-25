@@ -196,7 +196,7 @@ function rememberOperationKey(runScope: string, entity: string, fact: string): s
     .update(`${runScope}\n${entity}\n${fact.trim()}`)
     .digest("hex")
     .slice(0, 48);
-  return `rakazo:${digest}`;
+  return `smith:${digest}`;
 }
 
 const wordSegmenter = new Intl.Segmenter("en", { granularity: "word" });
@@ -262,7 +262,7 @@ export class SerenityMemoryProvider implements SemanticMemoryProvider {
     request: SemanticMemoryRecallRequest,
     context: AdapterContext,
   ): Promise<SemanticMemoryResponse<SemanticMemoryResult[]>> {
-    // History compaction stays in Rakazo; Serenity is the durable brain only.
+    // History compaction stays in Smith; Serenity is the durable brain only.
     const entities = recallEntities(
       request.scope,
       request.botId,
@@ -322,7 +322,7 @@ export class SerenityMemoryProvider implements SemanticMemoryProvider {
       context.spaceId,
       this.connection.brainLabel,
     );
-    const provenance = `rakazo space:${context.spaceId} bot:${request.botId}`;
+    const provenance = `smith space:${context.spaceId} bot:${request.botId}`;
     const result = await rememberSerenity(request.content, provenance, this.connection, {
       entity,
       operationKey: rememberOperationKey(

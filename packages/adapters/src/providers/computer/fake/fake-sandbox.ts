@@ -156,7 +156,7 @@ export class FakeSandboxProvider implements SandboxProvider {
       url: await this.terminals.open(
         computer.id,
         request.controlToken,
-        workspacePath("/home/rakazo", request.cwd ?? ""),
+        workspacePath("/home/smith", request.cwd ?? ""),
       ),
     };
   }

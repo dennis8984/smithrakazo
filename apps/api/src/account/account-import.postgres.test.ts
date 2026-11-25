@@ -68,7 +68,7 @@ function sourceRecords(): AccountExportRecord[] {
       description: "",
       instructions: "",
       color: "#F5A03C",
-      avatarSet: "rakazo",
+      avatarSet: "smith",
       notifyOnFinish: true,
       pinned: false,
       position: 0,
@@ -317,7 +317,7 @@ describePostgres("account import (PostgreSQL)", () => {
   const actor: Actor = {
     userId,
     spaceId: baseSpaceId,
-    email: `${userId}@rakazo.test`,
+    email: `${userId}@smith.test`,
     isDeploymentOwner: false,
   };
   const stored = new Map<string, Uint8Array>();

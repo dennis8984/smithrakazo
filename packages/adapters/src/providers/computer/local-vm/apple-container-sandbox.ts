@@ -27,7 +27,7 @@ const CLI_TIMEOUT_MS = 60_000;
 const CREATE_TIMEOUT_MS = 15 * 60_000;
 const IMAGE_USER = "1000";
 const IMAGE_COMMAND = ["/usr/bin/env", "-u", "LD_PRELOAD", "/usr/local/bin/rakazo-computer"];
-const BOT_ID_LABEL = "rakazo.bot-id";
+const BOT_ID_LABEL = "smith.bot-id";
 const KIND = "local-vm";
 
 export interface AppleContainerSandboxOptions {
@@ -54,9 +54,9 @@ interface ContainerRecord {
  */
 export function localVmFirewall(gateway: string): string {
   if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(gateway)) throw new Error(`invalid VM gateway ${gateway}`);
-  return `add table inet rakazo
-delete table inet rakazo
-table inet rakazo {
+  return `add table inet smith
+delete table inet smith
+table inet smith {
   chain output {
     type filter hook output priority filter; policy accept;
     oif "lo" accept
@@ -128,7 +128,7 @@ export class AppleContainerSandboxProvider extends ImageComputerSandbox {
       if (existing) await this.remove(name).catch(() => {});
     }
     await this.removeOrphans(request.botId, request.providerRef, signal);
-    const name = `rakazo-${randomUUID()}`;
+    const name = `smith-${randomUUID()}`;
     try {
       await this.cliRun(["network", "create", name], signal);
       await this.cliRun(this.runArgs(name, request.botId), signal, {
@@ -251,7 +251,7 @@ export class AppleContainerSandboxProvider extends ImageComputerSandbox {
       }
     };
     await asRoot(["--interactive", name, "nft", "-f", "-"], localVmFirewall(gateway));
-    await asRoot([name, "nft", "list", "table", "inet", "rakazo"]);
+    await asRoot([name, "nft", "list", "table", "inet", "smith"]);
   }
 
   private assertOwner(record: ContainerRecord, name: string, botId: string) {

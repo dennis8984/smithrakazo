@@ -80,7 +80,7 @@ test("choose your own key or monthly credits, then add a one-time top-up", async
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `credit-choice-${stamp}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `credit-choice-${stamp}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -97,7 +97,7 @@ test("choose your own key or monthly credits, then add a one-time top-up", async
   });
   await page.route("**/rpc/billing/status", (route) => route.fulfill({ json: { json: status } }));
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Choose how to use Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Choose how to use Smith" })).toBeVisible();
   await expect(page.getByText("$10 / month", { exact: true })).toBeVisible();
   await expect(
     page.getByText("Works with your ChatGPT or Claude plan.", { exact: true }),
@@ -235,7 +235,7 @@ test("choose your own key or monthly credits, then add a one-time top-up", async
   await expect(page.getByText("Free plan ends Jan 15, 2030", { exact: true })).toBeVisible();
   await captureScreenshot(page, testInfo, "sidebar-free-plan-ends");
   await page.getByRole("button", { name: "Upgrade", exact: true }).click();
-  const plans = page.getByRole("dialog", { name: "Choose how to use Rakazo" });
+  const plans = page.getByRole("dialog", { name: "Choose how to use Smith" });
   await expect(plans.getByText("$10 / month", { exact: true })).toBeVisible();
   await expect(
     plans.getByRole("button", { name: "Subscribe with your own AI", exact: true }),
@@ -293,18 +293,18 @@ test("choose your own key or monthly credits, then add a one-time top-up", async
   });
   await captureScreenshot(page, testInfo, "billing-use-existing-credits");
   // Switching reloads the page; the URL keeps Billing open to show the result.
-  await existingCredits.getByRole("button", { name: "Use Rakazo credits", exact: true }).click();
+  await existingCredits.getByRole("button", { name: "Use Smith credits", exact: true }).click();
   const reactivated = page.getByTestId("user-settings");
   await expect(reactivated).toHaveAttribute("data-settings-section", "billing");
   await expect(reactivated.getByText("$12.00", { exact: true })).toBeVisible();
   await expect(
-    reactivated.getByRole("button", { name: "Use Rakazo credits", exact: true }),
+    reactivated.getByRole("button", { name: "Use Smith credits", exact: true }),
   ).toHaveCount(0);
   expect(purchase).toEqual({ amountCents: 5000, monthly: false });
 });
 
 test("delete an unpaid organization from the plan choice", async ({ page }, testInfo) => {
-  await signup(page, `org-paywall-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `org-paywall-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   const work = await rpc<{ id: string; defaultSpaceId: string }>(page, "organizations/create", {
     name: "Work",
@@ -323,7 +323,7 @@ test("delete an unpaid organization from the plan choice", async ({ page }, test
     });
   });
   await page.evaluate(
-    (spaceId) => window.localStorage.setItem("rakazo:space-id", spaceId),
+    (spaceId) => window.localStorage.setItem("smith:space-id", spaceId),
     work.defaultSpaceId,
   );
   await page.reload();
@@ -346,7 +346,7 @@ test("delete an unpaid organization from the plan choice", async ({ page }, test
 
 test("start the own-key plan billed yearly", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `byok-yearly-${stamp}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `byok-yearly-${stamp}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -380,12 +380,12 @@ test("start the own-key plan billed yearly", async ({ page }, testInfo) => {
     page.getByRole("button", { name: "Start 7-day free trial", exact: true }).click(),
   ]);
   // The checkout is mocked, so the paywall returns; waiting lets the reload's requests settle.
-  await expect(page.getByRole("heading", { name: "Choose how to use Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Choose how to use Smith" })).toBeVisible();
   expect(selected).toEqual({ funding: "byok", interval: "year" });
 });
 
 test("end an own-key trial early to get full computer hours", async ({ page }, testInfo) => {
-  await signup(page, `trial-end-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `trial-end-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -432,7 +432,7 @@ test("end an own-key trial early to get full computer hours", async ({ page }, t
 test("a cancelled trial explains its missing computer hours and offers renewal", async ({
   page,
 }, testInfo) => {
-  await signup(page, `trial-cancelled-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `trial-cancelled-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -473,7 +473,7 @@ test("a cancelled trial explains its missing computer hours and offers renewal",
 });
 
 test("switch a monthly own-key plan to yearly", async ({ page }, testInfo) => {
-  await signup(page, `byok-switch-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `byok-switch-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -518,7 +518,7 @@ test("switch a monthly own-key plan to yearly", async ({ page }, testInfo) => {
 });
 
 test("move an own-key plan to a bigger tier", async ({ page }, testInfo) => {
-  await signup(page, `byok-tier-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `byok-tier-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -604,7 +604,7 @@ test("move an own-key plan to a bigger tier", async ({ page }, testInfo) => {
 test("computers settings set each cloud computer's size within the plan", async ({
   page,
 }, testInfo) => {
-  await signup(page, `computer-size-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `computer-size-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();
@@ -690,7 +690,7 @@ test("computers settings set each cloud computer's size within the plan", async 
 test("yearly billing shows the monthly computer reset separately from renewal", async ({
   page,
 }, testInfo) => {
-  await signup(page, `annual-hours-${Date.now()}@rakazo.test`, "password12", "Demo Customer");
+  await signup(page, `annual-hours-${Date.now()}@smith.test`, "password12", "Demo Customer");
   await completeOnboarding(page);
   await page.route("**/api/auth/capabilities", async (route) => {
     const response = await route.fetch();

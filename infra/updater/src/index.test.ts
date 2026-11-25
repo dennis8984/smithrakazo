@@ -127,7 +127,7 @@ describe("updater HTTP surface", () => {
     const response = await createUpdaterApp(fixture.config).request("/apply", {
       method: "POST",
       headers: authorized,
-      body: JSON.stringify({ repoUrl: "https://github.com/someone/rakazo", branch: "main" }),
+      body: JSON.stringify({ repoUrl: "https://github.com/someone/smith", branch: "main" }),
     });
     expect(response.status).toBe(400);
     const payload = (await response.json()) as { error: string };
@@ -754,18 +754,18 @@ describe("child process environment", () => {
     // The child environment is rebuilt from an allowlist, so GIT_CONFIG_* set on the Compose
     // service never reaches git. Without these three, every git call exits 128 with "detected
     // dubious ownership" on the layout docs/self-host-production.md recommends.
-    const env = commandEnvironment({ RAKAZO_DEPLOY_DIR: "/srv/rakazo" });
+    const env = commandEnvironment({ RAKAZO_DEPLOY_DIR: "/srv/smith" });
     expect(env.GIT_CONFIG_COUNT).toBe("1");
     expect(env.GIT_CONFIG_KEY_0).toBe("safe.directory");
-    expect(env.GIT_CONFIG_VALUE_0).toBe("/srv/rakazo");
+    expect(env.GIT_CONFIG_VALUE_0).toBe("/srv/smith");
   });
 
   it("keeps the exemption scoped to the deployment directory, whoever calls it", () => {
     const env = commandEnvironment(
-      { RAKAZO_DEPLOY_DIR: "/opt/rakazo" },
+      { RAKAZO_DEPLOY_DIR: "/opt/smith" },
       { GIT_CONFIG_VALUE_0: "*", GIT_CONFIG_COUNT: "9" },
     );
-    expect(env.GIT_CONFIG_VALUE_0).toBe("/opt/rakazo");
+    expect(env.GIT_CONFIG_VALUE_0).toBe("/opt/smith");
     expect(env.GIT_CONFIG_COUNT).toBe("1");
   });
 

@@ -127,7 +127,7 @@ describe("leaving an organization", () => {
     expect(queryClient.getQueryData(spaceQueries("user-1", "home").me.queryKey())).toEqual({
       spaceId: "home",
     });
-    expect(items.has("rakazo:org-spaces")).toBe(false);
+    expect(items.has("smith:org-spaces")).toBe(false);
   });
 });
 

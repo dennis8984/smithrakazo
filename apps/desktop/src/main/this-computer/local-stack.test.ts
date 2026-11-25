@@ -80,7 +80,7 @@ describe("defaultSleep", () => {
 
 describe("stack locations", () => {
   it("keeps the compose project under user data", () => {
-    expect(stackDir("/data/rakazo")).toBe(path.join("/data/rakazo", "stack"));
+    expect(stackDir("/data/smith")).toBe(path.join("/data/smith", "stack"));
   });
 
   it("reads resources from the bundle when packaged and from the repo otherwise", () => {
@@ -381,11 +381,11 @@ describe("reduceStackState", () => {
   it("records why Docker is unavailable", () => {
     const state = reduceStackState(reduceStackState(start, { type: "check-start" }), {
       type: "docker-missing",
-      message: "Rakazo needs Docker to run on this computer.",
+      message: "Smith needs Docker to run on this computer.",
     });
     expect(state).toMatchObject({
       phase: "docker-missing",
-      message: "Rakazo needs Docker to run on this computer.",
+      message: "Smith needs Docker to run on this computer.",
     });
   });
 });
@@ -591,12 +591,12 @@ describe("LocalStackController", () => {
   it("keeps lifecycle commands off the standalone project despite environment overrides", async () => {
     const dir = path.join(root, "stack");
     await mkdir(dir, { recursive: true });
-    await writeFile(path.join(dir, STACK_ENV_FILE), "COMPOSE_PROJECT_NAME=rakazo\n");
-    const stack = controller({ env: { COMPOSE_PROJECT_NAME: "rakazo" } }, (args) =>
+    await writeFile(path.join(dir, STACK_ENV_FILE), "COMPOSE_PROJECT_NAME=smith\n");
+    const stack = controller({ env: { COMPOSE_PROJECT_NAME: "smith" } }, (args) =>
       args[7] === "up" ? { code: 1, stderr: "port is already allocated" } : ok(args),
     );
     expect((await stack.start()).phase).toBe("failed");
-    // A fresh process must stop the same desktop project without discovering or adopting rakazo.
+    // A fresh process must stop the same desktop project without discovering or adopting smith.
     expect((await controller().stop()).phase).toBe("idle");
     const commands = calls.filter(
       (call) => call.args[0] === "compose" && call.args[1] !== "version",
@@ -994,7 +994,7 @@ describe("LocalStackController", () => {
     const state = await stack.start();
     expect(state).toMatchObject({
       phase: "docker-missing",
-      message: "Rakazo needs Docker to run on this computer.",
+      message: "Smith needs Docker to run on this computer.",
     });
     expect(calls).toEqual([]);
     await expect(stat(path.join(root, "stack", STACK_ENV_FILE))).rejects.toThrow();
@@ -1071,7 +1071,7 @@ describe("LocalStackController", () => {
   it("names Docker Desktop when it is missing on macOS and Windows", async () => {
     const stack = controller({ platform: "darwin", exists: () => false });
     expect((await stack.start()).message).toBe(
-      "Rakazo needs Docker Desktop to run on this computer.",
+      "Smith needs Docker Desktop to run on this computer.",
     );
   });
 

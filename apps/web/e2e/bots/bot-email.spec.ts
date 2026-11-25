@@ -13,7 +13,7 @@ test("a bot gets its email address from its settings and lists it in the Vault",
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `bot-email-${stamp}@rakazo.test`, "password12", "Bot Email");
+  await signup(page, `bot-email-${stamp}@smith.test`, "password12", "Bot Email");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   await openBotPanel(page);
@@ -23,12 +23,12 @@ test("a bot gets its email address from its settings and lists it in the Vault",
   await page.getByRole("menuitem", { name: "Get an email address" }).click();
   await header.getByRole("textbox", { name: "Email address" }).fill(`scout-${stamp}`);
   await header.getByRole("button", { name: "Claim" }).click();
-  const address = `scout-${stamp}@bots.rakazo.test`;
+  const address = `scout-${stamp}@bots.smith.test`;
   await expect(header.getByText(address)).toBeVisible();
   await expect(header.getByRole("button", { name: `Copy ${address}` })).toBeVisible();
   await captureScreenshot(page, testInfo, "bot-email-address");
   expect(await rpc(page, "bots/emailAddress", { botId })).toEqual({
-    domain: "bots.rakazo.test",
+    domain: "bots.smith.test",
     address,
   });
 
@@ -42,7 +42,7 @@ test("a bot email claim stays in its shell's Space when another tab switches Spa
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `bot-email-space-${stamp}@rakazo.test`, "password12", "Bot Email Space");
+  await signup(page, `bot-email-space-${stamp}@smith.test`, "password12", "Bot Email Space");
   await completeOnboarding(page);
 
   const home = await rpc<{ id: string }>(page, "spaces/create", { name: "Email Home" });
@@ -60,7 +60,7 @@ test("a bot email claim stays in its shell's Space when another tab switches Spa
   const scout = await createBot(home.id, "Scout");
   const otherBot = await createBot(other.id, "Other");
 
-  await page.evaluate((id) => localStorage.setItem("rakazo:space-id", id), home.id);
+  await page.evaluate((id) => localStorage.setItem("smith:space-id", id), home.id);
   await page.goto(`/app/${scout.id}`);
   await expect(page.getByPlaceholder("Message Scout")).toBeVisible();
   await openBotPanel(page);
@@ -70,14 +70,14 @@ test("a bot email claim stays in its shell's Space when another tab switches Spa
   await expect(getAddress).toBeVisible();
 
   const otherTab = await page.context().newPage();
-  await otherTab.addInitScript((id) => localStorage.setItem("rakazo:space-id", id), other.id);
+  await otherTab.addInitScript((id) => localStorage.setItem("smith:space-id", id), other.id);
   await otherTab.goto(`/app/${otherBot.id}`);
   await expect(otherTab.getByPlaceholder("Message Other")).toBeVisible();
 
   await getAddress.click();
   await header.getByRole("textbox", { name: "Email address" }).fill(`scout-${stamp}`);
   await header.getByRole("button", { name: "Claim" }).click();
-  const address = `scout-${stamp}@bots.rakazo.test`;
+  const address = `scout-${stamp}@bots.smith.test`;
   await expect(header.getByText(address)).toBeVisible();
   await captureScreenshot(page, testInfo, "bot-email-space-claim");
   const response = await page.request.post("/rpc/bots/emailAddress", {

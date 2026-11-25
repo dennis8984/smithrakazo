@@ -24,7 +24,7 @@ function demuxLogs(data: Buffer): string {
  * skipping it: a silent skip reads as a verified check. The reachability half
  * still skips on a host without outbound IPv6, after the subnet allocation is
  * verified. Needs the computer image (RAKAZO_COMPUTER_IMAGE or
- * rakazo/computer:local, which ships python3).
+ * smith/computer:local, which ships python3).
  */
 it.skipIf(process.env.VERIFY_DOCKER_COMPUTER_IPV6 !== "1")(
   "gives a computer network IPv6 that reaches IPv6-only destinations",
@@ -64,10 +64,10 @@ socket.create_connection(addrs[0][4][:2], timeout=10).close()
 print("V6_OK")`;
       try {
         container = await docker.createContainer({
-          Image: process.env.RAKAZO_COMPUTER_IMAGE ?? "rakazo/computer:local",
+          Image: process.env.RAKAZO_COMPUTER_IMAGE ?? "smith/computer:local",
           Entrypoint: ["python3", "-c", probe],
           Cmd: [],
-          Labels: { "rakazo.ipv6Probe": "true" },
+          Labels: { "smith.ipv6Probe": "true" },
           HostConfig: {
             NetworkMode: options.Name,
             CapDrop: ["ALL"],

@@ -29,7 +29,7 @@ async function routeScreen(page: Page) {
 test("a retrying computer can be closed and keeps booting without a stale error label", async ({
   page,
 }, testInfo) => {
-  await signup(page, `boot-leave-${Date.now()}@rakazo.test`, "password12", "Boot Leave");
+  await signup(page, `boot-leave-${Date.now()}@smith.test`, "password12", "Boot Leave");
   await completeOnboarding(page);
   await routeScreen(page);
   let staleError = true;
@@ -86,7 +86,7 @@ test("the preview shows progress while a running computer's screen connects", as
 }, testInfo) => {
   await signup(
     page,
-    `screen-connecting-${Date.now()}@rakazo.test`,
+    `screen-connecting-${Date.now()}@smith.test`,
     "password12",
     "Screen Connecting",
   );
@@ -110,7 +110,7 @@ test("the preview shows progress while a running computer's screen connects", as
 });
 
 test("opening a computer refreshes a stale booting snapshot", async ({ page }, testInfo) => {
-  await signup(page, `boot-stale-${Date.now()}@rakazo.test`, "password12", "Boot Stale");
+  await signup(page, `boot-stale-${Date.now()}@smith.test`, "password12", "Boot Stale");
   await completeOnboarding(page);
   await rpc(page, "computer/boot", { botId: activeBotId(page) });
   await routeScreen(page);
@@ -143,7 +143,7 @@ test("opening a computer refreshes a stale booting snapshot", async ({ page }, t
 test("opening a computer the server reports as booting does not start a second boot", async ({
   page,
 }) => {
-  await signup(page, `boot-server-${Date.now()}@rakazo.test`, "password12", "Boot Server");
+  await signup(page, `boot-server-${Date.now()}@smith.test`, "password12", "Boot Server");
   await completeOnboarding(page);
   // Another tab or the phone started this computer; the server reports it booting.
   await page.route("**/rpc/threads/get", async (route) => {
@@ -171,7 +171,7 @@ test("opening a computer the server reports as booting does not start a second b
 });
 
 test("Retry screen clears a failed takeover on a running computer", async ({ page }) => {
-  await signup(page, `boot-takeover-${Date.now()}@rakazo.test`, "password12", "Boot Takeover");
+  await signup(page, `boot-takeover-${Date.now()}@smith.test`, "password12", "Boot Takeover");
   await completeOnboarding(page);
   const botId = activeBotId(page);
   await rpc(page, "computer/boot", { botId });

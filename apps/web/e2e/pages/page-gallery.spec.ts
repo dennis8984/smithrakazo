@@ -28,7 +28,7 @@ async function openGallery(page: Page, lang: string) {
     lang,
   });
   await page.setContent(
-    `<!doctype html><html><body><div id="root"></div><script>${runtime.replaceAll("</script", "<\\/script")}</script><script>RakazoPage.mount(${boot.replaceAll("<", "\\u003c")});</script></body></html>`,
+    `<!doctype html><html><body><div id="root"></div><script>${runtime.replaceAll("</script", "<\\/script")}</script><script>SmithPage.mount(${boot.replaceAll("<", "\\u003c")});</script></body></html>`,
   );
   const track = page.locator(".rk-gallery-track");
   await expect(track).toBeVisible();

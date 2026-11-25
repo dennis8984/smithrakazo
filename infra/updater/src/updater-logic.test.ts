@@ -11,7 +11,7 @@ import {
 } from "./updater-logic.js";
 
 const base = {
-  RAKAZO_DEPLOY_DIR: "/srv/rakazo",
+  RAKAZO_DEPLOY_DIR: "/srv/smith",
   RAKAZO_UPDATER_TOKEN: "fake-review-updater-token-000000000000",
 } as const;
 
@@ -19,7 +19,7 @@ describe("resolveUpdaterConfig", () => {
   it("derives the compose file, env file, and defaults from the deployment directory", () => {
     const config = resolveUpdaterConfig({ ...base });
     expect(config).toMatchObject({
-      deployDir: "/srv/rakazo",
+      deployDir: "/srv/smith",
       composeFiles: [`/srv/rakazo/${DEFAULT_COMPOSE_FILE}`],
       updateServices: ["api", "worker", "web"],
       envFile: "/srv/rakazo/.env",
@@ -94,7 +94,7 @@ describe("resolveUpdaterConfig", () => {
 
   it("refuses a deployment directory that is missing or relative", () => {
     expect(() => resolveUpdaterConfig({ RAKAZO_UPDATER_TOKEN: "t" })).toThrow(/RAKAZO_DEPLOY_DIR/);
-    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_DEPLOY_DIR: "srv/rakazo" })).toThrow(
+    expect(() => resolveUpdaterConfig({ ...base, RAKAZO_DEPLOY_DIR: "srv/smith" })).toThrow(
       /RAKAZO_DEPLOY_DIR/,
     );
   });

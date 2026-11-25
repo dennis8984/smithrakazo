@@ -19,7 +19,7 @@ suite("personal connection removal preserves credit models (PostgreSQL)", () => 
   const actor: Actor = {
     userId,
     spaceId: spaceIds[0]!,
-    email: `credit-disconnect-${stamp}@rakazo.test`,
+    email: `credit-disconnect-${stamp}@smith.test`,
     isDeploymentOwner: false,
   };
   let db: ReturnType<typeof createDb>;

@@ -1,6 +1,6 @@
 {
   "platforms": ["apple"],
   "apple": {
-    "modules": ["RakazoComposerKeyboardModule"]
+    "modules": ["SmithComposerKeyboardModule"]
   }
 }

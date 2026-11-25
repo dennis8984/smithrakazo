@@ -16,7 +16,7 @@ dbTests("plan choice funnel", () => {
   const actor: Actor = {
     userId,
     spaceId,
-    email: `funnel-${stamp}@rakazo.test`,
+    email: `funnel-${stamp}@smith.test`,
     isDeploymentOwner: false,
   };
   const provider = new BillingEmulator({ modelCredits: true, namespace: `funnel-${stamp}` });

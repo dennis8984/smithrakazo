@@ -173,7 +173,7 @@ it("copies a new invite link, and shows it only when copying fails", async () =>
   Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true });
   await renderWith({ spaceName: "Home", members: [owner], canManage: true });
   rpc.spaces.invites.create.mockResolvedValue({
-    url: "https://rakazo.example/invite/token-1",
+    url: "https://smith.example/invite/token-1",
     expiresAt: new Date().toISOString(),
   });
   const linkField = () => host.querySelector<HTMLInputElement>('input[aria-label="Invite link"]');
@@ -181,12 +181,12 @@ it("copies a new invite link, and shows it only when copying fails", async () =>
   await act(async () => buttonNamed("Copy invite link")?.click());
   expect(rpc.spaces.invites.create).toHaveBeenCalledWith({ spaceId: space.id });
   await vi.waitFor(() => expect(toast).toHaveBeenCalledWith("Invite link copied"));
-  expect(writeText).toHaveBeenCalledWith("https://rakazo.example/invite/token-1");
+  expect(writeText).toHaveBeenCalledWith("https://smith.example/invite/token-1");
   expect(linkField()).toBeNull();
 
   writeText.mockRejectedValueOnce(new Error("denied"));
   await act(async () => buttonNamed("Copy invite link")?.click());
-  await vi.waitFor(() => expect(linkField()?.value).toBe("https://rakazo.example/invite/token-1"));
+  await vi.waitFor(() => expect(linkField()?.value).toBe("https://smith.example/invite/token-1"));
   expect(linkField()?.readOnly).toBe(true);
 });
 
@@ -282,11 +282,11 @@ it("adds someone from the organization, and keeps the link for anyone else", asy
   );
 
   rpc.spaces.invites.create.mockResolvedValue({
-    url: "https://rakazo.example/invite/token-2",
+    url: "https://smith.example/invite/token-2",
     expiresAt: new Date().toISOString(),
   });
   await act(async () => buttonNamed("Copy invite link")?.click());
-  expect(writeText).toHaveBeenCalledWith("https://rakazo.example/invite/token-2");
+  expect(writeText).toHaveBeenCalledWith("https://smith.example/invite/token-2");
 });
 
 it("never shows a Space's people once another Space is open, even after an add", async () => {
@@ -352,7 +352,7 @@ it("tags guests, and says before inviting someone by email that they are outside
   expect(host.textContent).toContain(notice);
 
   rpc.spaces.invites.create.mockResolvedValue({
-    url: "https://rakazo.example/invite/token-3",
+    url: "https://smith.example/invite/token-3",
     expiresAt: new Date().toISOString(),
     emailed: true,
   });
@@ -398,7 +398,7 @@ it("never brings back a link whose copy finishes after the invites were cancelle
   Object.defineProperty(navigator, "clipboard", { value: { writeText }, configurable: true });
   await renderWith({ spaceName: "Home", members: [owner], canManage: true, openInvites: 1 });
   rpc.spaces.invites.create.mockResolvedValue({
-    url: "https://rakazo.example/invite/token-4",
+    url: "https://smith.example/invite/token-4",
     expiresAt: new Date().toISOString(),
   });
   rpc.spaces.invites.cancel.mockResolvedValue({ ok: true });

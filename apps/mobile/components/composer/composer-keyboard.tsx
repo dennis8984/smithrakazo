@@ -12,8 +12,8 @@ type ComposerKeyboardProps = {
   onHardwareKey: (event: { nativeEvent: { key: string } }) => void;
 };
 
-const NativeComposerKeyboard = requireOptionalNativeModule("RakazoComposerKeyboard")
-  ? requireNativeView<ComposerKeyboardProps>("RakazoComposerKeyboard")
+const NativeComposerKeyboard = requireOptionalNativeModule("SmithComposerKeyboard")
+  ? requireNativeView<ComposerKeyboardProps>("SmithComposerKeyboard")
   : null;
 
 export const supportsComposerHardwareEnter = NativeComposerKeyboard !== null;

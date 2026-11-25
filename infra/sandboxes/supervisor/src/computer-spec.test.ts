@@ -80,8 +80,8 @@ describe("graphical computer spec", () => {
 
   it("resolves the computer image tag outside Compose", () => {
     // Explicit "" stands for unset, so exported RAKAZO_COMPUTER_IMAGE* values cannot leak in.
-    expect(resolveComputerImage("", "")).toBe("rakazo/computer:local");
-    expect(resolveComputerImage("", "edge")).toBe("rakazo/computer:local");
+    expect(resolveComputerImage("", "")).toBe("smith/computer:local");
+    expect(resolveComputerImage("", "edge")).toBe("smith/computer:local");
     expect(resolveComputerImage("ghcr.io/elie222/rakazo/computer", "edge")).toBe(
       "ghcr.io/elie222/rakazo/computer:edge",
     );
@@ -95,8 +95,8 @@ describe("graphical computer spec", () => {
     expect(resolveComputerImage("registry.example.com:5000/rakazo/computer", "v1.2.3")).toBe(
       "registry.example.com:5000/rakazo/computer:v1.2.3",
     );
-    expect(resolveComputerImage("rakazo/computer@sha256:abc", "edge")).toBe(
-      "rakazo/computer@sha256:abc",
+    expect(resolveComputerImage("smith/computer@sha256:abc", "edge")).toBe(
+      "smith/computer@sha256:abc",
     );
   });
 
@@ -121,11 +121,11 @@ describe("graphical computer spec", () => {
       homePath: "/var/rakazo/homes/abc",
       networkMode: "rakazo_default",
     });
-    expect(options.Image).toBe("rakazo/computer:local");
+    expect(options.Image).toBe("smith/computer:local");
     expect(options.Image).not.toMatch(/alpine/);
     expect(options).not.toHaveProperty("Entrypoint");
     expect(JSON.stringify(options)).not.toMatch(/sleep/);
-    expect(options.HostConfig.Binds).toEqual(["/var/rakazo/homes/abc:/home/rakazo"]);
+    expect(options.HostConfig.Binds).toEqual(["/var/rakazo/homes/abc:/home/smith"]);
     expect(options.Env).toContain(
       "PATH=/home/rakazo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     );
@@ -362,14 +362,14 @@ describe("graphical computer spec", () => {
     ];
     expect(containerCreateOptions(base).HostConfig.Mounts).toBeUndefined();
     const bound = containerCreateOptions({ ...base, mounts }).HostConfig;
-    expect(bound.Binds).toEqual(["/data/x:/home/rakazo"]);
+    expect(bound.Binds).toEqual(["/data/x:/home/smith"]);
     expect(bound.Mounts).toEqual(expected);
     const volume = containerCreateOptions({
       ...base,
       homeVolume: { name: "appdata", subpath: "homes/x" },
       mounts,
     }).HostConfig;
-    expect(volume.Mounts?.[0]).toMatchObject({ Type: "volume", Target: "/home/rakazo" });
+    expect(volume.Mounts?.[0]).toMatchObject({ Type: "volume", Target: "/home/smith" });
     expect(volume.Mounts?.slice(1)).toEqual(expected);
   });
 
@@ -377,7 +377,7 @@ describe("graphical computer spec", () => {
     const desired = resolveComputerMounts(
       "/srv/docs:/mnt/docs:ro,/srv/shares:/mnt/shares:rw:rslave",
     );
-    const home = { Type: "bind", Source: "/data/x", Target: "/home/rakazo" };
+    const home = { Type: "bind", Source: "/data/x", Target: "/home/smith" };
     const docs = { Type: "bind", Source: "/srv/docs", Target: "/mnt/docs", ReadOnly: true };
     const shares = {
       Type: "bind",
@@ -464,7 +464,7 @@ describe("graphical computer spec", () => {
     for (const source of [
       "/opt/rakazo/data",
       "/opt/rakazo/data/homes/bot",
-      "/opt/rakazo",
+      "/opt/smith",
       "/home/op",
     ])
       expect(() => resolveComputerMounts(`${source}:/mnt/x`, protectedPaths)).toThrow(
@@ -501,7 +501,7 @@ describe("graphical computer spec", () => {
       Driver: "bridge",
       CheckDuplicate: true,
       EnableIPv6: true,
-      Labels: { "rakazo.computerOwner": "owner", "rakazo.botId": "bot_1" },
+      Labels: { "rakazo.computerOwner": "owner", "smith.botId": "bot_1" },
     });
     expect(open).not.toHaveProperty("Options");
 
@@ -624,8 +624,8 @@ describe("graphical computer spec", () => {
     expect(isRegistryQualifiedImage("docker.io/rakazo/computer:edge")).toBe(true);
     expect(isRegistryQualifiedImage("Registry/rakazo/computer:edge")).toBe(true);
     expect(isRegistryQualifiedImage("rakazO/computer:edge")).toBe(true);
-    expect(isRegistryQualifiedImage("rakazo/computer:local")).toBe(false);
-    expect(isRegistryQualifiedImage("rakazo/computer@sha256:0123")).toBe(false);
+    expect(isRegistryQualifiedImage("smith/computer:local")).toBe(false);
+    expect(isRegistryQualifiedImage("smith/computer@sha256:0123")).toBe(false);
     expect(isRegistryQualifiedImage("computer:local")).toBe(false);
   });
 
@@ -671,7 +671,7 @@ describe("graphical computer spec", () => {
     const dockerfile = readFileSync(path.join(root, "Dockerfile"), "utf8");
     // COPY --chmod=644 gives the directories it creates that mode too, and the browser user
     // then cannot enter them, so the browser silently runs without the policy.
-    const created = dockerfile.match(/mkdir -p (\/etc\/rakazo\/fluxbox [^\\\n]+)/)?.[1]?.split(" ");
+    const created = dockerfile.match(/mkdir -p (\/etc\/smith\/fluxbox [^\\\n]+)/)?.[1]?.split(" ");
     const targets = [...dockerfile.matchAll(/COPY --chmod=644 browser-policy\.json (\S+)\//g)].map(
       (match) => match[1],
     );
@@ -2512,7 +2512,7 @@ describe("computer resource limits", () => {
 
   const createInput = {
     name: "rakazo-bot-x",
-    image: "rakazo/computer:local",
+    image: "smith/computer:local",
     botId: "bot-x",
     spaceId: "ws",
     homePath: "/var/rakazo/homes/bot-x",
@@ -2631,7 +2631,7 @@ describe("computer home storage", () => {
       {
         Type: "volume",
         Source: "example_appdata",
-        Target: "/home/rakazo",
+        Target: "/home/smith",
         VolumeOptions: { NoCopy: true, Subpath: "homes/bot" },
       },
     ]);
@@ -2713,7 +2713,7 @@ describe("computer home storage", () => {
       "utf8",
     );
     expect(start).toMatch(
-      /while true; do\s+\/usr\/local\/bin\/rakazo-computer-control\s+sleep 1\s+done >\/tmp\/rakazo\/control\.log 2>&1 &/,
+      /while true; do\s+\/usr\/local\/bin\/rakazo-computer-control\s+sleep 1\s+done >\/tmp\/smith\/control\.log 2>&1 &/,
     );
     // PID 1 terminates both the background loop and its current child on stop.
     expect(start).toContain("kill -TERM -- -1");
@@ -2727,7 +2727,7 @@ describe("computer home storage", () => {
         "utf8",
       );
       const loop = start.match(
-        /while true; do[\s\S]*?done >\/tmp\/rakazo\/control\.log 2>&1 &/,
+        /while true; do[\s\S]*?done >\/tmp\/smith\/control\.log 2>&1 &/,
       )?.[0];
       expect(loop).toBeDefined();
       const result = spawnSync(

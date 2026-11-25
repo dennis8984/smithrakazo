@@ -1,6 +1,6 @@
-# Contributing to Rakazo
+# Contributing to Smith
 
-Thanks for helping improve Rakazo. Keep changes focused and testable.
+Thanks for helping improve Smith. Keep changes focused and testable.
 
 ## Run locally
 

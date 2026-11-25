@@ -11,7 +11,7 @@ for (const platform of ["darwin", "linux"]) {
   test(`host computer choice explains file access on ${platform}`, async ({ page }, testInfo) => {
     await signup(
       page,
-      `host-choice-${platform}-${Date.now()}@rakazo.test`,
+      `host-choice-${platform}-${Date.now()}@smith.test`,
       "password12",
       "Host Tester",
     );
@@ -111,7 +111,7 @@ for (const platform of ["darwin", "linux"]) {
 }
 
 test("a failed host choice does not show on the next opening", async ({ page }, testInfo) => {
-  await signup(page, `host-choice-reopen-${Date.now()}@rakazo.test`, "password12", "Host Tester");
+  await signup(page, `host-choice-reopen-${Date.now()}@smith.test`, "password12", "Host Tester");
   await completeOnboarding(page);
   await page.addInitScript(() => {
     Object.defineProperty(window, "rakazoDesktop", {
@@ -169,7 +169,7 @@ test("a failed host choice does not show on the next opening", async ({ page }, 
 });
 
 test("a saved host choice closes when refreshing the profile fails", async ({ page }) => {
-  await signup(page, `host-choice-refresh-${Date.now()}@rakazo.test`, "password12", "Host Tester");
+  await signup(page, `host-choice-refresh-${Date.now()}@smith.test`, "password12", "Host Tester");
   await completeOnboarding(page);
   await page.addInitScript(() => {
     Object.defineProperty(window, "rakazoDesktop", {

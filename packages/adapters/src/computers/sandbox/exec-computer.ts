@@ -26,7 +26,7 @@ import { sandboxCommandArgv } from "./sandbox-command-environment.js";
 import { abortedCommandEvents } from "./sandbox-command-events.js";
 
 /** The published computer image's user home, which is also the portable workspace. */
-export const COMPUTER_IMAGE_WORKSPACE = "/home/rakazo";
+export const COMPUTER_IMAGE_WORKSPACE = "/home/smith";
 const WORKSPACE = COMPUTER_IMAGE_WORKSPACE;
 const MAX_FILE_BYTES = 64 * 1024 * 1024;
 /** How long the `timeout` wrapper waits after SIGTERM before it kills the command's process group. */

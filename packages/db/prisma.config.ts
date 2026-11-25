@@ -20,6 +20,6 @@ export default defineConfig({
     url:
       process.env.DATABASE_MIGRATION_URL ||
       process.env.DATABASE_URL ||
-      "postgres://rakazo:rakazo@127.0.0.1:5433/rakazo",
+      "postgres://smith:smith@127.0.0.1:5433/smith",
   },
 });

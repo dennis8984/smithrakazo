@@ -7,12 +7,12 @@ import { BotAvatar } from "./bot-avatar.js";
 beforeEach(() => vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true));
 afterEach(() => vi.unstubAllGlobals());
 
-it("gives another bot a fresh Rakazo avatar, so its new loops join the shared clock", () => {
+it("gives another bot a fresh Smith avatar, so its new loops join the shared clock", () => {
   const container = document.createElement("div");
   const root = createRoot(container);
   // Small enough to stay still, which keeps motion observers out of jsdom.
   const avatar = (identity: string, color: string) => (
-    <BotAvatar avatarSet="rakazo" identity={identity} color={color} size={20} />
+    <BotAvatar avatarSet="smith" identity={identity} color={color} size={20} />
   );
   act(() => root.render(avatar("bot-a", "#8B5CF6")));
   const first = container.querySelector("svg");

@@ -30,9 +30,9 @@ import {
 export const USER_DEVICE_FORWARD_PATH = "/internal/user-devices/request";
 export const USER_DEVICE_DISCONNECT_PATH = "/internal/user-devices/disconnect";
 export const USER_DEVICE_OFFLINE_MESSAGE =
-  "Your computer is not connected. Open the Rakazo desktop app.";
+  "Your computer is not connected. Open the Smith desktop app.";
 const DISCONNECTED_MESSAGE = "Your computer disconnected. Check the result before retrying.";
-const REVOKED_MESSAGE = "This computer was disconnected from Rakazo.";
+const REVOKED_MESSAGE = "This computer was disconnected from Smith.";
 export const USER_DEVICE_LIMIT = 10;
 const PING_INTERVAL_MS = 25_000;
 /** A connection row older than this has lost its holding process. */
@@ -61,7 +61,7 @@ export function userDeviceBearer(header: string | null | undefined): string | nu
 
 /** API and worker share ENCRYPTION_KEY; forwarding uses a key derived from it for this purpose only. */
 export function userDeviceForwardSecret(encryptionKey: string): string {
-  return createHmac("sha256", encryptionKey).update("rakazo:user-device-forward:v1").digest("hex");
+  return createHmac("sha256", encryptionKey).update("smith:user-device-forward:v1").digest("hex");
 }
 
 export function validUserDeviceForwardSecret(expected: string, header: string | null | undefined) {

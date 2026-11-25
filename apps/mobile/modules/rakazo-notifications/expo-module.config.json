@@ -1,10 +1,10 @@
 {
   "platforms": ["android", "apple"],
   "android": {
-    "modules": ["com.rakazo.notifications.RakazoNotificationsModule"]
+    "modules": ["com.rakazo.notifications.SmithNotificationsModule"]
   },
   "apple": {
-    "modules": ["RakazoNotificationsModule"],
-    "appDelegateSubscribers": ["RakazoCallsSubscriber"]
+    "modules": ["SmithNotificationsModule"],
+    "appDelegateSubscribers": ["SmithCallsSubscriber"]
   }
 }

@@ -25,9 +25,9 @@ test("another member's routine is read-only, can be turned on, and can be copied
   const stamp = Date.now();
   const owner = await (await browser.newContext()).newPage();
   const member = await (await browser.newContext()).newPage();
-  await signup(owner, `routine-owner-${stamp}@rakazo.test`, "password12", "Dana Owner");
+  await signup(owner, `routine-owner-${stamp}@smith.test`, "password12", "Dana Owner");
   await completeOnboarding(owner);
-  await signup(member, `routine-member-${stamp}@rakazo.test`, "password12", "Ada Member");
+  await signup(member, `routine-member-${stamp}@smith.test`, "password12", "Ada Member");
   await completeOnboarding(member);
 
   const home = await rpc<{ id: string }>(owner, "spaces/create", { name: "Home" });
@@ -51,7 +51,7 @@ test("another member's routine is read-only, can be turned on, and can be copied
     active: false,
   });
 
-  await member.evaluate((id) => localStorage.setItem("rakazo:space-id", id), home.id);
+  await member.evaluate((id) => localStorage.setItem("smith:space-id", id), home.id);
   await member.goto(`/app/${bot.id}`);
   await expect(member.getByPlaceholder("Message Family")).toBeVisible();
   await openBotPanel(member);

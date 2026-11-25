@@ -87,7 +87,7 @@ export function workspacePath(root: string, relative: string): string {
 }
 
 /** The workspace path bots see on every computer. */
-const VIRTUAL_HOME = "/home/rakazo";
+const VIRTUAL_HOME = "/home/smith";
 
 /**
  * The directory a command runs in. Empty, ".", "/", the workspace root and any home alias
@@ -191,10 +191,10 @@ function isTeamRootPath(value: string): boolean {
   );
 }
 
-// A leading ~ or /home/rakazo means the workspace root, the same as a leading /.
+// A leading ~ or /home/smith means the workspace root, the same as a leading /.
 function expandHomePrefix(value: string): string {
   return value.replace(
-    /^(?:~|[\\/]home[\\/]rakazo)([\\/]|$)/,
+    /^(?:~|[\\/]home[\\/]smith)([\\/]|$)/,
     (_, separator: string) => separator || "/",
   );
 }

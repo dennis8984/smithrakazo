@@ -19,7 +19,7 @@ import { COMPUTER_IMAGE_CONTEXT_FILES } from "./computer-spec.js";
 const context = path.resolve(import.meta.dirname, "../../computer");
 const noContext = path.join(import.meta.dirname, "no-such-computer-context");
 const published = "ghcr.io/elie222/rakazo/computer:edge";
-const local = "rakazo/computer:local";
+const local = "smith/computer:local";
 const image = { "container.image.name": published };
 const progressLine = '{"status":"Downloading"}\n';
 const errorLine = (message: string) => `${JSON.stringify({ errorDetail: { message } })}\n`;
@@ -144,7 +144,7 @@ describe("computer image", () => {
     expect(fake.docker.buildImage).not.toHaveBeenCalled();
   });
 
-  it.each([local, "rakazo/computer:topology"])(
+  it.each([local, "smith/computer:topology"])(
     "builds a missing %s with BuildKit from the full context",
     async (name) => {
       const fake = fakeDocker();
@@ -161,7 +161,7 @@ describe("computer image", () => {
     "rakazo-computer-brave:latest",
     "myorg/rakazo-computer:edge",
     "computer:local",
-    `rakazo/computer@sha256:${"0".repeat(64)}`,
+    `smith/computer@sha256:${"0".repeat(64)}`,
   ])("never replaces the custom image %s with a stock build", async (name) => {
     const fake = fakeDocker();
     await expect(fake.ensure(name, context)()).rejects.toThrow(new Error(missing(name)));

@@ -26,9 +26,9 @@ async function main() {
     );
   if (unknown.length)
     throw new Error(
-      "Usage: computer-replay.ts [--image=rakazo/computer:local] [--subnet=unused-private-CIDR] [--live --record=new-fixture.json]",
+      "Usage: computer-replay.ts [--image=smith/computer:local] [--subnet=unused-private-CIDR] [--live --record=new-fixture.json]",
     );
-  const image = imageArg?.slice("--image=".length) || "rakazo/computer:local";
+  const image = imageArg?.slice("--image=".length) || "smith/computer:local";
   let captureKey: string | undefined;
   if (live) {
     loadRootEnv();

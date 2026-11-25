@@ -12,7 +12,7 @@ import {
 test("opening and releasing the computer keep a view-only stream; a failed release can be retried", async ({
   page,
 }, testInfo) => {
-  await signup(page, `view-only-${Date.now()}@rakazo.test`, "password12", "Computer");
+  await signup(page, `view-only-${Date.now()}@smith.test`, "password12", "Computer");
   await completeOnboarding(page);
   let takeovers = 0;
   page.on("request", (request) => {
@@ -77,7 +77,7 @@ test("a person can take control while a Team bot works", async ({ page }, testIn
 
   await signup(
     page,
-    `active-team-control-${stamp}@rakazo.test`,
+    `active-team-control-${stamp}@smith.test`,
     "password12",
     "Active Team Control",
   );

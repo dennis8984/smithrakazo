@@ -63,10 +63,10 @@ jobs:
           id="$(jq -er '.[0].id' "$RUNNER_TEMP/build.json")"
           url="$(jq -er '.[0].artifacts.applicationArchiveUrl // .[0].artifacts.buildUrl' "$RUNNER_TEMP/build.json")"
           [[ "$url" == https://* ]]
-          curl --fail --location --silent --show-error --output "$RUNNER_TEMP/rakazo.aab" "$url"
+          curl --fail --location --silent --show-error --output "$RUNNER_TEMP/smith.aab" "$url"
           echo "id=$id" >> "$GITHUB_OUTPUT"
       - name: Check bundle optimization
-        run: python3 .github/scripts/check-android-bundle.py "$RUNNER_TEMP/rakazo.aab"
+        run: python3 .github/scripts/check-android-bundle.py "$RUNNER_TEMP/smith.aab"
       # EAS holds the upload key and the Google service account. Nothing private is written to Git.
       - name: Submit to Google Play production
         working-directory: apps/mobile

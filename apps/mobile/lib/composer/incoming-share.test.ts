@@ -294,8 +294,8 @@ describe("incoming share on iOS", () => {
     expect(state.remove).not.toHaveBeenCalled();
   });
   it("uses the build's configured app group when extra.iosAppGroup is set", () => {
-    state.iosAppGroup = "group.com.example.rakazo";
-    state.containerGroup = "group.com.example.rakazo";
+    state.iosAppGroup = "group.com.example.smith";
+    state.containerGroup = "group.com.example.smith";
     state.container!.files = ["old.png", "new.png"];
     receiveIos(["new.png"], true);
     expect(state.remove.mock.calls).toEqual([[`${GROUP}old.png`]]);

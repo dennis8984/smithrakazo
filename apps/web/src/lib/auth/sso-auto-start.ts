@@ -4,7 +4,7 @@
  * person straight back in after they signed out. Holds the time it was set, and is cleared only by a
  * session created after it: a tab still on the session being signed out must not clear it.
  */
-const SSO_AUTO_START_HELD_KEY = "rakazo.sso-auto-start-held";
+const SSO_AUTO_START_HELD_KEY = "smith.sso-auto-start-held";
 /** Server and browser clocks differ; a session this much older than the hold still clears it. */
 const CLOCK_SKEW_MS = 5 * 60_000;
 

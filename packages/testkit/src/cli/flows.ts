@@ -75,7 +75,7 @@ async function main() {
       SANDBOX_PROVIDER: sandbox.provider,
       ...(sandbox.provider === "docker"
         ? {
-            RAKAZO_COMPUTER_IMAGE: process.env.RAKAZO_COMPUTER_IMAGE || "rakazo/computer:local",
+            RAKAZO_COMPUTER_IMAGE: process.env.RAKAZO_COMPUTER_IMAGE || "smith/computer:local",
             SANDBOX_CONTROL_VIA_LOOPBACK: "true",
             SANDBOX_SCREEN_NETWORK: "published",
             SANDBOX_SCREEN_HOST: "127.0.0.1",

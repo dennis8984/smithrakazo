@@ -18,14 +18,14 @@ const packageJson = JSON.parse(
 
 describe("desktop package metadata", () => {
   it("shares the customer-facing name between Electron and electron-builder", () => {
-    expect(packageJson.productName).toBe("Rakazo");
+    expect(packageJson.productName).toBe("Smith");
     expect(packageJson.build?.productName).toBeUndefined();
   });
 
   it("registers the rakazo:// protocol scheme for packaged installers", () => {
     expect(packageJson.build?.protocols).toContainEqual({
-      name: "Rakazo",
-      schemes: ["rakazo"],
+      name: "Smith",
+      schemes: ["smith"],
     });
   });
 

@@ -14,14 +14,14 @@
 
 ## กู้คืน
 
-สำหรับ backup ที่สร้างด้วย `scripts/backup.sh` ให้ใช้ฐานข้อมูลว่างใน Compose stack สำหรับ development ทั้งสองสคริปต์ใช้ค่า `POSTGRES_USER` และ `POSTGRES_DB` ของคอนเทนเนอร์ Postgres (ค่าเริ่มต้นใน Compose คือ `rakazo`) สคริปต์จะตรวจและแตก archive ของ homes ในโฟลเดอร์สะอาดข้าง ๆ ก่อนแตะฐานข้อมูล จากนั้นหยุด API, worker และ supervisor และจะปฏิเสธถ้า `data/` เป็น symlink หรือไม่ใช่โฟลเดอร์ ก่อนรันสคริปต์ ให้หยุด bot computers และ process อื่นที่เขียนลงฐานข้อมูลหรือโฟลเดอร์นี้
+สำหรับ backup ที่สร้างด้วย `scripts/backup.sh` ให้ใช้ฐานข้อมูลว่างใน Compose stack สำหรับ development ทั้งสองสคริปต์ใช้ค่า `POSTGRES_USER` และ `POSTGRES_DB` ของคอนเทนเนอร์ Postgres (ค่าเริ่มต้นใน Compose คือ `smith`) สคริปต์จะตรวจและแตก archive ของ homes ในโฟลเดอร์สะอาดข้าง ๆ ก่อนแตะฐานข้อมูล จากนั้นหยุด API, worker และ supervisor และจะปฏิเสธถ้า `data/` เป็น symlink หรือไม่ใช่โฟลเดอร์ ก่อนรันสคริปต์ ให้หยุด bot computers และ process อื่นที่เขียนลงฐานข้อมูลหรือโฟลเดอร์นี้
 สคริปต์รอให้ Postgres รับการเชื่อมต่อได้นานสุด 60 วินาที ถ้าไม่สำเร็จ สคริปต์จะพิมพ์คำสั่งสำหรับอ่าน log ของ Postgres และปล่อยให้ตัวเขียนข้อมูลหยุดอยู่
 
 การ import SQL รันใน transaction เดียวและหยุดที่ error แรก รวมถึงกรณีชนกับตารางที่มีอยู่แล้ว archive ที่ไม่ถูกต้องหรือ import ที่ล้มเหลวจะไม่แตะโฟลเดอร์ข้อมูลปัจจุบัน เมื่อ SQL สำเร็จ สคริปต์จะย้ายโฟลเดอร์ปัจจุบันไปที่ `data.rollback.<random>/data` พิมพ์ path นั้น และแทนที่ `data/` ด้วยโฟลเดอร์ที่บันทึกไว้ ไฟล์ที่ไม่มีใน snapshot จะไม่เหลือในโฟลเดอร์ที่ใช้งาน ถ้าไม่มี archive ของ homes หรือเป็น archive ว่างจากการไม่รวม homes `data/` จะไม่เปลี่ยน ส่วน archive ที่มีโฟลเดอร์ `data/` ว่างจะแทนที่ด้วยโฟลเดอร์ว่าง
 
 บริการของแอปจะเริ่มก็ต่อเมื่อ import และการแทนที่โฟลเดอร์สำเร็จ เมื่อเริ่มหยุดตัวเขียนข้อมูลแล้ว ถ้าเกิดความล้มเหลวหรือถูกขัดจังหวะภายหลัง สคริปต์จะพยายามหยุด API, worker และ supervisor อีกครั้ง รวมถึงบริการที่เริ่มไปแล้วก่อนการเริ่มขั้นสุดท้ายจะล้มเหลว สคริปต์คงสถานะความล้มเหลวเดิมไว้แม้การเก็บกวาดจะล้มเหลว ถ้า Docker หยุดบริการไม่ได้ ให้หยุดเองก่อนกู้คืน
 
-ความล้มเหลวหลัง commit SQL แล้วไม่สามารถ rollback ฐานข้อมูลอัตโนมัติได้ ให้แอปหยุดอยู่ เก็บทั้งสองโฟลเดอร์ไว้ และกู้ฐานข้อมูลที่ตรงกันก่อนย้ายโฟลเดอร์ rollback กลับไปเป็น `data/` ถ้าต้องการ rollback แบบนั้น ให้เก็บ backup ฐานข้อมูลแยกจากก่อนการกู้คืนไว้ สคริปต์นี้ไม่ใช้ `rakazo.dump` แบบ custom format หรือ `appdata.tgz` ของ snapshot production
+ความล้มเหลวหลัง commit SQL แล้วไม่สามารถ rollback ฐานข้อมูลอัตโนมัติได้ ให้แอปหยุดอยู่ เก็บทั้งสองโฟลเดอร์ไว้ และกู้ฐานข้อมูลที่ตรงกันก่อนย้ายโฟลเดอร์ rollback กลับไปเป็น `data/` ถ้าต้องการ rollback แบบนั้น ให้เก็บ backup ฐานข้อมูลแยกจากก่อนการกู้คืนไว้ สคริปต์นี้ไม่ใช้ `smith.dump` แบบ custom format หรือ `appdata.tgz` ของ snapshot production
 
 ```bash
 ./scripts/restore.sh backups/<stamp>
@@ -29,9 +29,9 @@
 
 ## สำรองบน production
 
-สำหรับ production แบบ VM เดียว ให้ติดตั้ง `infra/compose/backup-prod.sh` เป็น `/usr/local/sbin/rakazo-backup` และเปิด `rakazo-backup.timer` ที่ให้มา สคริปต์สร้าง dump ของ Postgres แบบ custom format ที่ตรวจแล้ว พร้อม archive ข้อมูลแอปไว้ใต้ `/var/backups/rakazo` ด้วยสิทธิ์ `0600` เก็บ snapshot ที่ตรวจแล้วได้สูงสุด `RAKAZO_BACKUP_KEEP` ชุด (ค่าเริ่มต้น `3`) ภายใต้ขีดจำกัด `RAKAZO_BACKUP_MAX_GB` (ค่าเริ่มต้น `50` GiB) และกันพื้นที่ว่างไว้ `RAKAZO_BACKUP_MIN_FREE_GB` (ค่าเริ่มต้น `5` GiB) ก่อนเริ่ม สคริปต์ลบ snapshot ที่ค้างไม่ครบและประวัติที่เกิน แล้วประเมินพื้นที่โดยปรับขนาด archive appdata ครั้งก่อนตามการเติบโตของข้อมูล appdata บวกขนาด dump ฐานข้อมูลครั้งก่อน snapshot ที่ไม่มี metadata ขนาดต้นทางจะใช้ขนาดต้นทางจริงในการประเมินครั้งแรก ถ้าพื้นที่ไม่พอ สคริปต์จะเก็บ snapshot ที่ตรวจแล้วล่าสุดไว้ จำกัดขนาดไฟล์ผลลัพธ์ และลบ snapshot ที่ไม่ครบของการรันที่ล้มเหลว snapshot ที่อยู่ในเครื่องอย่างเดียวจะหายไปพร้อมเครื่อง ให้เข้ารหัสและคัดลอกไปเก็บนอกไซต์ตามด้านล่าง
+สำหรับ production แบบ VM เดียว ให้ติดตั้ง `infra/compose/backup-prod.sh` เป็น `/usr/local/sbin/rakazo-backup` และเปิด `rakazo-backup.timer` ที่ให้มา สคริปต์สร้าง dump ของ Postgres แบบ custom format ที่ตรวจแล้ว พร้อม archive ข้อมูลแอปไว้ใต้ `/var/backups/smith` ด้วยสิทธิ์ `0600` เก็บ snapshot ที่ตรวจแล้วได้สูงสุด `RAKAZO_BACKUP_KEEP` ชุด (ค่าเริ่มต้น `3`) ภายใต้ขีดจำกัด `RAKAZO_BACKUP_MAX_GB` (ค่าเริ่มต้น `50` GiB) และกันพื้นที่ว่างไว้ `RAKAZO_BACKUP_MIN_FREE_GB` (ค่าเริ่มต้น `5` GiB) ก่อนเริ่ม สคริปต์ลบ snapshot ที่ค้างไม่ครบและประวัติที่เกิน แล้วประเมินพื้นที่โดยปรับขนาด archive appdata ครั้งก่อนตามการเติบโตของข้อมูล appdata บวกขนาด dump ฐานข้อมูลครั้งก่อน snapshot ที่ไม่มี metadata ขนาดต้นทางจะใช้ขนาดต้นทางจริงในการประเมินครั้งแรก ถ้าพื้นที่ไม่พอ สคริปต์จะเก็บ snapshot ที่ตรวจแล้วล่าสุดไว้ จำกัดขนาดไฟล์ผลลัพธ์ และลบ snapshot ที่ไม่ครบของการรันที่ล้มเหลว snapshot ที่อยู่ในเครื่องอย่างเดียวจะหายไปพร้อมเครื่อง ให้เข้ารหัสและคัดลอกไปเก็บนอกไซต์ตามด้านล่าง
 
-การสำรองตามกำหนดเวลาใช้ `/srv/rakazo` เป็นค่าเริ่มต้น ถ้า deploy ไว้ที่อื่น ให้ตั้ง `RAKAZO_DEPLOY_DIR=/absolute/path/to/checkout` ใน `/etc/rakazo/backup.env` ที่ root เป็นเจ้าของ (สิทธิ์ `0600`) service อ่านไฟล์ทางเลือกนี้ทุกครั้งที่รัน และสคริปต์ใช้ `.env` กับไฟล์ production Compose ของ checkout ที่เลือก ถ้าเริ่ม stack ด้วย `-p` แบบกำหนดเอง ให้ตั้ง `COMPOSE_PROJECT_NAME` เดียวกันในไฟล์นั้น และตั้งค่าการเก็บรักษาและพื้นที่ไว้ที่นั่นด้วย เมื่ออัปเดตการติดตั้งเดิม ให้ติดตั้งสคริปต์และ unit ใหม่ แล้วรัน `systemctl daemon-reload` การ pull repository ไม่ได้อัปเดตสำเนาใน `/usr/local/sbin`
+การสำรองตามกำหนดเวลาใช้ `/srv/smith` เป็นค่าเริ่มต้น ถ้า deploy ไว้ที่อื่น ให้ตั้ง `RAKAZO_DEPLOY_DIR=/absolute/path/to/checkout` ใน `/etc/rakazo/backup.env` ที่ root เป็นเจ้าของ (สิทธิ์ `0600`) service อ่านไฟล์ทางเลือกนี้ทุกครั้งที่รัน และสคริปต์ใช้ `.env` กับไฟล์ production Compose ของ checkout ที่เลือก ถ้าเริ่ม stack ด้วย `-p` แบบกำหนดเอง ให้ตั้ง `COMPOSE_PROJECT_NAME` เดียวกันในไฟล์นั้น และตั้งค่าการเก็บรักษาและพื้นที่ไว้ที่นั่นด้วย เมื่ออัปเดตการติดตั้งเดิม ให้ติดตั้งสคริปต์และ unit ใหม่ แล้วรัน `systemctl daemon-reload` การ pull repository ไม่ได้อัปเดตสำเนาใน `/usr/local/sbin`
 
 ### การติดตั้งด้วย published images
 
@@ -46,7 +46,7 @@ sudo chmod 755 /usr/local/sbin/rakazo-backup
 for unit in rakazo-backup.service rakazo-backup.timer; do
   sudo curl -fsSL "$base/systemd/$unit" -o "/etc/systemd/system/$unit"
 done
-sudo install -d -m 700 /etc/rakazo
+sudo install -d -m 700 /etc/smith
 printf '\nRAKAZO_DEPLOY_DIR=%s\n' "$PWD" | sudo tee -a /etc/rakazo/backup.env >/dev/null
 sudo chmod 600 /etc/rakazo/backup.env
 sudo systemctl daemon-reload
@@ -80,7 +80,7 @@ RAKAZO_BACKUP_AGE_RECIPIENTS=age1exampleprimaryrecipient age1examplerecoveryreci
 # or: RAKAZO_BACKUP_AGE_RECIPIENTS_FILE=/etc/rakazo/backup-recipients.txt
 ```
 
-เมื่อตั้ง recipients แล้ว แต่ละ snapshot จะมี `rakazo.dump.age`, `appdata.tgz.age`, `SOURCE_SIZE_KB` และ `SHA256SUMS` `pg_dump` และ `tar` ส่งข้อมูลเข้า age โดยตรง plaintext จึงไม่เคยลงดิสก์ การตรวจสอบไม่ต้องใช้ private key: `pg_restore --list` และ `tar -t` อ่าน plaintext stream เดียวกันระหว่างเข้ารหัส ทุกไฟล์ต้องมี age header และ checksum ครอบคลุมไฟล์ที่เข้ารหัสแล้ว
+เมื่อตั้ง recipients แล้ว แต่ละ snapshot จะมี `smith.dump.age`, `appdata.tgz.age`, `SOURCE_SIZE_KB` และ `SHA256SUMS` `pg_dump` และ `tar` ส่งข้อมูลเข้า age โดยตรง plaintext จึงไม่เคยลงดิสก์ การตรวจสอบไม่ต้องใช้ private key: `pg_restore --list` และ `tar -t` อ่าน plaintext stream เดียวกันระหว่างเข้ารหัส ทุกไฟล์ต้องมี age header และ checksum ครอบคลุมไฟล์ที่เข้ารหัสแล้ว
 
 ถ้าไม่มี recipients backup จะเป็น plaintext เหมือนเดิม เขียนคำเตือนใน log และ host check จะแจ้งเตือนว่า backup ล่าสุดไม่ได้เข้ารหัส หลังจาก backup เข้ารหัสครั้งแรก การรันโดยไม่มี recipients จะ fail แทนที่จะเขียน plaintext เงียบ ๆ ตั้ง `RAKAZO_BACKUP_ALLOW_PLAINTEXT=1` เฉพาะเมื่อตั้งใจยอมรับ plaintext ค่านี้ยังปิดการแจ้งเตือนของ host check ด้วย
 
@@ -116,10 +116,10 @@ umask 077
 COMPOSE="sudo docker compose --env-file .env -f infra/compose/docker-compose.prod.yml"
 VOLUME=rakazo-prod_appdata
 
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE stop api worker web"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE stop api worker web"
 ROLLBACK_DUMP="$(mktemp "$PWD/before-restore.dump.XXXXXX")"
 if ! ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'pg_dump -Fc -U \"\$POSTGRES_USER\" \"\$POSTGRES_DB\"'" \
+  "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'pg_dump -Fc -U \"\$POSTGRES_USER\" \"\$POSTGRES_DB\"'" \
   > "$ROLLBACK_DUMP"; then
   printf 'Pre-restore dump failed. Do not use the partial file at %s. Keep the application stopped.\n' "$ROLLBACK_DUMP" >&2
   exit 1
@@ -133,13 +133,13 @@ printf 'Record this rollback pair:\nDatabase dump: %s\nData tree on deploy@app.e
 age -d -i rakazo-backup.key <stamp>/appdata.tgz.age | ssh deploy@app.example.com \
   "sudo tar -xzf - --numeric-owner -C '$RESTORE/staged'"
 
-age -d -i rakazo-backup.key <stamp>/rakazo.dump.age | ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'pg_restore --clean --if-exists --no-owner --exit-on-error --single-transaction -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\"'"
+age -d -i rakazo-backup.key <stamp>/smith.dump.age | ssh deploy@app.example.com \
+  "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'pg_restore --clean --if-exists --no-owner --exit-on-error --single-transaction -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\"'"
 
 ssh deploy@app.example.com \
   "sudo mv -- '$APPDATA' '$RESTORE/previous' && sudo mv -- '$RESTORE/staged' '$APPDATA'"
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE up -d --force-recreate --wait --pull never api worker web"
+  "cd /srv/smith && $COMPOSE up -d --force-recreate --wait --pull never api worker web"
 ```
 
 archive ต้องแตกสำเร็จก่อนเริ่ม import SQL โฟลเดอร์ staging ที่สะอาดและโฟลเดอร์ rollback อยู่ข้างโฟลเดอร์ข้อมูลที่ใช้งานของ volume บน filesystem เดียวกัน การสร้างคอนเทนเนอร์ของแอปใหม่ทำให้คอนเทนเนอร์ mount โฟลเดอร์ที่แทนที่แล้ว `--single-transaction` rollback error ของ SQL ได้ แต่ไม่ครอบคลุมการสลับโฟลเดอร์ หลัง import commit แล้ว ถ้าการสลับหรือการเริ่มระบบล้มเหลว ฐานข้อมูลกับโฟลเดอร์ที่ใช้งานอาจไม่ตรงกัน ถ้าเริ่มระบบไม่สำเร็จ ให้หยุด `api worker web` อีกครั้ง รวมถึงคอนเทนเนอร์ที่เริ่มไปแล้ว
@@ -148,13 +148,13 @@ archive ต้องแตกสำเร็จก่อนเริ่ม impor
 
 จด path ของ database dump ที่พิมพ์ออกมาคู่กับ path ของโฟลเดอร์ `$RESTORE/previous` บนเครื่องปลายทางที่ตรงกัน เก็บคู่นั้นไว้จนกว่าจะตรวจแอปที่กู้คืนแล้ว อย่าลบ Docker volume ขณะยังต้องใช้โฟลเดอร์ rollback ถ้าต้อง rollback หลัง SQL commit แล้ว ให้แอปหยุดอยู่ และกู้ `$ROLLBACK_DUMP` ที่จดไว้ลงฐานข้อมูลว่างที่สร้างใหม่ ย้ายโฟลเดอร์ที่ใช้งานซึ่งล้มเหลวไปไว้ path อื่นเพื่อตรวจสอบ แล้วย้ายโฟลเดอร์ `$RESTORE/previous` ที่จดไว้ของรอบนั้นกลับไปที่ `$APPDATA` และสร้างคอนเทนเนอร์ของแอปใหม่ ถ้าการย้ายโฟลเดอร์ครั้งแรกล้มเหลว โฟลเดอร์เดิมยังอยู่ที่ `$APPDATA` ตรวจทั้งสอง path ก่อนย้ายอะไร การสลับโฟลเดอร์อย่างเดียวไม่ได้ rollback ฐานข้อมูล
 
-snapshot แบบ plaintext ใช้ `cat` แทน `age -d` และใช้ชื่อไฟล์ `rakazo.dump` และ `appdata.tgz` ใช้ขั้นตอนโฟลเดอร์สะอาดแบบเดียวกัน
+snapshot แบบ plaintext ใช้ `cat` แทน `age -d` และใช้ชื่อไฟล์ `smith.dump` และ `appdata.tgz` ใช้ขั้นตอนโฟลเดอร์สะอาดแบบเดียวกัน
 
 ถ้ากู้คืนลง stack ใหม่ ให้สร้าง role `rakazo_app` ก่อนทำขั้นตอนด้านบน dump มีการ grant ให้ role นี้ และบน stack ใหม่มีแค่ขั้น migration ที่จะสร้าง role นี้ `pg_restore` จึงหยุดถ้าไม่มี อย่ารัน migration ก่อน เพราะตารางที่ใหม่กว่า snapshot จะขวางการกู้คืน การเริ่มระบบขั้นสุดท้ายของขั้นตอนจะ apply migration ให้เอง
 
 ```bash
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE up -d --wait postgres"
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -c \"CREATE ROLE rakazo_app NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE\"'"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE up -d --wait postgres"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -c \"CREATE ROLE rakazo_app NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE\"'"
 ```
 
 ## กู้คืนไปยังช่วงเวลาที่ต้องการ
@@ -204,22 +204,22 @@ sudo infra/compose/pitr.sh drill < rakazo-backup.key
 
 ```bash
 COMPOSE="sudo docker compose --env-file .env -f infra/compose/docker-compose.prod.yml"
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE stop api worker web pitr postgres"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE stop api worker web pitr postgres"
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && sudo infra/compose/pitr.sh restore '2026-01-31 09:41:00+00' rakazo-prod_postgres" \
+  "cd /srv/smith && sudo infra/compose/pitr.sh restore '2026-01-31 09:41:00+00' rakazo-prod_postgres" \
   < rakazo-backup.key
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE up -d --wait"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE up -d --wait"
 ```
 
 การกู้คืนใช้ base backup ล่าสุดที่เสร็จก่อนเวลาเป้าหมาย replay WAL จนถึงเวลานั้น แล้ว promote ผลลัพธ์ ซึ่งเริ่ม timeline ใหม่ และ sidecar จะทำ base backup ใหม่ให้ timeline นั้น หยุด deploy จาก CI ระหว่างกู้คืน เมื่อตรวจฐานข้อมูลที่กู้คืนแล้วว่าถูกต้อง ให้ลบ cluster เก่า:
 
 ```bash
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE run --rm --no-deps --entrypoint sh postgres -c 'rm -rf \"\$PGDATA\".before-restore-*'"
+  "cd /srv/smith && $COMPOSE run --rm --no-deps --entrypoint sh postgres -c 'rm -rf \"\$PGDATA\".before-restore-*'"
 ```
 
 ถ้าจะปิด ให้เอา `pitr` ออกจาก `COMPOSE_PROFILES` แล้วรัน `sudo infra/compose/pitr.sh disable` คำสั่งนี้ลบ sidecar, slot (Postgres จึงเลิกเก็บ WAL ไว้ให้), login และค่าที่ตั้งไว้ backup ที่อัปโหลดแล้วยังอยู่ใน bucket
 
 ## ย้ายบัญชีระหว่างการติดตั้ง
 
-ถ้าจะย้ายจาก Rakazo Cloud มาที่การติดตั้งของคุณเอง (หรือกลับ) ให้ใช้ **ตั้งค่า (Settings) → Export data** บนการติดตั้งเดิม และ **Import data** บนการติดตั้งใหม่ ไฟล์ export เป็น zip ของทุก space ที่คุณเป็นสมาชิก: bot, แชท, ไฟล์, memory, routine, skill, ไฟล์ใน workspace ของ bot และใน space ที่คุณเป็นเจ้าของจะรวม board ด้วย เนื้อหาใน zip ถูกถอดรหัสแล้ว จึงต้องเก็บเป็นความลับ การ import จะสร้าง space ใหม่ที่คุณเป็นเจ้าของ routine จะถูกปิดไว้ credentials และการเชื่อมต่อ (key ของโมเดล แอป MCP server และ messaging) ไม่ถูกย้ายไปด้วย ให้เชื่อมใหม่บนการติดตั้งใหม่ ไฟล์ workspace ที่ใหญ่เกิน 8 MiB จะไม่ถูกรวม ไฟล์ export ต้องเล็กกว่า 4 GiB และการอัปโหลดต้องเสร็จภายใน request timeout ของเซิร์ฟเวอร์ (ค่าเริ่มต้น 5 นาทีใน Node)
+ถ้าจะย้ายจาก Smith Cloud มาที่การติดตั้งของคุณเอง (หรือกลับ) ให้ใช้ **ตั้งค่า (Settings) → Export data** บนการติดตั้งเดิม และ **Import data** บนการติดตั้งใหม่ ไฟล์ export เป็น zip ของทุก space ที่คุณเป็นสมาชิก: bot, แชท, ไฟล์, memory, routine, skill, ไฟล์ใน workspace ของ bot และใน space ที่คุณเป็นเจ้าของจะรวม board ด้วย เนื้อหาใน zip ถูกถอดรหัสแล้ว จึงต้องเก็บเป็นความลับ การ import จะสร้าง space ใหม่ที่คุณเป็นเจ้าของ routine จะถูกปิดไว้ credentials และการเชื่อมต่อ (key ของโมเดล แอป MCP server และ messaging) ไม่ถูกย้ายไปด้วย ให้เชื่อมใหม่บนการติดตั้งใหม่ ไฟล์ workspace ที่ใหญ่เกิน 8 MiB จะไม่ถูกรวม ไฟล์ export ต้องเล็กกว่า 4 GiB และการอัปโหลดต้องเสร็จภายใน request timeout ของเซิร์ฟเวอร์ (ค่าเริ่มต้น 5 นาทีใน Node)

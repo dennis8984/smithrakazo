@@ -51,7 +51,7 @@ const TEST_NETWORK = {
 };
 
 afterEach(() => {
-  installLogger(createLogger({ service: "rakazo", level: "off", sinks: [] }));
+  installLogger(createLogger({ service: "smith", level: "off", sinks: [] }));
 });
 
 function recordWarnings() {

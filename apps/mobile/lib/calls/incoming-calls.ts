@@ -46,7 +46,7 @@ type NativeCalls = {
   clearIncomingCalls(): Promise<void>;
   addListener(name: string, callback: () => void): { remove(): void };
 };
-const module = requireOptionalNativeModule<NativeCalls>("RakazoNotifications");
+const module = requireOptionalNativeModule<NativeCalls>("SmithNotifications");
 const native = module?.incomingState ? module : null;
 const listeners = new Set<() => void>();
 let calls: IncomingBotCall[] = [];

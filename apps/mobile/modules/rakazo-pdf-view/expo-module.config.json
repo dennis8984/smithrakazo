@@ -1,9 +1,9 @@
 {
   "platforms": ["apple", "android"],
   "apple": {
-    "modules": ["RakazoPdfViewModule"]
+    "modules": ["SmithPdfViewModule"]
   },
   "android": {
-    "modules": ["com.rakazo.pdfview.RakazoPdfViewModule"]
+    "modules": ["com.rakazo.pdfview.SmithPdfViewModule"]
   }
 }

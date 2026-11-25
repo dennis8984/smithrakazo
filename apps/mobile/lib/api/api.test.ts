@@ -68,8 +68,8 @@ describe("mobile API requests", () => {
 
   it("rejects an expired account session without sending the selected Space", async () => {
     const store = new Map<string, string>([
-      ["rakazo.session_token", "expired-token"],
-      ["rakazo.space_id", "space-a"],
+      ["smith.session_token", "expired-token"],
+      ["smith.space_id", "space-a"],
     ]);
     mockSecureStore(store);
     await loadApiBase();
@@ -85,14 +85,14 @@ describe("mobile API requests", () => {
       expect(result.body).toEqual({});
       expect(fetchMock.mock.calls[0]?.[1]?.headers).not.toHaveProperty("x-rakazo-space-id");
       expect(rejected).toHaveBeenCalledOnce();
-      expect(store.has("rakazo.session_token")).toBe(false);
+      expect(store.has("smith.session_token")).toBe(false);
     } finally {
       unsubscribe();
     }
   });
 
   it.each(["session", "server"])("ignores an account 401 after the %s changes", async (change) => {
-    const store = new Map<string, string>([["rakazo.session_token", "old-token"]]);
+    const store = new Map<string, string>([["smith.session_token", "old-token"]]);
     mockSecureStore(store);
     await loadApiBase();
     const originalBase = (await captureApiRequestContext(null)).apiBase;
@@ -108,7 +108,7 @@ describe("mobile API requests", () => {
       resolveFetch(new Response(null, { status: 401 }));
       await pending;
       expect(rejected).not.toHaveBeenCalled();
-      expect(store.get("rakazo.session_token")).toBe(
+      expect(store.get("smith.session_token")).toBe(
         change === "session" ? "new-token" : "old-token",
       );
     } finally {
@@ -160,7 +160,7 @@ describe("mobile API requests", () => {
   it.each(["malformed", "oversized"])(
     "rejects the session even with a %s account 401 body",
     async (body) => {
-      const store = new Map<string, string>([["rakazo.session_token", "expired-token"]]);
+      const store = new Map<string, string>([["smith.session_token", "expired-token"]]);
       mockSecureStore(store);
       await loadApiBase();
       const rejected = vi.fn();
@@ -177,7 +177,7 @@ describe("mobile API requests", () => {
       try {
         await expect(listUserDevices()).rejects.toThrow("Could not load");
         expect(rejected).toHaveBeenCalledOnce();
-        expect(store.has("rakazo.session_token")).toBe(false);
+        expect(store.has("smith.session_token")).toBe(false);
       } finally {
         unsubscribe();
       }
@@ -497,7 +497,7 @@ describe("mobile API requests", () => {
     ).rejects.toThrow("Model server returned 401 Unauthorized");
     expect(fetchMock).toHaveBeenCalledOnce();
     expect(selectedSpaceId()).toBe("space-support");
-    expect(store.get("rakazo.space_id")).toBe("space-support");
+    expect(store.get("smith.space_id")).toBe("space-support");
   });
 
   it("blocks mobile message and attachment submission when AI sharing is declined", async () => {
@@ -782,9 +782,9 @@ describe("mobile API requests", () => {
   });
 
   it("keeps the Space selection when unauthorized is a session failure", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-support"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-support"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => {
-      if (key === "rakazo.session_token") return "expired-token";
+      if (key === "smith.session_token") return "expired-token";
       return storage.get(key) ?? null;
     });
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
@@ -804,14 +804,14 @@ describe("mobile API requests", () => {
 
     await expect(rpc("spaces/list")).rejects.toThrow("Unauthorized");
     expect(selectedSpaceId()).toBe("space-support");
-    expect(storage.get("rakazo.space_id")).toBe("space-support");
+    expect(storage.get("smith.space_id")).toBe("space-support");
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls[0]![1].headers["x-rakazo-space-id"]).toBe("space-support");
     expect(fetchMock.mock.calls[1]![1].headers["x-rakazo-space-id"]).toBeUndefined();
   });
 
   it("keeps a Space selected during unauthorized recovery when the retry succeeds", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-deleted"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-deleted"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => storage.get(key) ?? null);
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
       storage.delete(key);
@@ -838,11 +838,11 @@ describe("mobile API requests", () => {
 
     await expect(pending).resolves.toEqual({ spaces: [] });
     expect(selectedSpaceId()).toBe("space-new");
-    expect(storage.get("rakazo.space_id")).toBe("space-new");
+    expect(storage.get("smith.space_id")).toBe("space-new");
   });
 
   it("keeps a Space selected during unauthorized recovery when the retry fails", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-deleted"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-deleted"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => storage.get(key) ?? null);
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
       storage.delete(key);
@@ -869,11 +869,11 @@ describe("mobile API requests", () => {
 
     await expect(pending).rejects.toThrow("Unauthorized");
     expect(selectedSpaceId()).toBe("space-new");
-    expect(storage.get("rakazo.space_id")).toBe("space-new");
+    expect(storage.get("smith.space_id")).toBe("space-new");
   });
 
   it("ignores a 401 from a request sent before the user switched Spaces", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-a"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-a"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => storage.get(key) ?? null);
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
       storage.delete(key);
@@ -902,11 +902,11 @@ describe("mobile API requests", () => {
     await expect(stale).rejects.toThrow("Unauthorized");
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(selectedSpaceId()).toBe("space-b");
-    expect(storage.get("rakazo.space_id")).toBe("space-b");
+    expect(storage.get("smith.space_id")).toBe("space-b");
   });
 
   it("ignores a stale 401 after switching away and back to the same Space", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-a"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-a"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => storage.get(key) ?? null);
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
       storage.delete(key);
@@ -937,11 +937,11 @@ describe("mobile API requests", () => {
     await expect(stale).rejects.toThrow("Unauthorized");
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(selectedSpaceId()).toBe("space-a");
-    expect(storage.get("rakazo.space_id")).toBe("space-a");
+    expect(storage.get("smith.space_id")).toBe("space-a");
   });
 
   it("clears a session the server rejects and reports it once", async () => {
-    const store = new Map<string, string>([["rakazo.session_token", "revoked-token"]]);
+    const store = new Map<string, string>([["smith.session_token", "revoked-token"]]);
     mockSecureStore(store);
     await loadApiBase();
     const rejected = vi.fn();
@@ -958,11 +958,11 @@ describe("mobile API requests", () => {
         expect(rpc("bots/list")).rejects.toThrow("Unauthorized"),
       ]);
       expect(rejected).toHaveBeenCalledOnce();
-      expect(store.has("rakazo.session_token")).toBe(false);
+      expect(store.has("smith.session_token")).toBe(false);
       expect(
         vi
           .mocked(SecureStore.deleteItemAsync)
-          .mock.calls.filter(([key]) => key === "rakazo.session_token"),
+          .mock.calls.filter(([key]) => key === "smith.session_token"),
       ).toHaveLength(1);
 
       // Later requests carry no session and cannot reject it again.
@@ -975,7 +975,7 @@ describe("mobile API requests", () => {
   });
 
   it("keeps the unsent queue of a session the server rejects", async () => {
-    const store = new Map<string, string>([["rakazo.session_token", "revoked-token"]]);
+    const store = new Map<string, string>([["smith.session_token", "revoked-token"]]);
     mockSecureStore(store);
     await loadApiBase();
     const clear = vi.fn();
@@ -997,14 +997,14 @@ describe("mobile API requests", () => {
     // those messages before a sign-in deletes them.
     await expect(rpc("bots/list")).rejects.toThrow("Unauthorized");
 
-    expect(store.has("rakazo.session_token")).toBe(false);
+    expect(store.has("smith.session_token")).toBe(false);
     expect(clear).not.toHaveBeenCalled();
   });
 
   it("checks Space access before treating a 401 as a rejected session", async () => {
     const store = new Map<string, string>([
-      ["rakazo.session_token", "session-token"],
-      ["rakazo.space_id", "space-removed"],
+      ["smith.session_token", "session-token"],
+      ["smith.space_id", "space-removed"],
     ]);
     mockSecureStore(store);
     await loadApiBase();
@@ -1019,7 +1019,7 @@ describe("mobile API requests", () => {
     try {
       await expect(rpc("spaces/list")).resolves.toEqual({ spaces: [] });
       expect(rejected).not.toHaveBeenCalled();
-      expect(store.get("rakazo.session_token")).toBe("session-token");
+      expect(store.get("smith.session_token")).toBe("session-token");
       expect(selectedSpaceId()).toBeNull();
 
       // When the probe without a Space is refused too, the session itself is
@@ -1031,7 +1031,7 @@ describe("mobile API requests", () => {
       await expect(rpc("bots/list")).rejects.toThrow("Unauthorized");
       expect(fetchMock.mock.calls[3]![1].headers["x-rakazo-space-id"]).toBeUndefined();
       expect(rejected).toHaveBeenCalledOnce();
-      expect(store.has("rakazo.session_token")).toBe(false);
+      expect(store.has("smith.session_token")).toBe(false);
       expect(selectedSpaceId()).toBe("space-support");
     } finally {
       unsubscribe();
@@ -1047,7 +1047,7 @@ describe("mobile API requests", () => {
       async () => rpcErrorResponse(400, "BAD_REQUEST", "Model server returned 401 Unauthorized"),
     ],
   ])("keeps the session after %s", async (_failure, respond) => {
-    const store = new Map<string, string>([["rakazo.session_token", "session-token"]]);
+    const store = new Map<string, string>([["smith.session_token", "session-token"]]);
     mockSecureStore(store);
     await loadApiBase();
     const rejected = vi.fn();
@@ -1057,14 +1057,14 @@ describe("mobile API requests", () => {
     try {
       await expect(rpc("bots/list")).rejects.toThrow();
       expect(rejected).not.toHaveBeenCalled();
-      expect(store.get("rakazo.session_token")).toBe("session-token");
+      expect(store.get("smith.session_token")).toBe("session-token");
     } finally {
       unsubscribe();
     }
   });
 
   it("keeps the session a password change on this device is replacing", async () => {
-    const store = new Map<string, string>([["rakazo.session_token", "session-token"]]);
+    const store = new Map<string, string>([["smith.session_token", "session-token"]]);
     mockSecureStore(store);
     await loadApiBase();
     const rejected = vi.fn();
@@ -1090,14 +1090,14 @@ describe("mobile API requests", () => {
       await pending;
 
       expect(rejected).not.toHaveBeenCalled();
-      expect(store.get("rakazo.session_token")).toBe("rotated-token");
+      expect(store.get("smith.session_token")).toBe("rotated-token");
     } finally {
       unsubscribe();
     }
   });
 
   it("keeps a newer session when a request from the old one is refused", async () => {
-    const store = new Map<string, string>([["rakazo.session_token", "old-token"]]);
+    const store = new Map<string, string>([["smith.session_token", "old-token"]]);
     mockSecureStore(store);
     await loadApiBase();
     const rejected = vi.fn();
@@ -1113,18 +1113,18 @@ describe("mobile API requests", () => {
 
       await expect(stale).rejects.toThrow("Unauthorized");
       expect(rejected).not.toHaveBeenCalled();
-      expect(store.get("rakazo.session_token")).toBe("new-token");
+      expect(store.get("smith.session_token")).toBe("new-token");
     } finally {
       unsubscribe();
     }
   });
 
   it("re-persists a Space selected while recovery cleanup is in flight", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-deleted"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-deleted"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => storage.get(key) ?? null);
     let injected = false;
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
-      if (key === "rakazo.space_id" && !injected) {
+      if (key === "smith.space_id" && !injected) {
         injected = true;
         await expect(selectSpace("space-new")).resolves.toBe(true);
       }
@@ -1144,11 +1144,11 @@ describe("mobile API requests", () => {
     await expect(rpc("spaces/list")).resolves.toEqual({ spaces: [] });
     expect(injected).toBe(true);
     expect(selectedSpaceId()).toBe("space-new");
-    expect(storage.get("rakazo.space_id")).toBe("space-new");
+    expect(storage.get("smith.space_id")).toBe("space-new");
   });
 
   it("does not retry a mutating RPC against the default Space after Space auth failure", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-deleted"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-deleted"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => storage.get(key) ?? null);
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
       storage.delete(key);
@@ -1166,7 +1166,7 @@ describe("mobile API requests", () => {
 
     await expect(rpc("bots/create", { name: "Wrong space bot" })).rejects.toThrow("Unauthorized");
     expect(selectedSpaceId()).toBeNull();
-    expect(storage.has("rakazo.space_id")).toBe(false);
+    expect(storage.has("smith.space_id")).toBe(false);
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(String(fetchMock.mock.calls[0]![0])).toContain("/rpc/bots/create");
     expect(fetchMock.mock.calls[0]![1].headers["x-rakazo-space-id"]).toBe("space-deleted");
@@ -1175,9 +1175,9 @@ describe("mobile API requests", () => {
   });
 
   it("keeps the Space selection when a mutating RPC unauthorized is a session failure", async () => {
-    const storage = new Map<string, string>([["rakazo.space_id", "space-support"]]);
+    const storage = new Map<string, string>([["smith.space_id", "space-support"]]);
     vi.mocked(SecureStore.getItemAsync).mockImplementation(async (key) => {
-      if (key === "rakazo.session_token") return "expired-token";
+      if (key === "smith.session_token") return "expired-token";
       return storage.get(key) ?? null;
     });
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
@@ -1196,7 +1196,7 @@ describe("mobile API requests", () => {
 
     await expect(rpc("bots/create", { name: "Should not land" })).rejects.toThrow("Unauthorized");
     expect(selectedSpaceId()).toBe("space-support");
-    expect(storage.get("rakazo.space_id")).toBe("space-support");
+    expect(storage.get("smith.space_id")).toBe("space-support");
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(String(fetchMock.mock.calls[0]![0])).toContain("/rpc/bots/create");
     expect(fetchMock.mock.calls[0]![1].headers["x-rakazo-space-id"]).toBe("space-support");

@@ -7,10 +7,10 @@ signs up for a service. Your own mail to it starts the bot, and mail can start i
 optional and off until you set it up.
 
 You need a domain (or subdomain) that receives mail for every name on it, and something that
-hands each message to Rakazo. Rakazo does not run a mail server itself: any mail relay that can
+hands each message to Smith. Smith does not run a mail server itself: any mail relay that can
 make an HTTPS request works.
 
-## Configure Rakazo
+## Configure Smith
 
 Set both on the API, and `INBOUND_EMAIL_DOMAIN` on the worker too, so each bot knows its address.
 Then restart them:
@@ -26,7 +26,7 @@ settings, by asking the bot in chat, or when adding an **Email** trigger to a ro
 addresses are listed in the Vault. Names are lowercase, never change, and are never given to
 another bot, even after the bot is deleted.
 
-## Hand mail to Rakazo
+## Hand mail to Smith
 
 The relay posts each message, unchanged, once per recipient:
 
@@ -38,7 +38,7 @@ Content-Type: message/rfc822
 <the raw message>
 ```
 
-Rakazo answers `200` for every message it accepted, including mail it drops, so the relay never
+Smith answers `200` for every message it accepted, including mail it drops, so the relay never
 retries or bounces it. `401` means the secret is wrong and `413` means the message is over 25 MB.
 Treat any other error as temporary and retry.
 
@@ -64,7 +64,7 @@ export default {
       body: message.raw,
     });
     if (response.status === 413) message.setReject("Message too large");
-    else if (!response.ok) throw new Error(`Rakazo answered ${response.status}`);
+    else if (!response.ok) throw new Error(`Smith answered ${response.status}`);
   },
 };
 ```
@@ -78,7 +78,7 @@ On a host that already runs Postfix with an MX record for the domain, add a pipe
 `master.cf`:
 
 ```text
-rakazo  unix  -  n  n  -  -  pipe
+smith  unix  -  n  n  -  -  pipe
   flags=Rq user=nobody argv=/usr/local/bin/rakazo-inbound-email ${recipient}
 ```
 
@@ -91,11 +91,11 @@ transport_maps = <existing maps> hash:/etc/postfix/transport
 rakazo_destination_recipient_limit = 1
 ```
 
-Add `bots.example.com rakazo:` to `/etc/postfix/transport` and run `postmap` on it. Save the same
+Add `bots.example.com smith:` to `/etc/postfix/transport` and run `postmap` on it. Save the same
 `INBOUND_EMAIL_SECRET` where the pipe's user can read it and no one else can:
 
 ```sh
-sudo install -d -m 755 /etc/rakazo
+sudo install -d -m 755 /etc/smith
 printf %s "$INBOUND_EMAIL_SECRET" | sudo install -m 400 -o nobody /dev/stdin /etc/rakazo/inbound-email-secret
 ```
 
@@ -111,7 +111,7 @@ status=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 \
   -H "Authorization: Bearer $(cat /etc/rakazo/inbound-email-secret)" \
   -H "Content-Type: message/rfc822" \
   --data-binary @- \
-  "https://rakazo.example.com/api/v1/email/inbound?to=$recipient")
+  "https://smith.example.com/api/v1/email/inbound?to=$recipient")
 case "$status" in
   2??) exit 0 ;;
   413) exit 69 ;;
@@ -202,7 +202,7 @@ for database access and retention.
 
 ## Who can start work
 
-Rakazo checks each message's DKIM signature itself. A message is verified only when it is signed
+Smith checks each message's DKIM signature itself. A message is verified only when it is signed
 by the domain in its **From** address and that signature covers its **To** and **Cc**. Many
 services sign with another domain, so their mail is saved as unverified: the bot can still read
 it but is told its sender could be forged. Signed mail that doesn't name the bot in **To** or

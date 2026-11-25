@@ -76,7 +76,7 @@ docker compose --env-file .env -f infra/compose/docker-compose.prod.yml \
 先[备份并演练](./self-host-backups.md)，再在生产服务器运行：
 
 ```bash
-cd /srv/rakazo
+cd /srv/smith
 git pull --ff-only
 sudo infra/compose/upgrade-postgres.sh
 ```
@@ -212,7 +212,7 @@ Fork 构建失败也会恢复更新前的分支与提交。数据库迁移不会
 
 ```dotenv
 COMPOSE_PROFILES=updater
-RAKAZO_DEPLOY_DIR=/srv/rakazo
+RAKAZO_DEPLOY_DIR=/srv/smith
 RAKAZO_AUTO_UPDATE_INTERVAL_HOURS=6
 ```
 
@@ -255,14 +255,14 @@ docker compose --env-file .env -f docker-compose.images.yml logs --tail 50 updat
 ## 部署目录必须是同一路径
 
 `RAKAZO_DEPLOY_DIR` 以相同路径绑定挂载进更新器（`${RAKAZO_DEPLOY_DIR}:${RAKAZO_DEPLOY_DIR}`），这是负载相关而非仅为整洁。
-生产 Compose 默认两侧为 `/srv/rakazo`；其他布局须显式设置。更新器在容器内执行 `docker compose` 时，
+生产 Compose 默认两侧为 `/srv/smith`；其他布局须显式设置。更新器在容器内执行 `docker compose` 时，
 本文件中的相对绑定挂载（`../../.env`、`./Caddyfile.prod` 等）相对该路径展开；守护进程必须能解析相同字符串，
 否则会静默创建空目录。须将 `COMPOSE_PROJECT_NAME` 传入更新器；独立 sidecar 可设 `RAKAZO_COMPOSE_PROJECT_NAME`，
 否则回退为 `rakazo-prod`。
 
-- **Linux：** 守护进程与宿主共享文件系统，检出路径即可，例如 `/srv/rakazo`。
+- **Linux：** 守护进程与宿主共享文件系统，检出路径即可，例如 `/srv/smith`。
 - **Docker Desktop（Windows/macOS）：** 守护进程在虚拟机中，`C:` 在 Windows 上常映射为 `/run/desktop/mnt/host/c`，
-  因此 `C:\\Users\\you\\rakazo` 应设为 `RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/rakazo`。
+  因此 `C:\\Users\\you\\smith` 应设为 `RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/smith`。
   勿用 Windows 原生路径（盘符冒号会导致 `mount denied`），勿用 `/mnt/c/...`（可能静默为空目录）。
 
 部署前验证：

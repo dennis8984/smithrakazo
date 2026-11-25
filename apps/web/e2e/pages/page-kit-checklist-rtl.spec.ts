@@ -19,7 +19,7 @@ for (const { lang, dir, text, note } of [
     await page.setContent('<!doctype html><html><body><div id="root"></div></body></html>');
     await page.addScriptTag({ content: await runtime.text() });
     await page.addScriptTag({
-      content: `window.RakazoPage.mount(${JSON.stringify({ code, theme: "light", errorTitle: "Error", lang })});`,
+      content: `window.SmithPage.mount(${JSON.stringify({ code, theme: "light", errorTitle: "Error", lang })});`,
     });
     await expect(page.locator("main")).toHaveAttribute("dir", dir);
     const checklist = page.locator(".rk-checklist");

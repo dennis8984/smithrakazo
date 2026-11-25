@@ -17,12 +17,12 @@ describePostgres("renaming a skill under PostgreSQL row-level security", () => {
     const organizationId = randomUUID();
     const userId = randomUUID();
     const otherUserId = randomUUID();
-    const email = `${userId}@rakazo.test`;
+    const email = `${userId}@smith.test`;
     try {
       await fixtures.user.createMany({
         data: [
           { id: userId, name: "Owner", email },
-          { id: otherUserId, name: "Other user", email: `${otherUserId}@rakazo.test` },
+          { id: otherUserId, name: "Other user", email: `${otherUserId}@smith.test` },
         ],
       });
       await fixtures.organization.create({

@@ -142,9 +142,9 @@ function loginShell(
     encoding: "utf8",
     env: {
       HOME: home,
-      LOGNAME: "rakazo",
+      LOGNAME: "smith",
       PATH: `${home}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`,
-      USER: "rakazo",
+      USER: "smith",
       RAKAZO_LOCAL_BIN_SNIPPET: localBinSnippet,
     },
   });

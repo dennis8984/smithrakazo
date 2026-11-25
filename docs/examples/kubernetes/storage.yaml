@@ -4,8 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: rakazo-database
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   accessModes:
     - ReadWriteOnce
@@ -19,8 +19,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: rakazo-data
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   accessModes:
     - ReadWriteOnce
@@ -34,8 +34,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: rakazo-web-assets
   labels:
-    rakazo.example/phase: foundation
-  namespace: rakazo
+    smith.example/phase: foundation
+  namespace: smith
 spec:
   accessModes:
     - ReadWriteOnce

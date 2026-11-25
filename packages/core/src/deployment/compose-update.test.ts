@@ -63,7 +63,7 @@ describe("image references", () => {
   it("accepts registry paths with a host and rejects anything else", () => {
     expect(isValidImageName(OFFICIAL_SERVER_IMAGE)).toBe(true);
     expect(isValidImageName("ghcr.io:5000/owner/app")).toBe(true);
-    expect(isValidImageName("rakazo/app")).toBe(true);
+    expect(isValidImageName("smith/app")).toBe(true);
     expect(isValidImageName("Ghcr.io/owner/app")).toBe(false);
     expect(isValidImageName("owner/app:tag")).toBe(false);
     expect(isValidImageName("owner/../app")).toBe(false);
@@ -440,7 +440,7 @@ describe("update plans", () => {
     const steps = composeUpdatePlan({
       strategy: "build",
       target,
-      repoUrl: "https://github.com/someone/rakazo",
+      repoUrl: "https://github.com/someone/smith",
       branch: "trunk",
       repointRemote: true,
     });
@@ -468,7 +468,7 @@ describe("update plans", () => {
   });
 
   it("keeps the repository URL in argv rather than in any compose input", () => {
-    const repoUrl = "https://github.com/someone/rakazo";
+    const repoUrl = "https://github.com/someone/smith";
     const steps = composeUpdatePlan({
       strategy: "build",
       target,
@@ -649,12 +649,12 @@ describe("sidecar boundary validation", () => {
 
   it("marks a fork as unofficial so the sidecar picks the build path", () => {
     const result = validateUpdateRequest({
-      repoUrl: "https://github.com/someone/rakazo",
+      repoUrl: "https://github.com/someone/smith",
       branch: "main",
     });
     expect(result).toEqual({
       request: {
-        repoUrl: "https://github.com/someone/rakazo",
+        repoUrl: "https://github.com/someone/smith",
         branch: "main",
         official: false,
       },

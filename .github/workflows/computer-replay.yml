@@ -33,6 +33,6 @@ jobs:
       - uses: ./.github/actions/setup-workspace
       - run: pnpm db:generate
         env:
-          DATABASE_URL: postgres://rakazo:rakazo@127.0.0.1:5433/rakazo
+          DATABASE_URL: postgres://smith:smith@127.0.0.1:5433/smith
       - run: pnpm sandbox:build
       - run: pnpm test:computer-replay

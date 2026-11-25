@@ -57,7 +57,7 @@ test("a week calendar keeps its days aligned in a desktop two-column page", asyn
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-calendar-${Date.now()}@rakazo.test`, "password12", "Calendar Reader");
+  await signup(page, `pages-calendar-${Date.now()}@smith.test`, "password12", "Calendar Reader");
   await completeOnboarding(page);
   const title = "Calendar layout";
   const source = `function CalendarPage() {
@@ -150,7 +150,7 @@ test("a week calendar keeps its days aligned in a desktop two-column page", asyn
 test("a day calendar fits a phone-width page while a week calendar scrolls", async ({
   page,
 }, testInfo) => {
-  await signup(page, `pages-day-${Date.now()}@rakazo.test`, "password12", "Calendar Reader");
+  await signup(page, `pages-day-${Date.now()}@smith.test`, "password12", "Calendar Reader");
   await completeOnboarding(page);
   await page.setViewportSize({ width: 390, height: 844 });
   const title = "Calendar on a phone";
@@ -198,7 +198,7 @@ test("a long Page scrolls in its chat card and opens from the preview", async ({
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-scroll-${Date.now()}@rakazo.test`, "password12", "Page Reader");
+  await signup(page, `pages-scroll-${Date.now()}@smith.test`, "password12", "Page Reader");
   await completeOnboarding(page);
 
   const title = "Garden plans";
@@ -267,7 +267,7 @@ test("a long Page scrolls in its chat card and opens from the preview", async ({
 
 test("a Page preview grows when an absolute item overflows the document body", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-overflow-${Date.now()}@rakazo.test`, "password12", "Page Reader");
+  await signup(page, `pages-overflow-${Date.now()}@smith.test`, "password12", "Page Reader");
   await completeOnboarding(page);
 
   const title = "Planting notes";
@@ -325,7 +325,7 @@ test("wheel scrolling within a Page preview keeps the chat following new message
 }) => {
   await page.setViewportSize({ width: 1280, height: 650 });
   const stamp = Date.now();
-  await signup(page, `pages-follow-${stamp}@rakazo.test`, "password12", "Page Reader");
+  await signup(page, `pages-follow-${stamp}@smith.test`, "password12", "Page Reader");
   await completeOnboarding(page);
   const botId = await activeBotId(page);
 
@@ -384,7 +384,7 @@ test("shared page contents jump below the header and copy fallback", async ({
   page,
   browser,
 }, testInfo) => {
-  await signup(page, `pages-anchor-${Date.now()}@rakazo.test`, "password12", "Page Reader");
+  await signup(page, `pages-anchor-${Date.now()}@smith.test`, "password12", "Page Reader");
   await completeOnboarding(page);
   const title = "Reading guide";
   const source = `export default function Guide() {
@@ -457,9 +457,9 @@ test("a bot's page shows in its reply, opens full screen, is shared by link and 
   page,
   browser,
 }, testInfo) => {
-  await page.addInitScript(() => localStorage.setItem("rakazo.uiAppearance", "dark"));
+  await page.addInitScript(() => localStorage.setItem("smith.uiAppearance", "dark"));
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-${Date.now()}@rakazo.test`, "password12", "Page Owner");
+  await signup(page, `pages-${Date.now()}@smith.test`, "password12", "Page Owner");
   await completeOnboarding(page);
 
   const title = "Test dashboard (example data)";
@@ -636,7 +636,7 @@ test("a bot's page shows in its reply, opens full screen, is shared by link and 
   );
   await expect(outside.getByRole("heading", { name: "Signups dashboard", level: 1 })).toBeVisible();
   await expect(outside.getByRole("button", { name: "Download PDF" })).toBeVisible();
-  await expect(outside.getByRole("link", { name: "Open Rakazo" })).toBeVisible();
+  await expect(outside.getByRole("link", { name: "Open Smith" })).toBeVisible();
   await expect(pageFrame(outside, "Signups dashboard").getByText("$12,400")).toBeVisible();
   // There is no chat beside a shared page, so its reply buttons do nothing.
   await expect(
@@ -753,7 +753,7 @@ test("a bot's page shows in its reply, opens full screen, is shared by link and 
   await expect(share.getByRole("link", { name: "Open link" })).toBeHidden();
   await outside.reload();
   await expect(outside.getByRole("heading", { name: "This page isn't available" })).toBeVisible();
-  await expect(outside.getByRole("link", { name: "Open Rakazo" })).toBeVisible();
+  await expect(outside.getByRole("link", { name: "Open Smith" })).toBeVisible();
   await captureScreenshot(outside, testInfo, "page-public-unavailable");
   // Busy or unreachable is not gone: the visitor is asked to try again.
   await outside.route("**/api/v1/pages/shared/**", (route) => route.fulfill({ status: 503 }));
@@ -815,9 +815,9 @@ async function closePage(page: Page) {
 test("in the macOS app a page's top row sits below the window controls and its close button clicks", async ({
   page,
 }, testInfo) => {
-  await page.addInitScript(() => localStorage.setItem("rakazo.uiAppearance", "dark"));
+  await page.addInitScript(() => localStorage.setItem("smith.uiAppearance", "dark"));
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-mac-${Date.now()}@rakazo.test`, "password12", "Page Owner");
+  await signup(page, `pages-mac-${Date.now()}@smith.test`, "password12", "Page Owner");
   await completeOnboarding(page);
   const title = "Test dashboard (example data)";
   await send(
@@ -874,9 +874,9 @@ test("a page's failures, a deleted page's card, and the Library's Share, search 
 }, testInfo) => {
   // Nine saves through the bot: more than the default budget on a busy machine.
   test.setTimeout(240_000);
-  await page.addInitScript(() => localStorage.setItem("rakazo.uiAppearance", "dark"));
+  await page.addInitScript(() => localStorage.setItem("smith.uiAppearance", "dark"));
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-states-${Date.now()}@rakazo.test`, "password12", "Page States");
+  await signup(page, `pages-states-${Date.now()}@smith.test`, "password12", "Page States");
   await completeOnboarding(page);
   // The command palette caches its own page list; new cards must not trip over it.
   await page.keyboard.press("ControlOrMeta+K");
@@ -1162,9 +1162,9 @@ test("a page's failures, a deleted page's card, and the Library's Share, search 
 test("a group's pages show in its settings, and the palette finds and opens a page", async ({
   page,
 }, testInfo) => {
-  await page.addInitScript(() => localStorage.setItem("rakazo.uiAppearance", "dark"));
+  await page.addInitScript(() => localStorage.setItem("smith.uiAppearance", "dark"));
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-group-${Date.now()}@rakazo.test`, "password12", "Group Pages");
+  await signup(page, `pages-group-${Date.now()}@smith.test`, "password12", "Group Pages");
   await completeOnboarding(page);
   const planner = await createNamedBot(page, "Planner");
   const writer = await createNamedBot(page, "Writer");
@@ -1260,7 +1260,7 @@ test("a page acts for its reader only after a click in it, never on load or from
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 860 });
-  await signup(page, `pages-rogue-${Date.now()}@rakazo.test`, "password12", "Rogue Reader");
+  await signup(page, `pages-rogue-${Date.now()}@smith.test`, "password12", "Rogue Reader");
   await completeOnboarding(page);
   await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.evaluate(() => navigator.clipboard.writeText("untouched"));

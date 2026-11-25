@@ -81,7 +81,7 @@ function fixture(modelText: string) {
     runtime,
     resolveModel,
     signingSecret: "emulator-secret",
-    publicOrigin: "https://rakazo.example.test",
+    publicOrigin: "https://smith.example.test",
     voiceReady: async () => true,
     loadSession: async () => ({
       actor,

@@ -160,7 +160,7 @@ const GITHUB_TOOLS: SessionTools = [
       type: "object",
       properties: {
         owner: { type: "string", description: "Repository owner, e.g. elie222" },
-        repo: { type: "string", description: "Repository name, e.g. rakazo" },
+        repo: { type: "string", description: "Repository name, e.g. smith" },
       },
       required: ["owner", "repo"],
     },
@@ -473,7 +473,7 @@ export class FakeComposioClient implements ComposioClient {
 
   private runGithub(tool: string, args: Record<string, unknown>): Record<string, unknown> {
     const owner = String(args.owner ?? args.owner_name ?? "elie222");
-    const repo = String(args.repo ?? args.repository ?? "rakazo");
+    const repo = String(args.repo ?? args.repository ?? "smith");
     const matched = this.githubReleases.filter(
       (release) =>
         release.owner.toLowerCase() === owner.toLowerCase() &&
@@ -676,11 +676,11 @@ function seedMailbox(): Mailbox {
       {
         messageId: "18c5f5d1a2b3c4d5",
         threadId: "18c5f5d1a2b3c4d5",
-        subject: "Welcome to Rakazo",
-        sender: "hello@rakazo.test",
+        subject: "Welcome to Smith",
+        sender: "hello@smith.test",
         to: "me@example.test",
         snippet: "Your inbox is ready for agent workflows.",
-        messageText: "Your inbox is ready for agent workflows.\n\n— Rakazo",
+        messageText: "Your inbox is ready for agent workflows.\n\n— Smith",
         labelIds: ["INBOX", "UNREAD"],
         internalDate: String(base),
       },

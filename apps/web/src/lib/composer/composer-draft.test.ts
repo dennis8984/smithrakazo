@@ -174,8 +174,8 @@ describe("legacy send envelope cleanup", () => {
       "composerNonce",
       "composerBindings",
     ]) {
-      storage.setItem(`rakazo.${namespace}.bot:old`, "private");
-      storage.setItem(`rakazo.${namespace}.group:old`, "private");
+      storage.setItem(`smith.${namespace}.bot:old`, "private");
+      storage.setItem(`smith.${namespace}.group:old`, "private");
     }
     storage.setItem("unrelated", "keep");
     vi.stubGlobal("localStorage", storage);

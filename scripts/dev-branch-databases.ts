@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 
-export const BRANCH_DATABASE_COMMENT = "rakazo dev branch: ";
+export const BRANCH_DATABASE_COMMENT = "smith dev branch: ";
 
 /** Keep database names safe as both SQL identifiers and local directory names. */
 export function branchDatabaseName(sharedName: string, branch: string): string {

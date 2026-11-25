@@ -5,7 +5,7 @@ import { useEventListener } from "../../lib/use-event-listener";
 import { isComposingKey } from "./shell-shortcuts";
 import { useBotsSidebarWidth } from "./sidebar/sidebar-layout";
 
-const STORAGE_KEY = "rakazo:right-panel-width";
+const STORAGE_KEY = "smith:right-panel-width";
 const MIN_WIDTH = 320;
 const DEFAULT_WIDTH = 384;
 const ABSOLUTE_MAX = 1000;

@@ -9,7 +9,7 @@ it("sets an explicit Unix session bus address in the computer image environment"
   const dockerfile = readFileSync(new URL("Dockerfile", image), "utf8");
   const startup = readFileSync(new URL("start.sh", image), "utf8");
   // A Unix-only address makes clients fail to connect when the socket is absent.
-  expect(dockerfile).toMatch(/^ENV DBUS_SESSION_BUS_ADDRESS=unix:path=\/tmp\/rakazo\/[\w-]+$/m);
+  expect(dockerfile).toMatch(/^ENV DBUS_SESSION_BUS_ADDRESS=unix:path=\/tmp\/smith\/[\w-]+$/m);
   expect(startup).toContain('dbus-daemon --session --fork --address="$DBUS_SESSION_BUS_ADDRESS"');
 });
 
@@ -41,8 +41,8 @@ describe.skipIf(process.env.RUN_COMPUTER_REPLAY_DOCKER !== "1")(
               "--tmpfs",
               "/tmp:mode=1777,exec",
               "--tmpfs",
-              `/home/rakazo:uid=${uid},gid=${gid},mode=700`,
-              process.env.RAKAZO_COMPUTER_IMAGE ?? "rakazo/computer:local",
+              `/home/smith:uid=${uid},gid=${gid},mode=700`,
+              process.env.RAKAZO_COMPUTER_IMAGE ?? "smith/computer:local",
             ],
             { stdio: "pipe", timeout: 30_000 },
           );

@@ -6,7 +6,7 @@ import {
   shouldOpenInAppPopup,
 } from "./window-open.js";
 
-const appOrigin = "https://rakazo.example.com";
+const appOrigin = "https://smith.example.com";
 
 describe("desktop child windows", () => {
   it("keeps same-origin app routes in Electron", () => {

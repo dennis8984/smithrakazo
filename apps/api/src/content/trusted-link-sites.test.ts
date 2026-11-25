@@ -57,7 +57,7 @@ function setup() {
         actor: {
           userId,
           spaceId,
-          email: `${userId}@rakazo.test`,
+          email: `${userId}@smith.test`,
           isDeploymentOwner: false,
         } satisfies Actor,
       } as never,

@@ -8,10 +8,10 @@ const mobile = join(import.meta.dirname, "..");
 const read = (file) => readFileSync(join(mobile, file), "utf8");
 const constant = (file, name) => read(file).match(new RegExp(`${name} = "([^"]+)"`))?.[1];
 
-describe("RakazoIntents", () => {
+describe("SmithIntents", () => {
   // The intents read what the app saved; renaming a key on one side would break them silently.
   it("reads the secure-store keys the app writes", () => {
-    const swift = read("ios-intents/RakazoIntents.swift");
+    const swift = read("ios-intents/SmithIntents.swift");
     for (const [file, name] of [
       ["lib/api/session.ts", "SESSION_KEY"],
       ["lib/api/server-config.ts", "API_BASE_STORAGE_KEY"],
@@ -26,12 +26,12 @@ describe("RakazoIntents", () => {
   });
 
   it("hands a voice chat to the module that reads it", () => {
-    const swift = read("ios-intents/RakazoIntents.swift");
-    const module = read("modules/rakazo-voice-chat/ios/RakazoVoiceChatModule.swift");
-    expect(swift).toContain('"rakazo.pending_voice_chat"');
-    expect(module).toContain('"rakazo.pending_voice_chat"');
+    const swift = read("ios-intents/SmithIntents.swift");
+    const module = read("modules/rakazo-voice-chat/ios/SmithVoiceChatModule.swift");
+    expect(swift).toContain('"smith.pending_voice_chat"');
+    expect(module).toContain('"smith.pending_voice_chat"');
     for (const source of [swift, module]) {
-      expect(source).toContain('Notification.Name("RakazoPendingVoiceChat")');
+      expect(source).toContain('Notification.Name("SmithPendingVoiceChat")');
     }
   });
 
@@ -46,18 +46,18 @@ describe("withAppIntents prebuild", () => {
     const files = new Set();
     const copied = [];
     const added = [];
-    const widgetSettings = { PRODUCT_NAME: '"RakazoWidgets"' };
+    const widgetSettings = { PRODUCT_NAME: '"SmithWidgets"' };
     const config = {
       version: "2.0.0",
       ios: { bundleIdentifier: "com.example.app", buildNumber: "7" },
       modRequest: { projectRoot: "/project", platformProjectRoot: "/project/ios" },
       modResults: {
         hasFile: (file) => files.has(file),
-        pbxTargetByName: (name) => (name === "RakazoWidgets" ? {} : undefined),
+        pbxTargetByName: (name) => (name === "SmithWidgets" ? {} : undefined),
         pbxNativeTargetSection: () => ({
-          "app-target": { name: "Rakazo" },
-          "app-target_comment": "Rakazo",
-          "widget-target": { name: '"RakazoWidgets"' },
+          "app-target": { name: "Smith" },
+          "app-target_comment": "Smith",
+          "widget-target": { name: '"SmithWidgets"' },
         }),
         pbxXCBuildConfigurationSection: () => ({ widget: { buildSettings: widgetSettings } }),
       },
@@ -85,7 +85,7 @@ describe("withAppIntents prebuild", () => {
             withXcodeProject: (value, mod) => mod(value),
             IOSConfig: {
               XcodeUtils: {
-                getProjectName: () => "Rakazo",
+                getProjectName: () => "Smith",
                 addBuildSourceFileToGroup: (input) => {
                   // Like the real helper, a file already in its group is skipped.
                   const key = `${input.groupName}/${input.filepath}`;
@@ -101,24 +101,24 @@ describe("withAppIntents prebuild", () => {
     });
     module.exports(config);
     module.exports(config);
-    expect(plist.modResults.RakazoDefaultApiBase).toBe("https://api.example.test");
+    expect(plist.modResults.SmithDefaultApiBase).toBe("https://api.example.test");
     expect(plist.modResults.UIBackgroundModes).toEqual(["audio"]);
     expect(copied).toContainEqual([
-      join(mobile, "ios-intents/RakazoIntents.swift"),
-      "/project/ios/Rakazo/RakazoIntents.swift",
+      join(mobile, "ios-intents/SmithIntents.swift"),
+      "/project/ios/Smith/SmithIntents.swift",
     ]);
     expect(added.map((input) => input.filepath)).toEqual([
-      "Rakazo/RakazoIntents.swift",
-      "Rakazo/VoiceMessageRecorder.swift",
-      "Rakazo/VoiceMessageActivity.swift",
-      "RakazoWidgets.swift",
+      "Smith/SmithIntents.swift",
+      "Smith/VoiceMessageRecorder.swift",
+      "Smith/VoiceMessageActivity.swift",
+      "SmithWidgets.swift",
       "WorkLiveActivity.swift",
       "VoiceMessageActivity.swift",
       "WorkActivityAttributes.swift",
     ]);
     // An existing widget target still gets every source, in its own group and build phase.
     expect(added.slice(3).every((input) => input.targetUuid === "widget-target")).toBe(true);
-    expect(added.slice(3).every((input) => input.groupName === "RakazoWidgets")).toBe(true);
+    expect(added.slice(3).every((input) => input.groupName === "SmithWidgets")).toBe(true);
     expect(widgetSettings).toMatchObject({
       CURRENT_PROJECT_VERSION: "7",
       MARKETING_VERSION: "2.0.0",
@@ -131,7 +131,7 @@ describe("voice message Live Activity", () => {
   it("lists the widget extension for EAS signing", () => {
     const app = JSON.parse(read("app.json")).expo;
     const extension = app.extra.eas.build.experimental.ios.appExtensions.find(
-      ({ targetName }) => targetName === "RakazoWidgets",
+      ({ targetName }) => targetName === "SmithWidgets",
     );
     expect(read("plugins/with-app-intents.js")).toContain(`"${extension.targetName}"`);
     expect(extension.bundleIdentifier).toBe(`${app.ios.bundleIdentifier}.widgets`);

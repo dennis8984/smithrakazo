@@ -9,7 +9,7 @@ import { trialOutcome } from "./trial-outcome.js";
 const actor: Actor = {
   userId: "user-1",
   spaceId: "space-1",
-  email: "user@rakazo.test",
+  email: "user@smith.test",
   isDeploymentOwner: false,
 };
 const price = { amount: 1000, currency: "usd", interval: "month" as const, intervalCount: 1 };

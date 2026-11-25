@@ -77,6 +77,6 @@ describe("RUN_DRAIN_SIGNAL", () => {
       fileURLToPath(new URL("../../../../infra/compose/Dockerfile", import.meta.url)),
       "utf8",
     );
-    expect(dockerfile).toContain(`LABEL org.rakazo.run-drain-signal=${RUN_DRAIN_SIGNAL}\n`);
+    expect(dockerfile).toContain(`LABEL org.smith.run-drain-signal=${RUN_DRAIN_SIGNAL}\n`);
   });
 });

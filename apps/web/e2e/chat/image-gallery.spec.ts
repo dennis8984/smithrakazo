@@ -21,7 +21,7 @@ const images = [
 ];
 
 test("a chat's images open in one lightbox that moves between them", async ({ page }, testInfo) => {
-  await signup(page, `image-gallery-${Date.now()}@rakazo.test`, "password12", "Image Viewer");
+  await signup(page, `image-gallery-${Date.now()}@smith.test`, "password12", "Image Viewer");
   await completeOnboarding(page);
   const composer = page.getByRole("combobox", { name: /Message/ });
   await expect(composer).toBeVisible();

@@ -481,16 +481,16 @@ describe("serenity verbs", () => {
     const server = fakeSerenityFetch(() => ({
       content: [{ type: "text", text: JSON.stringify({ id: "fact-1", status: "inserted" }) }],
     }));
-    const result = await rememberSerenity("Use metric units.", "rakazo", LOOPBACK, {
+    const result = await rememberSerenity("Use metric units.", "smith", LOOPBACK, {
       entity: "rakazo-bot/bot-1",
-      operationKey: "rakazo:abc",
+      operationKey: "smith:abc",
       network: { fetch: server.fetch },
     });
     expect(result).toEqual({ ok: true, value: { id: "fact-1", status: "inserted" } });
     const call = server.calls.find((entry) => entry.rpc?.method === "tools/call");
     expect(call?.rpc?.params?.arguments).toMatchObject({
       entity: "rakazo-bot/bot-1",
-      operation_key: "rakazo:abc",
+      operation_key: "smith:abc",
     });
     expect(server.calls.at(-1)?.method).toBe("DELETE");
   });
@@ -502,7 +502,7 @@ describe("serenity verbs", () => {
       fact: `Fact ${index}`,
       kind: "preference",
       entity_slug: "bot-1",
-      provenance: "rakazo",
+      provenance: "smith",
       valid_until: null,
       visibility: "world",
     }));
@@ -527,7 +527,7 @@ describe("serenity verbs", () => {
     const server = fakeSerenityFetch(() => ({}));
     const result = await rememberSerenity(
       "é".repeat(MAX_SERENITY_FACT_BYTES / 2 + 1),
-      "rakazo",
+      "smith",
       LOOPBACK,
       { network: { fetch: server.fetch } },
     );
@@ -590,7 +590,7 @@ describe("serenity verbs", () => {
         },
       ],
     }));
-    const remembered = await rememberSerenity("Use metric units.", "rakazo", LOOPBACK, {
+    const remembered = await rememberSerenity("Use metric units.", "smith", LOOPBACK, {
       network: { fetch: statusEcho.fetch },
     });
     expect(remembered.ok).toBe(true);

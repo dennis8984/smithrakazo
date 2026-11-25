@@ -52,7 +52,7 @@ for (const plan of plans) {
   }, testInfo) => {
     await signup(
       page,
-      `computer-hours-${plan.name}-${Date.now()}@rakazo.test`,
+      `computer-hours-${plan.name}-${Date.now()}@smith.test`,
       "password12",
       "Hours Out",
     );

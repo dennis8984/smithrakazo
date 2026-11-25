@@ -37,7 +37,7 @@ describe("mobile thread subscription", () => {
       spaceId: "space-1",
       name: "Caller",
       color: "",
-      avatarSet: "rakazo",
+      avatarSet: "smith",
       incomingCall: {
         callId: "call-1",
         reason: "Review",

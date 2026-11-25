@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { captureScreenshot, completeOnboarding, rpc, signup } from "../helpers/helpers";
 
 test("Enter picks the highlighted slash skill instead of sending", async ({ page }, testInfo) => {
-  await signup(page, `slash-enter-${Date.now()}@rakazo.test`, "password12", "Slash Owner");
+  await signup(page, `slash-enter-${Date.now()}@smith.test`, "password12", "Slash Owner");
   await completeOnboarding(page);
   const descriptionPrefix = `Review 👍🏽 ${"i".repeat(60)}`;
   await rpc(page, "agentSkills/create", {
@@ -31,7 +31,7 @@ test("Enter picks the highlighted slash skill instead of sending", async ({ page
 });
 
 test("a slash skill picked mid-message keeps the words around it", async ({ page }, testInfo) => {
-  await signup(page, `slash-inline-${Date.now()}@rakazo.test`, "password12", "Slash Owner");
+  await signup(page, `slash-inline-${Date.now()}@smith.test`, "password12", "Slash Owner");
   await completeOnboarding(page);
   await rpc(page, "agentSkills/create", {
     content: [

@@ -29,7 +29,7 @@ vi.mock("../api/network-cache", () => ({ clearNetworkCache: vi.fn() }));
 
 const OLD = "https://old.example.test";
 const NEW = "https://new.example.test";
-const SESSION_KEY = "rakazo.session_token";
+const SESSION_KEY = "smith.session_token";
 const WRITE = "spaceSettings/setOverride";
 
 const onSaved = vi.fn();

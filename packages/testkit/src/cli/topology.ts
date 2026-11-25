@@ -17,8 +17,8 @@ async function main() {
   const env = {
     ...process.env,
     TOPOLOGY_API_PORT: String(port),
-    TOPOLOGY_APP_IMAGE: process.env.TOPOLOGY_APP_IMAGE ?? "rakazo/app:topology",
-    TOPOLOGY_COMPUTER_IMAGE: process.env.TOPOLOGY_COMPUTER_IMAGE ?? "rakazo/computer:topology",
+    TOPOLOGY_APP_IMAGE: process.env.TOPOLOGY_APP_IMAGE ?? "smith/app:topology",
+    TOPOLOGY_COMPUTER_IMAGE: process.env.TOPOLOGY_COMPUTER_IMAGE ?? "smith/computer:topology",
   };
   const compose = (args: string[], capture = false) =>
     command(
@@ -146,7 +146,7 @@ async function signup(baseUrl: string) {
     method: "POST",
     headers: { "content-type": "application/json", origin: baseUrl },
     body: JSON.stringify({
-      email: `topology-${Date.now()}@rakazo.test`,
+      email: `topology-${Date.now()}@smith.test`,
       password: "password12",
       name: "Topology",
     }),
@@ -283,7 +283,7 @@ function assertComputerNetworkIsolation(
     "inspect",
     computerId,
     "--format",
-    '{{index .Config.Labels "rakazo.managed"}}',
+    '{{index .Config.Labels "smith.managed"}}',
   ]).trim();
   if (managed !== "true") throw new Error("isolated peer is not a managed computer");
   const [spec] = JSON.parse(docker(["inspect", computerId])) as Array<{
@@ -332,9 +332,9 @@ function removeManagedComputers(
           "postgres",
           "psql",
           "-U",
-          "rakazo",
+          "smith",
           "-d",
-          "rakazo",
+          "smith",
           "-Atc",
           'SELECT "homeKey" FROM computers',
         ],
@@ -354,7 +354,7 @@ function removeManagedComputers(
         "--filter",
         `network=${networkName}`,
         "--filter",
-        "label=rakazo.managed=true",
+        "label=smith.managed=true",
       ])
         .split("\n")
         .map((id) => id.trim())

@@ -4,8 +4,8 @@ kind: Job
 metadata:
   name: rakazo-migrate
   labels:
-    rakazo.example/phase: migrate
-  namespace: rakazo
+    smith.example/phase: migrate
+  namespace: smith
 spec:
   backoffLimit: 1
   template:

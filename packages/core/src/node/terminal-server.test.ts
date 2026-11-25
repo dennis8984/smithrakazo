@@ -115,7 +115,7 @@ describe("terminal server", () => {
   });
 });
 
-// Runs the real start script against /tmp/rakazo on a display no computer uses.
+// Runs the real start script against /tmp/smith on a display no computer uses.
 const canRunScript =
   process.platform === "linux" && spawnSync("sh", ["-c", "command -v pgrep"]).status === 0;
 describe.skipIf(!canRunScript)("terminal start script", () => {
@@ -149,7 +149,7 @@ describe.skipIf(!canRunScript)("terminal start script", () => {
 
   it("stops before the gateway when the token cannot be published", () => {
     stop();
-    mkdirSync("/tmp/rakazo", { recursive: true });
+    mkdirSync("/tmp/smith", { recursive: true });
     const cwd = mkdtempSync(path.join(tmpdir(), "terminal-cwd-"));
     cleanup.push(() => rmSync(cwd, { recursive: true, force: true }));
     writeFileSync(`/tmp/rakazo/control-token-${display}`, "lease-a");
@@ -164,7 +164,7 @@ describe.skipIf(!canRunScript)("terminal start script", () => {
 
   it("keeps open shells when another tab joins, and replaces the server for a new lease", async () => {
     stop();
-    mkdirSync("/tmp/rakazo", { recursive: true });
+    mkdirSync("/tmp/smith", { recursive: true });
     const cwd = mkdtempSync(path.join(tmpdir(), "terminal-cwd-"));
     cleanup.push(() => rmSync(cwd, { recursive: true, force: true }));
 

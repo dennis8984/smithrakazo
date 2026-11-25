@@ -353,7 +353,7 @@ const FIND_BY_ID = new RegExp(`\\bfind\\b[^;&|]*-i?name\\s+["']?${EXTENSION_ID}`
  * the home folder: the starting folders and depths bots used, each too shallow to reach it.
  */
 const SHALLOW_FIND =
-  /\bfind\s+(?=[^;&|]*manifest)(?:(?:~|"?\$HOME"?|\.|\/home\/rakazo)\/?\s[^;&|]*-maxdepth\s+[1-6]\b|"?(?:~|\$HOME)\/\.config"?\/?\s[^;&|]*-maxdepth\s+[1-5]\b|"?(?:~|\$HOME)\/\.config\/chromium"?\/?\s[^;&|]*-maxdepth\s+[1-4]\b|\/\s[^;&|]*-maxdepth\s+[1-8]\b)/;
+  /\bfind\s+(?=[^;&|]*manifest)(?:(?:~|"?\$HOME"?|\.|\/home\/smith)\/?\s[^;&|]*-maxdepth\s+[1-6]\b|"?(?:~|\$HOME)\/\.config"?\/?\s[^;&|]*-maxdepth\s+[1-5]\b|"?(?:~|\$HOME)\/\.config\/chromium"?\/?\s[^;&|]*-maxdepth\s+[1-4]\b|\/\s[^;&|]*-maxdepth\s+[1-8]\b)/;
 /** A find of the Preferences file piped to `xargs grep -l` for the extension: that file matches. */
 const FIND_PREFERENCES_GREP =
   /\bfind\b[^;&|]*-name\s+["']?Preferences["']?[^;&|]*\|\s*xargs\s+grep\s+(?:-\w+\s+)*-\w*l\w*\s[^;&|]*(?:midnight|lizard)/i;
@@ -384,17 +384,17 @@ const ELSEWHERE = {
 };
 /** The home folder and config folder a bot lists while looking around. */
 const HOME = [
-  { match: /^\s*pwd\s*$/, output: "/home/rakazo" },
+  { match: /^\s*pwd\s*$/, output: "/home/smith" },
   // The home's other folders are empty.
   { match: /^\s*ls\b[^;&|]*~\/(?:Downloads|Desktop)\b/, output: "" },
   {
     // `-a` shows the hidden folders too.
     match:
-      /^\s*ls\b(?:\s+-\w+)*\s+-\w*a\w*(?:\s+-\w+)*(?:\s+(?:~|"?\$HOME"?|\/home\/rakazo)\/?)?\s*(?:[0-9&]?>\S*\s*)*$/,
+      /^\s*ls\b(?:\s+-\w+)*\s+-\w*a\w*(?:\s+-\w+)*(?:\s+(?:~|"?\$HOME"?|\/home\/smith)\/?)?\s*(?:[0-9&]?>\S*\s*)*$/,
     output: ".\n..\n.cache\n.config\nDesktop\nDownloads\nattachments",
   },
   {
-    match: /^\s*ls\b(?:\s+-\w+)*(?:\s+(?:~|"?\$HOME"?|\/home\/rakazo)\/?)?\s*(?:[0-9&]?>\S*\s*)*$/,
+    match: /^\s*ls\b(?:\s+-\w+)*(?:\s+(?:~|"?\$HOME"?|\/home\/smith)\/?)?\s*(?:[0-9&]?>\S*\s*)*$/,
     output: "Desktop\nDownloads\nattachments",
   },
   { match: /\bls\b[^;&|]*\.config\/?["']?(?:\s|$)/, output: "chromium" },
@@ -1394,7 +1394,7 @@ const TOOL_HEAVY_WORK: Array<{
           ),
           shellCall(
             "ls -l reports/python-3.13.1-notes.html",
-            "-rw-r--r-- 1 rakazo rakazo 122880 reports/python-3.13.1-notes.html\n",
+            "-rw-r--r-- 1 smith smith 122880 reports/python-3.13.1-notes.html\n",
           ),
           shellCall(
             "head -c 60 reports/python-3.13.1-notes.html",

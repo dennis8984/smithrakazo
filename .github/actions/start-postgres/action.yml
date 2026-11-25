@@ -32,8 +32,8 @@ runs:
         docker run -d --name ci-postgres \
           -e POSTGRES_USER=postgres \
           -e POSTGRES_PASSWORD=postgres \
-          -e POSTGRES_DB=rakazo \
+          -e POSTGRES_DB=smith \
           -p 5432:5432 \
           "$POSTGRES_IMAGE" \
           postgres -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c max_connections=500
-        echo "CI_POSTGRES_URL=postgres://postgres:postgres@127.0.0.1:5432/rakazo" >> "$GITHUB_ENV"
+        echo "CI_POSTGRES_URL=postgres://postgres:postgres@127.0.0.1:5432/smith" >> "$GITHUB_ENV"

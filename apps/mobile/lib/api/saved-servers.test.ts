@@ -16,7 +16,7 @@ vi.mock("expo-secure-store", () => ({
   deleteItemAsync: vi.fn(),
 }));
 
-const KEY = "rakazo.saved_servers";
+const KEY = "smith.saved_servers";
 const ONE = "https://one.example.test";
 const TWO = "https://two.example.test";
 const ACCESS = { "CF-Access-Client-Id": "id.access", "CF-Access-Client-Secret": "secret" };

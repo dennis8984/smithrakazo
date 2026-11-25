@@ -11,7 +11,7 @@ import {
 type BotRow = { id: string; name: string; modelProvider: string | null; modelId: string | null };
 
 test("a missing model opens Models in account Settings from chat", async ({ page }, testInfo) => {
-  await signup(page, `composer-connect-${Date.now()}@rakazo.test`, "password12", "Connect Model");
+  await signup(page, `composer-connect-${Date.now()}@smith.test`, "password12", "Connect Model");
   await completeOnboarding(page);
   await page.route("**/rpc/me", async (route) => {
     const response = await route.fetch();
@@ -60,7 +60,7 @@ test("the chat's model can be changed from the message box once turned on", asyn
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `composer-model-${stamp}@rakazo.test`, "password12", "Composer Model");
+  await signup(page, `composer-model-${stamp}@smith.test`, "password12", "Composer Model");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);
@@ -141,7 +141,7 @@ test("the chat's model can be changed from the message box once turned on", asyn
 
 test("the message box lists a provider's newest models first", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `composer-model-order-${stamp}@rakazo.test`, "password12", "Model Order");
+  await signup(page, `composer-model-order-${stamp}@smith.test`, "password12", "Model Order");
   await completeOnboarding(page);
   await page.goto("/app");
   await page.waitForURL(/\/app\/[^/]+$/);

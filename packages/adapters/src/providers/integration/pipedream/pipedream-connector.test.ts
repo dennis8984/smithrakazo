@@ -189,7 +189,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).rejects.toThrow("secure HTTPS connect URL");
@@ -209,7 +209,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream authentication failed: 502");
@@ -233,7 +233,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream response is too large.");
@@ -272,7 +272,7 @@ describe("PipedreamConnector", () => {
 
     const rejection = expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         { ...context, signal: abort.signal },
       ),
     ).rejects.toThrow("Pipedream response is too large.");
@@ -306,7 +306,7 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream response is too large.");
@@ -341,13 +341,13 @@ describe("PipedreamConnector", () => {
 
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).rejects.toThrow("Pipedream response is too large.");
     await expect(
       connector.begin(
-        { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).resolves.toEqual({
@@ -410,7 +410,7 @@ describe("PipedreamConnector", () => {
       }),
     ]);
     const started = await connector.begin(
-      { provider: "gmail", redirectUrl: "https://rakazo.example.test/app" },
+      { provider: "gmail", redirectUrl: "https://smith.example.test/app" },
       context,
     );
 
@@ -956,7 +956,7 @@ describe("PipedreamConnector", () => {
     );
     await expect(
       connector.begin(
-        { provider: "linear", redirectUrl: "https://rakazo.example.test/app" },
+        { provider: "linear", redirectUrl: "https://smith.example.test/app" },
         context,
       ),
     ).resolves.toEqual({
@@ -1026,7 +1026,7 @@ describe("oversized Pipedream answers", () => {
         identitySecret: "fake-identity-secret",
       },
       { fetch: vi.fn().mockResolvedValue(response) },
-    ).begin({ provider: "gmail", redirectUrl: "https://rakazo.example.test/app" }, context);
+    ).begin({ provider: "gmail", redirectUrl: "https://smith.example.test/app" }, context);
 
   it("refuses a streamed answer over the cap as too large", async () => {
     const failure = begin(new Response(new Uint8Array(MAX_PIPEDREAM_RESPONSE_BYTES + 1)));

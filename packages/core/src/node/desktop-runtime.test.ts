@@ -110,7 +110,7 @@ function fixture() {
           `bash() { return ${failLifecycle ? 1 : 0}; }`,
           script
             .replaceAll("/tmp/rakazo/desktop-assignments", root)
-            .replaceAll("/tmp/rakazo", root),
+            .replaceAll("/tmp/smith", root),
         ].join("\n"),
       ],
       { encoding: "utf8", timeout: 5000, input },
@@ -181,7 +181,7 @@ describe("shared Linux desktop lifecycle", () => {
       const relocate = (command: string) =>
         command
           .replaceAll("/tmp/rakazo/desktop-assignments", f.root)
-          .replaceAll("/tmp/rakazo", f.root);
+          .replaceAll("/tmp/smith", f.root);
       const ready = path.join(f.root, "helper-ready");
       const releasing = path.join(f.root, "release-ready");
       const helper = spawn("bash", [
@@ -360,7 +360,7 @@ describe("shared Linux desktop lifecycle", () => {
       expect(readdirSync(f.root).some((name) => name.endsWith(".slot"))).toBe(true);
       const script = releaseDesktopCommand("a", "run:1", env)
         .replaceAll("/tmp/rakazo/desktop-assignments", f.root)
-        .replaceAll("/tmp/rakazo", f.root);
+        .replaceAll("/tmp/smith", f.root);
       const result = spawnSync(
         "bash",
         [
@@ -393,7 +393,7 @@ describe("shared Linux desktop lifecycle", () => {
       expect(f.ensure("a").status).toBe(0);
       const script = releaseDesktopCommand("a", "run:1", env)
         .replaceAll("/tmp/rakazo/desktop-assignments", f.root)
-        .replaceAll("/tmp/rakazo", f.root);
+        .replaceAll("/tmp/smith", f.root);
       const result = spawnSync(
         "bash",
         [
@@ -519,7 +519,7 @@ describe("shared Linux desktop lifecycle", () => {
       writeRecorder(path.join(rawBin, "google-chrome"), rawArgs);
 
       const script = ensureScreenCommand(0, "bot", "token", env)
-        .replaceAll("/tmp/rakazo", runtime)
+        .replaceAll("/tmp/smith", runtime)
         .replaceAll("/usr/share/novnc", root);
       const launcherWritten = script.indexOf("\nchmod 700 ");
       expect(launcherWritten).toBeGreaterThan(-1);
@@ -577,7 +577,7 @@ describe("shared Linux desktop lifecycle", () => {
         writeFileSync(
           path.join(root, "image-menu"),
           [
-            "[begin] (Rakazo)",
+            "[begin] (Smith)",
             "  [exec] (Browser) {rakazo-browser}",
             "  [exec] (Docs) {rakazo-browser https://example.test}",
             "  [exec] (Files) {pcmanfm}",
@@ -595,7 +595,7 @@ describe("shared Linux desktop lifecycle", () => {
       )
         .replaceAll("/etc/rakazo/fluxbox/menu", path.join(root, "image-menu"))
         .replaceAll("/tmp/fluxbox-home-", path.join(root, "flux-"))
-        .replaceAll("/tmp/rakazo", root)
+        .replaceAll("/tmp/smith", root)
         .replaceAll("/usr/share/novnc", root);
       const result = spawnSync(
         "bash",
@@ -613,7 +613,7 @@ describe("shared Linux desktop lifecycle", () => {
       expect(readFileSync(path.join(root, "flux-20/.fluxbox/menu"), "utf8")).toBe(
         imageMenu === "readable"
           ? [
-              "[begin] (Rakazo)",
+              "[begin] (Smith)",
               `  [exec] (Browser) {${launcher}}`,
               `  [exec] (Docs) {${launcher} https://example.test}`,
               "  [exec] (Files) {pcmanfm}",
@@ -651,7 +651,7 @@ describe("shared Linux desktop lifecycle", () => {
       .replaceAll("/etc/rakazo/", path.join(root, "image/"))
       .replaceAll("/tmp/fluxbox-home-", path.join(root, "flux-"))
       .replaceAll("/tmp/.X", path.join(root, ".X"))
-      .replaceAll("/tmp/rakazo", root)
+      .replaceAll("/tmp/smith", root)
       .replaceAll("/usr/share/novnc", root)
       .replaceAll(env.homeDir, path.join(root, "home"));
     const result = spawnSync(
@@ -708,7 +708,7 @@ describe("shared Linux desktop lifecycle", () => {
         { mode: 0o755 },
       );
       const script = ensureScreenCommand(0, "bot", "token", env)
-        .replaceAll("/tmp/rakazo", root)
+        .replaceAll("/tmp/smith", root)
         .replaceAll("/usr/share/novnc", root)
         .replaceAll(env.homeDir, path.join(root, "home"));
       // Stop once the browser is ready; the viewer after it is covered elsewhere.
@@ -770,7 +770,7 @@ describe("shared Linux desktop lifecycle", () => {
           ...screenPorts(0),
           controlPort: String(address.port),
         })
-          .replaceAll("/tmp/rakazo", root)
+          .replaceAll("/tmp/smith", root)
           .replaceAll("/usr/share/novnc", root);
         const result = spawnSync(
           "bash",
@@ -803,7 +803,7 @@ describe("shared Linux desktop lifecycle", () => {
   it("fails without publishing a token when the input server cannot start", () => {
     const root = mkdtempSync("/tmp/rk-control-");
     roots.push(root);
-    const script = interactiveScreenCommand(true, "human").replaceAll("/tmp/rakazo", root);
+    const script = interactiveScreenCommand(true, "human").replaceAll("/tmp/smith", root);
     const result = spawnSync(
       "bash",
       [
@@ -880,7 +880,7 @@ describe("shared Linux desktop lifecycle", () => {
           [
             "pkill() { :; }; sleep() { :; }",
             `bash() { printf '%s\\n' "$5" >>${shellQuote(record)}; }`,
-            resetDesktopRuntimeCommand(env).replaceAll("/tmp/rakazo", f.root),
+            resetDesktopRuntimeCommand(env).replaceAll("/tmp/smith", f.root),
           ].join("\n"),
         ],
         { encoding: "utf8", timeout: 5000 },
@@ -1019,7 +1019,7 @@ describe("shared Linux desktop lifecycle", () => {
           homeDir: home,
           workspaceDir: home,
           browserProfilesDir: profiles,
-        }).replaceAll("/tmp/rakazo", path.join(root, "runtime"));
+        }).replaceAll("/tmp/smith", path.join(root, "runtime"));
         waitForReady(joinedReady);
         const result = spawnSync("bash", ["-eu", "-c", command], {
           encoding: "utf8",
@@ -1164,7 +1164,7 @@ describe("shared Linux desktop lifecycle", () => {
       );
       chmodSync(path.join(bin, "rakazo-browser"), 0o755);
       const command = ensureScreenCommand(0, "bot", "token", screenEnv)
-        .replaceAll("/tmp/rakazo", path.join(root, "runtime"))
+        .replaceAll("/tmp/smith", path.join(root, "runtime"))
         .replaceAll("/usr/share/novnc", root);
       const cdpChecked = command.indexOf("\nfi\n", command.indexOf("CDP not ready")) + 4;
       const profile = browserProfilePathForScreen("bot", screenEnv);
@@ -1528,7 +1528,7 @@ describe("shared Linux desktop lifecycle", () => {
     const relocate = (script: string) =>
       script
         .replaceAll("/usr/libexec", libexec)
-        .replaceAll("/tmp/rakazo", runtime)
+        .replaceAll("/tmp/smith", runtime)
         .replaceAll("/usr/share/novnc", root)
         .replaceAll("/tmp/fluxbox-home-", path.join(root, "flux-"));
     const run = (script: string, displayUp: boolean) =>

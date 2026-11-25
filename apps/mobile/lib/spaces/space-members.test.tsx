@@ -206,7 +206,7 @@ async function render(canManage: boolean) {
       };
     if (procedure === "spaces/invites/create") {
       server.openInvites += 1;
-      return { url: "https://rakazo.example/invite/token-1", expiresAt: "2026-10-29T00:00:00Z" };
+      return { url: "https://smith.example/invite/token-1", expiresAt: "2026-10-29T00:00:00Z" };
     }
     if (procedure === "spaces/invites/cancel") server.openInvites = 0;
     if (procedure === "spaces/members/remove")
@@ -235,7 +235,7 @@ it("lets the owner share an invite link and remove a member after confirming", a
   await act(async () => buttonNamed("Share invite link")?.click());
   await act(flush);
   expect(rpc).toHaveBeenCalledWith("spaces/invites/create", { spaceId: "space-shared" }, pinned);
-  expect(share).toHaveBeenCalledWith({ url: "https://rakazo.example/invite/token-1" });
+  expect(share).toHaveBeenCalledWith({ url: "https://smith.example/invite/token-1" });
   // An open link can be cancelled until someone uses it.
   await act(async () => buttonNamed("Cancel open invites")?.click());
   await act(flush);
@@ -397,7 +397,7 @@ it("tags guests, and says before inviting someone by email that they are outside
         organizationName: "Acme",
       };
     if (procedure === "spaces/invites/create")
-      return { url: "https://rakazo.example/invite/token-2", expiresAt: "", emailed: true };
+      return { url: "https://smith.example/invite/token-2", expiresAt: "", emailed: true };
     return { ok: true };
   });
   await act(async () => queryClient.invalidateQueries());

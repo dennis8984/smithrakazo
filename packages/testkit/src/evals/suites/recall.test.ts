@@ -351,7 +351,7 @@ describe("recall outcome grading", () => {
         ?.stdout,
     ).toContain("Extensions/pbnhgcfkmdlhnoeajihcmpgkglmbjblb");
     expect(scriptedShell(computer, "ls -la ../../shared 2>/dev/null; pwd")?.stdout).toBe(
-      "/home/rakazo",
+      "/home/smith",
     );
     // A probe for several browsers still finds the Chromium the computer has.
     expect(

@@ -4,7 +4,7 @@ kind: ValidatingAdmissionPolicy
 metadata:
   name: rakazo-example-computers
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
 spec:
   failurePolicy: Fail
   matchConstraints:
@@ -71,7 +71,7 @@ kind: ValidatingAdmissionPolicyBinding
 metadata:
   name: rakazo-example-computers
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
 spec:
   policyName: rakazo-example-computers
   validationActions:

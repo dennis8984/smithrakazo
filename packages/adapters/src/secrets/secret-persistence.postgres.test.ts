@@ -89,7 +89,7 @@ describePostgres("secret persistence cleanup (PostgreSQL)", () => {
     } as unknown as Parameters<typeof createBackgroundJobHandlers>[0]);
     for (const id of [userId, otherUserId])
       await asSystem(owner.prisma).user.create({
-        data: { id, name: "Cleanup", email: `${id}@rakazo.test`, emailVerified: true },
+        data: { id, name: "Cleanup", email: `${id}@smith.test`, emailVerified: true },
       });
   });
 
@@ -281,7 +281,7 @@ describePostgres("secret persistence cleanup (PostgreSQL)", () => {
     const holder = `secret-persistence-cascade-${suffix}`;
     const fixture = asSystem(owner.prisma);
     await fixture.user.create({
-      data: { id: holder, name: "Cascade", email: `${holder}@rakazo.test`, emailVerified: true },
+      data: { id: holder, name: "Cascade", email: `${holder}@smith.test`, emailVerified: true },
     });
     await fixture.organization.create({
       data: { id: holder, name: "Cascade", slug: holder, createdAt: new Date() },

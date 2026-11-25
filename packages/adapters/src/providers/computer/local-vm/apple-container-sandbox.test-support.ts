@@ -24,7 +24,7 @@ if (command === "exec") {
   if (state.vms[name]?.status.state !== "running") { process.stderr.write("not running"); process.exit(1); }
   if (program === "nft") {
     if (state.nftMissing) { process.stderr.write("exec failed: nft: not found"); process.exit(127); }
-    if (rest[0] === "list") process.stdout.write("table inet rakazo {}\\n");
+    if (rest[0] === "list") process.stdout.write("table inet smith {}\\n");
     process.exit(0);
   }
   // The tool follows setpriv's "--" and the four words of the timeout wrapper.
@@ -37,7 +37,7 @@ if (command === "exec") {
   const requested = execAt >= 0 ? rest.slice(rest.indexOf("timeout", execAt) + 4) : [];
   if (requested[0] === "echo") { process.stdout.write(requested.slice(1).join(" ") + "\\n"); process.exit(0); }
   const script = rest.join(" ");
-  if (script.includes("mkdir -p -- '/home/rakazo'")) process.exit(0);
+  if (script.includes("mkdir -p -- '/home/smith'")) process.exit(0);
   if (script.includes("/dev/tcp/127.0.0.1/6080") || script.includes("rakazo-write")) process.exit(0);
   if (script.includes("sleep")) setInterval(() => {}, 1000);
   else { process.stdout.write("out:" + script.slice(-5)); process.stderr.write("err"); process.exit(7); }
@@ -47,7 +47,7 @@ if (command === "exec") {
   if (command === "run") {
     const name = option("--name");
     state.vms[name] = {
-      configuration: { id: name, labels: { "rakazo.bot-id": option("--label").split("=")[1] } },
+      configuration: { id: name, labels: { "smith.bot-id": option("--label").split("=")[1] } },
       status: { state: "running", networks: [{ ipv4Address: "192.168.70.2/24", ipv4Gateway: "192.168.70.1" }] },
     };
     save();
@@ -84,7 +84,7 @@ export function fakeCli(
     Object.entries(vms).map(([name, vm]) => [
       name,
       {
-        configuration: { id: name, labels: { "rakazo.bot-id": vm.botId } },
+        configuration: { id: name, labels: { "smith.bot-id": vm.botId } },
         status: {
           state: vm.state ?? "running",
           networks: [{ ipv4Address: "192.168.70.2/24", ipv4Gateway: "192.168.70.1" }],

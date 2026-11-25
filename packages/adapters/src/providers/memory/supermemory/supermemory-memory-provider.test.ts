@@ -51,8 +51,8 @@ describe("SupermemoryMemoryProvider", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls.map((call) => namespaceOf(call[0]))).toEqual([
-      "rakazo:workspace:workspace-1",
-      "rakazo:bot-1",
+      "smith:workspace:workspace-1",
+      "smith:bot-1",
     ]);
   });
 
@@ -77,8 +77,8 @@ describe("SupermemoryMemoryProvider", () => {
     );
 
     expect(fetchMock.mock.calls.map((call) => namespaceOf(call[0]))).toEqual([
-      "rakazo:bot-1",
-      "rakazo:bot-1:history:3",
+      "smith:bot-1",
+      "smith:bot-1:history:3",
     ]);
   });
 
@@ -118,8 +118,8 @@ describe("SupermemoryMemoryProvider", () => {
     );
 
     expect(fetchMock.mock.calls.map((call) => namespaceOf(call[0]))).toEqual([
-      "rakazo:workspace:workspace-1",
-      "rakazo:bot-1",
+      "smith:workspace:workspace-1",
+      "smith:bot-1",
     ]);
   });
 
@@ -166,8 +166,8 @@ describe("SupermemoryMemoryProvider", () => {
     await provider().purgeHistory({ botId: "bot-1", generations: [2, 3, 3] }, context);
 
     expect(fetchMock.mock.calls.map((call) => call[0])).toEqual([
-      "http://localhost:6767/ns/rakazo%3Abot-1%3Ahistory%3A2",
-      "http://localhost:6767/ns/rakazo%3Abot-1%3Ahistory%3A3",
+      "http://localhost:6767/ns/smith%3Abot-1%3Ahistory%3A2",
+      "http://localhost:6767/ns/smith%3Abot-1%3Ahistory%3A3",
     ]);
   });
 
@@ -210,8 +210,8 @@ describe("SupermemoryMemoryProvider", () => {
   });
 });
 
-const WORKSPACE = "rakazo:workspace:workspace-1";
-const OWN = "rakazo:bot-1";
+const WORKSPACE = "smith:workspace:workspace-1";
+const OWN = "smith:bot-1";
 
 /** An in-memory server: each namespace holds memories by id, and forgets only its own ids. */
 function fakeSupermemory(namespaces: Record<string, Record<string, string>>) {
@@ -336,7 +336,7 @@ describe("Supermemory forget", () => {
   it("refuses another bot's namespace, chat history and a malformed id before calling Supermemory", async () => {
     const server = fakeSupermemory({});
     const request = { scope: "shared" as const, botId: "bot-1" };
-    for (const entity of ["rakazo:bot-2", "rakazo:bot-2:history:1", "rakazo:bot-1:history:2"]) {
+    for (const entity of ["smith:bot-2", "smith:bot-2:history:1", "smith:bot-1:history:2"]) {
       expect((await provider().forget({ ...request, id: "mem_a", entity }, context)).ok).toBe(
         false,
       );
@@ -394,7 +394,7 @@ describe("Supermemory connection setup", () => {
       [
         "DELETE",
         expect.stringMatching(
-          /^https:\/\/api\.supermemory\.ai\/ns\/rakazo%3Adelete-probe%3A[0-9a-f-]{36}$/,
+          /^https:\/\/api\.supermemory\.ai\/ns\/smith%3Adelete-probe%3A[0-9a-f-]{36}$/,
         ),
       ],
     ]);

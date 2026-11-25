@@ -1449,8 +1449,8 @@ msgid "Allow once"
 msgstr "允许一次"
 
 #: apps/web/src/lib/calls/dictation.ts
-msgid "Allow Rakazo to use Speech Recognition and the microphone in System Settings."
-msgstr "请在系统设置中允许 Rakazo 使用语音识别和麦克风。"
+msgid "Allow Smith to use Speech Recognition and the microphone in System Settings."
+msgstr "请在系统设置中允许 Smith 使用语音识别和麦克风。"
 
 #: apps/mobile/lib/calls/call-session.ts
 #: apps/mobile/lib/composer/composer-dictation.ts
@@ -2661,8 +2661,8 @@ msgstr "选择文件夹"
 
 #: apps/web/src/components/billing/CreditChoice.tsx
 #: apps/web/src/components/billing/SubscriptionGate.tsx
-msgid "Choose how to use Rakazo"
-msgstr "选择如何使用 Rakazo"
+msgid "Choose how to use Smith"
+msgstr "选择如何使用 Smith"
 
 #: apps/web/src/pages/shell/bots/agent-import.tsx
 msgid "Choose your {home} folder, or a backup of it."
@@ -3160,8 +3160,8 @@ msgstr "连接你的 AI"
 
 #. js-lingui-explicit-id
 #: packages/i18n/src/run-error.ts
-msgid "Connect your own API key in Models or choose Rakazo credits in Billing."
-msgstr "请在“模型”中连接你自己的 API 密钥，或在“账单”中选择 Rakazo 额度。"
+msgid "Connect your own API key in Models or choose Smith credits in Billing."
+msgstr "请在“模型”中连接你自己的 API 密钥，或在“账单”中选择 Smith 额度。"
 
 #. js-lingui-explicit-id
 #: packages/i18n/src/plugin-catalog.ts
@@ -5639,8 +5639,8 @@ msgid "Ends {day}"
 msgstr "将于 {day} 结束"
 
 #: apps/web/src/pages/shell/composer/github-star-prompt.tsx
-msgid "Enjoying Rakazo?"
-msgstr "喜欢 Rakazo 吗？"
+msgid "Enjoying Smith?"
+msgstr "喜欢 Smith 吗？"
 
 #: packages/i18n/src/user-error.ts
 msgid "Enter a password"
@@ -6401,8 +6401,8 @@ msgstr "如何检查"
 
 #: apps/mobile/app/(settings)/signup-survey.tsx
 #: apps/web/src/components/account/SignupSurvey.tsx
-msgid "How will you use Rakazo?"
-msgstr "你会如何使用 Rakazo？"
+msgid "How will you use Smith?"
+msgstr "你会如何使用 Smith？"
 
 #: apps/mobile/components/models/compatible-endpoint-form.tsx
 msgid "http://127.0.0.1:8000/v1"
@@ -6525,8 +6525,8 @@ msgid "In use"
 msgstr "使用中"
 
 #: apps/mobile/app/(settings)/model-connection.tsx
-msgid "In your browser, sign in and paste this code when asked. Then return to Rakazo."
-msgstr "在浏览器中登录，并在提示时粘贴此代码。然后返回 Rakazo。"
+msgid "In your browser, sign in and paste this code when asked. Then return to Smith."
+msgstr "在浏览器中登录，并在提示时粘贴此代码。然后返回 Smith。"
 
 #: apps/web/src/pages/settings/BillingSettingsPanel.tsx
 msgid "Inactive"
@@ -8231,8 +8231,8 @@ msgid "Not in {organizationName}. They'll only see this Space."
 msgstr "不在 {organizationName} 中，只能看到此空间。"
 
 #: apps/web/src/pages/shell/bots/import-status.ts
-msgid "Not in Rakazo's catalog"
-msgstr "不在 Rakazo 目录中"
+msgid "Not in Smith's catalog"
+msgstr "不在 Smith 目录中"
 
 #: apps/mobile/app/(settings)/integrations.tsx
 #: apps/web/src/pages/plugins/plugin-browse.tsx
@@ -8260,8 +8260,8 @@ msgid "Not on an HTTPS site"
 msgstr "不是 HTTPS 网站"
 
 #: apps/web/src/pages/plugins/source-form.tsx
-msgid "Not reviewed by Rakazo. Only add it if you trust this address."
-msgstr "未经 Rakazo 审核。仅在你信任此地址时添加。"
+msgid "Not reviewed by Smith. Only add it if you trust this address."
+msgstr "未经 Smith 审核。仅在你信任此地址时添加。"
 
 #. js-lingui-explicit-id
 #: packages/i18n/src/vault.ts
@@ -8286,12 +8286,12 @@ msgstr "未发送。轻点重试"
 
 #: apps/web/src/pages/shell/bots/agent-import-plan.tsx
 #: apps/web/src/pages/shell/bots/import-status.ts
-msgid "Not supported in Rakazo"
-msgstr "Rakazo 不支持"
+msgid "Not supported in Smith"
+msgstr "Smith 不支持"
 
 #: apps/web/src/pages/shell/bots/agent-import-plan.tsx
-msgid "Not used by Rakazo"
-msgstr "Rakazo 不使用"
+msgid "Not used by Smith"
+msgstr "Smith 不使用"
 
 #. js-lingui-explicit-id
 #: packages/i18n/src/plugin-catalog.ts
@@ -8542,8 +8542,8 @@ msgstr "打开导航"
 #: apps/web/src/pages/auth/Invite.tsx
 #: apps/web/src/pages/auth/JoinOrganization.tsx
 #: apps/web/src/pages/SharedPage.tsx
-msgid "Open Rakazo"
-msgstr "打开 Rakazo"
+msgid "Open Smith"
+msgstr "打开 Smith"
 
 #: apps/web/src/components/models/SubscriptionSignInSteps.tsx
 msgid "Open settings"
@@ -9215,27 +9215,27 @@ msgstr "引用所选内容"
 #: apps/mobile/app/bot-settings.tsx
 #: apps/web/src/pages/settings/AccountSettingsOverlay.tsx
 #: apps/web/src/pages/shell/bots/avatar-studio-popover.tsx
-msgid "Rakazo"
-msgstr "Rakazo"
+msgid "Smith"
+msgstr "Smith"
 
 #: apps/mobile/app/(settings)/billing.tsx
 #: apps/mobile/components/models/model-role-settings.tsx
 #: apps/web/src/pages/model-settings/ModelRoleSettings.tsx
 #: apps/web/src/pages/onboarding/use-onboarding-model.ts
-msgid "Rakazo credits"
-msgstr "Rakazo 额度"
+msgid "Smith credits"
+msgstr "Smith 额度"
 
 #: apps/mobile/lib/billing/self-hosted-support.ts
-msgid "Rakazo is free to self-host. If you'd like to support it, subscribers can email support@rakazo.com for help."
-msgstr "Rakazo 可免费自托管。如果你想支持 Rakazo，订阅用户可发送邮件至 support@rakazo.com 获取帮助。"
+msgid "Smith is free to self-host. If you'd like to support it, subscribers can email support@rakazo.com for help."
+msgstr "Smith 可免费自托管。如果你想支持 Smith，订阅用户可发送邮件至 support@rakazo.com 获取帮助。"
 
 #: apps/web/src/components/models/ProviderSettingsForm.tsx
-msgid "rakazo-shared and IDs starting with bot- are reserved for Rakazo."
-msgstr "rakazo-shared 和以 bot- 开头的 ID 保留给 Rakazo 使用。"
+msgid "rakazo-shared and IDs starting with bot- are reserved for Smith."
+msgstr "rakazo-shared 和以 bot- 开头的 ID 保留给 Smith 使用。"
 
 #: apps/mobile/app/(settings)/account.tsx
-msgid "Rate Rakazo"
-msgstr "为 Rakazo 评分"
+msgid "Rate Smith"
+msgstr "为 Smith 评分"
 
 #: apps/mobile/components/thread/message-row.tsx
 #: apps/web/src/pages/shell/chat/message-hover-actions.tsx
@@ -9294,8 +9294,8 @@ msgid "Recall from banks"
 msgstr "从记忆库读取"
 
 #: apps/web/src/components/models/ProviderSettingsForm.tsx
-msgid "Recall from this peer; save to Rakazo’s own peers."
-msgstr "从此 peer 读取；保存到 Rakazo 自己的 peer。"
+msgid "Recall from this peer; save to Smith’s own peers."
+msgstr "从此 peer 读取；保存到 Smith 自己的 peer。"
 
 #: apps/web/src/components/models/ProviderSettingsForm.tsx
 msgid "Recall only"
@@ -9993,8 +9993,8 @@ msgstr "返回收件箱"
 
 #: apps/web/src/pages/integrations/McpOAuthCallback.tsx
 #: apps/web/src/pages/integrations/SlackInstallCallback.tsx
-msgid "Return to Rakazo"
-msgstr "返回 Rakazo"
+msgid "Return to Smith"
+msgstr "返回 Smith"
 
 #: apps/mobile/app/page.tsx
 #: apps/web/src/components/pages/PageViewHost.tsx
@@ -10892,8 +10892,8 @@ msgstr "在 {host} 登录，然后将页面显示的验证码粘贴到这里。"
 
 #: apps/mobile/app/sign-in.tsx
 #: apps/web/src/pages/auth/Auth.tsx
-msgid "Sign in to Rakazo"
-msgstr "登录 Rakazo"
+msgid "Sign in to Smith"
+msgstr "登录 Smith"
 
 #: packages/i18n/src/user-error.ts
 msgid "Sign in to your account, then link this provider in settings"
@@ -10923,8 +10923,8 @@ msgid "Sign up"
 msgstr "注册"
 
 #: apps/mobile/app/sign-in.tsx
-msgid "Sign up for Rakazo"
-msgstr "注册 Rakazo"
+msgid "Sign up for Smith"
+msgstr "注册 Smith"
 
 #: apps/web/src/pages/plugins/PluginsOverlay.tsx
 msgid "Sign-in cancelled. Retry in Manage MCP servers."
@@ -11279,8 +11279,8 @@ msgid "Start recording"
 msgstr "开始录制"
 
 #: apps/mobile/app/paywall.tsx
-msgid "Start using Rakazo"
-msgstr "开始使用 Rakazo"
+msgid "Start using Smith"
+msgstr "开始使用 Smith"
 
 #: apps/mobile/app/(settings)/billing.tsx
 #: apps/web/src/components/billing/ModelCredits.tsx
@@ -11447,8 +11447,8 @@ msgstr "支持，每月 $25"
 
 #: apps/mobile/app/(settings)/account.tsx
 #: apps/mobile/lib/billing/self-hosted-support.ts
-msgid "Support Rakazo"
-msgstr "支持 Rakazo"
+msgid "Support Smith"
+msgstr "支持 Smith"
 
 #: apps/mobile/app/(settings)/model-settings.tsx
 #: apps/web/src/pages/model-settings/model-settings-panel.tsx
@@ -11603,8 +11603,8 @@ msgid "That isn't a Grok Bot export. Paste the Bot's whole reply."
 msgstr "这不是 Grok Bot 的导出内容。请粘贴该 Bot 的完整回复。"
 
 #: apps/mobile/lib/api/endpoint.ts
-msgid "That URL did not look like a Rakazo server"
-msgstr "该地址看起来不是 Rakazo 服务器"
+msgid "That URL did not look like a Smith server"
+msgstr "该地址看起来不是 Smith 服务器"
 
 #: apps/mobile/lib/api/endpoint.ts
 msgid "That URL is missing a host"
@@ -11745,8 +11745,8 @@ msgstr "共享链接将失效"
 
 #: apps/mobile/app/meeting-transcript.tsx
 #: apps/web/src/pages/shell/meetings/meeting-transcript.tsx
-msgid "The transcript will be removed from Rakazo."
-msgstr "文字记录将从 Rakazo 中移除。"
+msgid "The transcript will be removed from Smith."
+msgstr "文字记录将从 Smith 中移除。"
 
 #: apps/mobile/app/(settings)/billing.tsx
 #: apps/web/src/components/billing/ModelCredits.tsx
@@ -11914,8 +11914,8 @@ msgid "This draft isn't available"
 msgstr "此草稿不可用"
 
 #: apps/web/src/lib/bots/agent-import-errors.ts
-msgid "This export is newer than Rakazo can read. Update Rakazo and try again."
-msgstr "此导出内容的版本比 Rakazo 能读取的更新。请更新 Rakazo 后重试。"
+msgid "This export is newer than Smith can read. Update Smith and try again."
+msgstr "此导出内容的版本比 Smith 能读取的更新。请更新 Smith 后重试。"
 
 #: apps/web/src/lib/bots/agent-import-errors.ts
 msgid "This export is too large to import."
@@ -12088,8 +12088,8 @@ msgstr "此空间有自己的保管库。其中的 Bot 会在那里保存和使�
 
 #: apps/mobile/app/(settings)/model-connection.tsx
 #: apps/web/src/pages/model-settings/connection-controls.tsx
-msgid "This subscription sign-in is not available in Rakazo yet. Use a deployment credential or choose another provider."
-msgstr "此订阅登录在 Rakazo 中尚不可用。请使用部署凭据或选择其他提供商。"
+msgid "This subscription sign-in is not available in Smith yet. Use a deployment credential or choose another provider."
+msgstr "此订阅登录在 Smith 中尚不可用。请使用部署凭据或选择其他提供商。"
 
 #: apps/mobile/app/(settings)/bot-template.tsx
 msgid "This template is no longer available."
@@ -12555,8 +12555,8 @@ msgid "Update progress"
 msgstr "更新进度"
 
 #: apps/web/src/lib/integrations/meeting-calendar-connect.ts
-msgid "Update Rakazo to connect your calendar from the desktop app."
-msgstr "请更新 Rakazo，以便从桌面应用连接日历。"
+msgid "Update Smith to connect your calendar from the desktop app."
+msgstr "请更新 Smith，以便从桌面应用连接日历。"
 
 #: apps/mobile/lib/api/client-update.ts
 #: apps/web/src/lib/platform/client-update.ts
@@ -12732,8 +12732,8 @@ msgstr "输入密码时请用受保护输入。"
 
 #: apps/mobile/app/(settings)/billing.tsx
 #: apps/web/src/components/billing/ModelCredits.tsx
-msgid "Use Rakazo credits"
-msgstr "使用 Rakazo 额度"
+msgid "Use Smith credits"
+msgstr "使用 Smith 额度"
 
 #: apps/mobile/components/settings/space-bots-model.tsx
 msgid "Use space default"
@@ -12987,8 +12987,8 @@ msgstr "欢迎回来"
 #: apps/mobile/app/(settings)/_layout.tsx
 #: apps/mobile/app/sign-in.tsx
 #: apps/web/src/components/account/SignupSurvey.tsx
-msgid "Welcome to Rakazo"
-msgstr "欢迎使用 Rakazo"
+msgid "Welcome to Smith"
+msgstr "欢迎使用 Smith"
 
 #: apps/web/src/pages/shell/create-delete-dialogs.tsx
 msgid "What about its memories?"
@@ -13000,8 +13000,8 @@ msgstr "这个空间可以使用什么？"
 
 #: apps/mobile/app/(settings)/signup-survey.tsx
 #: apps/web/src/components/account/SignupSurvey.tsx
-msgid "What do you most want Rakazo to help with?"
-msgstr "你最希望 Rakazo 帮你做什么？"
+msgid "What do you most want Smith to help with?"
+msgstr "你最希望 Smith 帮你做什么？"
 
 #: apps/web/src/pages/shell/chat/message-cards.tsx
 msgid "What do you want me on first?"

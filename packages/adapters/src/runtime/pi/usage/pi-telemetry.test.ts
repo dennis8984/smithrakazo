@@ -104,17 +104,17 @@ describe("Pi OpenTelemetry", () => {
     expect(spans).toHaveLength(6);
     for (const runId of ["first", "second"]) {
       const run = spans.find(
-        (s) => s.name === "rakazo.agent.run" && s.attributes["rakazo.run.id"] === runId,
+        (s) => s.name === "smith.agent.run" && s.attributes["smith.run.id"] === runId,
       )!;
       const children = spans.filter(
-        (s) => s.name !== run.name && s.attributes["rakazo.run.id"] === runId,
+        (s) => s.name !== run.name && s.attributes["smith.run.id"] === runId,
       );
       expect(children).toHaveLength(2);
       for (const span of children) {
         expect(span.spanContext().traceId).toBe(run.spanContext().traceId);
         expect(span.attributes).toMatchObject({
-          "rakazo.bot.id": ids.botId,
-          "rakazo.routine.id": ids.routineId,
+          "smith.bot.id": ids.botId,
+          "smith.routine.id": ids.routineId,
         });
       }
       const tool = children.find((s) => s.name === "pi.agent.tool")!;
@@ -320,7 +320,7 @@ describe("Pi OpenTelemetry", () => {
         failure === "provider" ? "private provider failure" : MISSING_TOOL_FINAL_RESPONSE_ERROR,
       );
       await provider.forceFlush();
-      const run = output.getFinishedSpans().find((span) => span.name === "rakazo.agent.run")!;
+      const run = output.getFinishedSpans().find((span) => span.name === "smith.agent.run")!;
       expect(run.status.code).toBe(SpanStatusCode.ERROR);
       expect(run.events).toEqual([]);
       expect(JSON.stringify(run.attributes)).not.toContain("private");
@@ -429,9 +429,9 @@ describe("Pi OpenTelemetry", () => {
       expect(spans.filter((span) => span.name === "pi.ai.request")).toHaveLength(2);
       const tool = spans.find((span) => span.name === "pi.agent.tool")!;
       expect(tool.attributes).toMatchObject({
-        "rakazo.bot.id": ids.botId,
-        "rakazo.run.id": ids.runId,
-        "rakazo.routine.id": ids.routineId,
+        "smith.bot.id": ids.botId,
+        "smith.run.id": ids.runId,
+        "smith.routine.id": ids.routineId,
         "pi.agent.tool.name": "fixture_tool",
         "pi.agent.tool.success": !failed,
       });

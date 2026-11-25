@@ -174,7 +174,7 @@ describe("SerenityMemoryProvider", () => {
         {
           factId: "fact-1",
           fact: "Prefer conventional commits.",
-          provenance: "user told rakazo",
+          provenance: "user told smith",
         },
       ],
     });
@@ -191,7 +191,7 @@ describe("SerenityMemoryProvider", () => {
           memory: "Prefer conventional commits.",
           score: expect.closeTo(1 / 3),
           id: "fact-1",
-          provenance: "user told rakazo",
+          provenance: "user told smith",
           entity: "rakazo-bot/bot-1",
         },
       ],
@@ -301,7 +301,7 @@ describe("SerenityMemoryProvider", () => {
     await provider().save(request, { ...run, operationId: "op-2" });
     await provider().save({ ...request, content: "Use imperial units." }, run);
     const keys = rememberSerenityMock.mock.calls.map((call) => call[3]?.operationKey);
-    expect(keys[0]).toMatch(/^rakazo:[0-9a-f]{48}$/);
+    expect(keys[0]).toMatch(/^smith:[0-9a-f]{48}$/);
     expect(keys[1]).toBe(keys[0]);
     expect(keys[2]).not.toBe(keys[0]);
   });

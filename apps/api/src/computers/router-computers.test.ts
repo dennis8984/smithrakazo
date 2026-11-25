@@ -27,7 +27,7 @@ describe("computer screen url", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const computerRow = {
@@ -213,7 +213,7 @@ describe("computer terminal and file transfer", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const controlled = {
@@ -856,7 +856,7 @@ describe("quarantined computer stop", () => {
               actor: {
                 userId: "user",
                 spaceId: "space",
-                email: "user@rakazo.test",
+                email: "user@smith.test",
                 isDeploymentOwner: true,
               },
             },
@@ -922,7 +922,7 @@ describe("bot restore computer quota", () => {
             actor: {
               spaceId: "space-1",
               userId: "user-1",
-              email: "user@rakazo.test",
+              email: "user@smith.test",
               isDeploymentOwner: true,
             },
           },

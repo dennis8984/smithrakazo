@@ -17,7 +17,7 @@ afterEach(() => {
 });
 
 function stubSelectedSpace(id: string) {
-  const store = new Map<string, string>([["rakazo:space-id", id]]);
+  const store = new Map<string, string>([["smith:space-id", id]]);
   const localStorage = {
     getItem: (key: string) => store.get(key) ?? null,
     setItem: (key: string, value: string) => {
@@ -29,7 +29,7 @@ function stubSelectedSpace(id: string) {
   };
   vi.stubGlobal("window", { localStorage });
   vi.stubGlobal("localStorage", localStorage);
-  return (next: string) => store.set("rakazo:space-id", next);
+  return (next: string) => store.set("smith:space-id", next);
 }
 
 function stubAudio(play: (audio: { onended: (() => void) | null }) => Promise<void>) {

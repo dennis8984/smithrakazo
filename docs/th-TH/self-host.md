@@ -1,4 +1,4 @@
-# Self-host Rakazo
+# Self-host Smith
 
 [English](../self-host.md) | ไทย
 
@@ -19,7 +19,7 @@
 ต้องมี Docker Engine 26 ขึ้นไป (API 1.45 ขึ้นไป สำหรับ subpath ของ volume home ของ bot), Compose plugin, curl และ OpenSSL
 
 ```bash
-mkdir -p rakazo && cd rakazo &&
+mkdir -p smith && cd smith &&
 curl -fsSLO https://raw.githubusercontent.com/elie222/rakazo/main/infra/compose/install-images.sh &&
 bash install-images.sh
 ```
@@ -61,7 +61,7 @@ app.example.com {
 
 บน Windows ถ้า clone เก่าที่ตั้ง `core.autocrlf=true` ทำให้แผง computer ค้างตอนบูต (เห็น `bash\r` ใน log ของ sandbox) ให้ตั้ง `git config core.autocrlf false` จาก worktree ที่สะอาด รัน `git add --renormalize . && git checkout -- .` แล้ว build ใหม่ด้วย `pnpm sandbox:build`
 
-Compose รัน Postgres, sandbox supervisor (Docker socket), API, worker และ Vite preview ของเว็บแอป computer ของ bot เป็น container พี่น้อง (`rakazo/computer:local`) บนเครือข่ายแยกต่อ bot มีเพียง supervisor และ screen proxy ที่เข้าร่วมแต่ละเครือข่าย process ของ API ไม่ได้รับ Docker socket แบบไม่จำกัด supervisor เป็นผู้ดูแล lifecycle
+Compose รัน Postgres, sandbox supervisor (Docker socket), API, worker และ Vite preview ของเว็บแอป computer ของ bot เป็น container พี่น้อง (`smith/computer:local`) บนเครือข่ายแยกต่อ bot มีเพียง supervisor และ screen proxy ที่เข้าร่วมแต่ละเครือข่าย process ของ API ไม่ได้รับ Docker socket แบบไม่จำกัด supervisor เป็นผู้ดูแล lifecycle
 
 Postgres อยู่ในเครือข่าย Compose เท่านั้น (ไม่ publish บนโฮสต์) เหมือน Compose ของ images credential มาจาก `.env` (ต้องมี `POSTGRES_PASSWORD`) ควรใช้ค่าที่ปลอดภัยใน URI (`openssl rand -hex 16`) อักขระอย่าง `@ : / ? # %` จะทำให้ `DATABASE_URL` ที่ Compose แทนค่าไว้เสีย image ทางการของ Postgres ตั้ง user, password และ database เฉพาะตอน init volume ครั้งแรก volume ฐานข้อมูลที่มีอยู่จึงคงตัวตนเดิมไว้: เก็บค่าเหล่านั้นใน `.env` หรือเปลี่ยนในที่ด้วย `ALTER ROLE` / rename สร้าง volume ใหม่เฉพาะหลังสำรองข้อมูลแล้ว (หรือเมื่อข้อมูลทิ้งได้) `docker compose down -v` จะลบ state ของ Postgres ทั้งหมด สำหรับไคลเอนต์ฝั่งโฮสต์ (`pnpm db:migrate`, เครื่องมือ GUI) ให้เพิ่ม `infra/compose/docker-compose.postgres-host.yml` เพื่อ publish Postgres ที่ loopback `127.0.0.1:5433` หรือใช้
 `docker compose --env-file .env -f infra/compose/docker-compose.yml exec postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'`
@@ -75,7 +75,7 @@ Postgres อยู่ในเครือข่าย Compose เท่าน�
 
 build และแพลตฟอร์มอื่นใช้ Docker Compose กับ published images (ดู [Published images](#published-images-ไม่ต้อง-checkout)) API ที่แอปจัดการจะได้พอร์ต loopback ที่ Docker กำหนดให้ container Docker เหล่านี้ยังทำงานต่อหลังปิดแอป **Quit and Stop Bots** ในเมนูแอปจะหยุด stack ที่แอปจัดการแล้วปิดแอป ใช้ได้กับทั้งสอง runtime การสลับไปเซิร์ฟเวอร์อื่นก็หยุด stack นั้นเช่นกัน build สำหรับพัฒนาที่ไม่ได้ package ปกติไม่มี server bundle ให้ใช้ **Existing instance** กับ stack พัฒนาจาก source
 
-สำหรับการพัฒนาจาก source ใน WSL ให้เก็บ checkout และไดเรกทอรี `data` ไว้ใน filesystem ของ Linux (เช่น `~/rakazo`) และรัน `pnpm dev` ด้วยผู้ใช้ปกติ supervisor ที่รันบนโฮสต์จะตั้ง UID/GID ของ container bot ให้ตรงกับผู้ใช้นั้น ถ้าเข้าถึง IP ของ container ใน Docker Desktop ไม่ได้ ให้ตั้ง `SANDBOX_CONTROL_VIA_LOOPBACK=true` ใน `.env` ซึ่งจะ publish control service ที่ป้องกันด้วย token บนพอร์ต loopback แบบสุ่ม ไม่ต้องตั้งค่านี้สำหรับ supervisor ที่รันใน Compose
+สำหรับการพัฒนาจาก source ใน WSL ให้เก็บ checkout และไดเรกทอรี `data` ไว้ใน filesystem ของ Linux (เช่น `~/smith`) และรัน `pnpm dev` ด้วยผู้ใช้ปกติ supervisor ที่รันบนโฮสต์จะตั้ง UID/GID ของ container bot ให้ตรงกับผู้ใช้นั้น ถ้าเข้าถึง IP ของ container ใน Docker Desktop ไม่ได้ ให้ตั้ง `SANDBOX_CONTROL_VIA_LOOPBACK=true` ใน `.env` ซึ่งจะ publish control service ที่ป้องกันด้วย token บนพอร์ต loopback แบบสุ่ม ไม่ต้องตั้งค่านี้สำหรับ supervisor ที่รันใน Compose
 
 home ของ bot ใน Compose mount เฉพาะไดเรกทอรีย่อยของตัวเองใน volume ของแอป ตามหลักการของ Docker volume path ภายในของ volume Docker ไม่เคยถูกใช้เป็น bind mount ของโฮสต์
 
@@ -134,4 +134,4 @@ docker compose -f docker-compose.images.yml exec api node dist/cli/diagnostics.j
 
 จาก checkout ให้ใช้ `-f infra/compose/docker-compose.yml` (หรือไฟล์ production) แทน รายงานแสดง revision ฟีเจอร์ที่เปิดอยู่ สถานะ migration MCP server ของแต่ละ bot พร้อมสถานะ และการรันล่าสุด ไม่พิมพ์ secret ค่าการตั้งค่า ชื่อ ที่อยู่ path หรือเนื้อหาข้อความ เซิร์ฟเวอร์ bot และการรันจะแสดงเป็น hash สั้น ๆ เท่านั้น
 
-เมื่อผู้ใช้ขอให้ bot รายงานบั๊กหรือส่งความคิดเห็น รายงานจะถูกบันทึกบนเซิร์ฟเวอร์ของคุณในตาราง `feedback_reports` พร้อมแชท bot และการรันที่มา ไม่มีอะไรถูกส่งไปยังโปรเจกต์ Rakazo
+เมื่อผู้ใช้ขอให้ bot รายงานบั๊กหรือส่งความคิดเห็น รายงานจะถูกบันทึกบนเซิร์ฟเวอร์ของคุณในตาราง `feedback_reports` พร้อมแชท bot และการรันที่มา ไม่มีอะไรถูกส่งไปยังโปรเจกต์ Smith

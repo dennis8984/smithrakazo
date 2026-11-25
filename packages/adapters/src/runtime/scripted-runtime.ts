@@ -751,7 +751,7 @@ code-b
         toolCalls: [
           {
             name: "destination.write",
-            args: { collection: "notes", title: "Rakazo result", body: prompt },
+            args: { collection: "notes", title: "Smith result", body: prompt },
           },
         ],
         complete: true,

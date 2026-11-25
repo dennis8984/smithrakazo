@@ -22,7 +22,7 @@ import { appHandler, createRouter, handle } from "./router-test-support.js";
 describe("account preferences", () => {
   function preferencesDeps(avatarStyle: string, timezone: string | null = null) {
     const user = {
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       name: "Test User",
       avatarStyle,
       timezone,
@@ -104,7 +104,7 @@ describe("account preferences", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     return {
@@ -345,7 +345,7 @@ describe("account preferences", () => {
       new Request("http://127.0.0.1/rpc/preferences/update", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ json: { botAvatarSet: "rakazo" } }),
+        body: JSON.stringify({ json: { botAvatarSet: "smith" } }),
       }),
       { prefix: "/rpc", context: { actor } },
     );
@@ -353,11 +353,11 @@ describe("account preferences", () => {
     expect(response.status).toBe(200);
     expect(update).toHaveBeenCalledWith({
       where: { id: "user-1" },
-      data: { botAvatarSet: "rakazo" },
+      data: { botAvatarSet: "smith" },
     });
     expect(botFindMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { userId: "user-1", avatarSetPinned: false, avatarSet: { not: "rakazo" } },
+        where: { userId: "user-1", avatarSetPinned: false, avatarSet: { not: "smith" } },
       }),
     );
   });
@@ -682,7 +682,7 @@ describe("billing", () => {
     const prisma = {
       user: {
         findUniqueOrThrow: vi.fn().mockResolvedValue({
-          email: "user@rakazo.test",
+          email: "user@smith.test",
           name: "Test User",
           avatarStyle: "robot",
           signupSurvey,
@@ -709,7 +709,7 @@ describe("billing", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner,
     } satisfies Actor;
     return createRouterClient(createRouter(deps), { context: { actor } });
@@ -822,7 +822,7 @@ describe("updater owner gate", () => {
     const prisma = {
       user: {
         findUniqueOrThrow: vi.fn().mockResolvedValue({
-          email: "user@rakazo.test",
+          email: "user@smith.test",
           name: "Test User",
           avatarStyle: "robot",
           secrets: [],
@@ -851,7 +851,7 @@ describe("updater owner gate", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-2",
-      email: "member@rakazo.test",
+      email: "member@smith.test",
       isDeploymentOwner: false,
     } satisfies Actor;
 
@@ -873,7 +873,7 @@ describe("updater owner gate", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "owner@rakazo.test",
+      email: "owner@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
 
@@ -895,7 +895,7 @@ describe("updater owner gate", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "owner@rakazo.test",
+      email: "owner@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
 
@@ -967,7 +967,7 @@ describe("link favicons", () => {
   const reader = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: false,
   } satisfies Actor;
 
@@ -1014,7 +1014,7 @@ describe("adapter refusals answered by type", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const call = (deps: RouterDeps, path: string, body: unknown) =>
@@ -1120,7 +1120,7 @@ describe("export.bot", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const roots: string[] = [];
@@ -1144,7 +1144,7 @@ describe("export.bot", () => {
   async function exportManifest(
     scope: "team" | "dedicated",
     home: LocalAgentHomeStore,
-    appearance?: { color: string; avatarSet?: "organic" | "rakazo" },
+    appearance?: { color: string; avatarSet?: "organic" | "smith" },
   ) {
     const prisma = {
       bot: {
@@ -1187,9 +1187,9 @@ describe("export.bot", () => {
     async (color) => {
       const manifest = await exportManifest("team", await homeWith({}), {
         color,
-        avatarSet: "rakazo",
+        avatarSet: "smith",
       });
-      expect(manifest.bot).toMatchObject({ color, avatarSet: "rakazo" });
+      expect(manifest.bot).toMatchObject({ color, avatarSet: "smith" });
     },
   );
 
@@ -1272,7 +1272,7 @@ describe("export.bot", () => {
 });
 
 describe("memory documents", () => {
-  const actor = { userId: "user-1", spaceId: "space-1", email: "user@rakazo.test" };
+  const actor = { userId: "user-1", spaceId: "space-1", email: "user@smith.test" };
 
   function memoryClient(
     doc: { id: string; path: string; scope: string; botId: string | null } | null,

@@ -6,7 +6,7 @@ test("chat details opens without animating its width when reduced motion is requ
 }) => {
   await page.setViewportSize({ width: 1500, height: 1000 });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await signup(page, `panel-motion-${Date.now()}@rakazo.test`, "password12", "Panel Motion");
+  await signup(page, `panel-motion-${Date.now()}@smith.test`, "password12", "Panel Motion");
   await completeOnboarding(page);
 
   const panel = page.getByTestId("side-panel");

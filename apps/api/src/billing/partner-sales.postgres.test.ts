@@ -23,7 +23,7 @@ dbTests("partner program sales", () => {
       data: {
         id,
         name,
-        email: `${id}@rakazo.test`,
+        email: `${id}@smith.test`,
         emailVerified: true,
         signupPartnerClickId: partnerClickId,
       },

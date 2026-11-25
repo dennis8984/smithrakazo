@@ -8,7 +8,7 @@ describe("routine live Codex model validation", () => {
   it.each(["create", "update"] as const)(
     "saves a listed live-only model on %s and rejects an unlisted id",
     async (operation) => {
-      const actor = { userId: "user-1", spaceId: "space-1", email: "user@rakazo.test" };
+      const actor = { userId: "user-1", spaceId: "space-1", email: "user@smith.test" };
       const modelId = "gpt-6-luna-latest";
       const stamp = new Date("2026-01-01T00:00:00Z");
       const row = {
@@ -270,7 +270,7 @@ describe("routines.update", () => {
   const actor = {
     spaceId: "space-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const routine = {
@@ -690,7 +690,7 @@ describe("routine watch creation boundaries", () => {
   const actor = {
     spaceId: "space-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
 

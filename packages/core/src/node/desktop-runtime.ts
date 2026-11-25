@@ -28,8 +28,8 @@ export interface DesktopEnvironment {
   bindHost?: string;
 }
 export const DEFAULT_DESKTOP_ENV: DesktopEnvironment = {
-  homeDir: "/home/rakazo",
-  workspaceDir: "/home/rakazo",
+  homeDir: "/home/smith",
+  workspaceDir: "/home/smith",
   browserProfilesDir: "/home/rakazo/.browser-profiles",
   displayStart: 1,
   bindHost: "127.0.0.1",
@@ -562,7 +562,7 @@ function stopProfileDirectoriesCommand(profileList: string) {
     "set -eu",
     "failed=0",
     "running=0",
-    "mkdir -p /tmp/rakazo",
+    "mkdir -p /tmp/smith",
     `for profile in ${profileList}; do`,
     '  [ -d "$profile" ] || continue',
     '  case "$profile" in',
@@ -806,7 +806,7 @@ function renderEnsureScreenCommand(
           // Keep apps a derived image adds to its menu; its browser entries open this screen's browser.
           `{ [ -r /etc/rakazo/fluxbox/menu ] && sed "s#{rakazo-browser\\([ }]\\)#{${browserLauncherPath(layout.displayNumber)}\\1#g" /etc/rakazo/fluxbox/menu || printf '[begin] (Desktop)\\n[exec] (Browser) {%s}\\n[exec] (Terminal) {%s}\\n[end]\\n' ${browserLauncherPath(layout.displayNumber)} ${shellQuote(TERMINAL_MENU_COMMAND)}; } >${fluxHome}/.fluxbox/menu`,
           `if ! xdpyinfo -display ${layout.display} >/dev/null 2>&1; then`,
-          `  mkdir -p /tmp/rakazo ${fluxHome}/.fluxbox /tmp/.X11-unix`,
+          `  mkdir -p /tmp/smith ${fluxHome}/.fluxbox /tmp/.X11-unix`,
           `  rm -f /tmp/.X${layout.displayNumber}-lock /tmp/.X11-unix/X${layout.displayNumber}`,
           `  nohup Xvfb ${layout.display} -screen 0 1280x800x24 -ac +extension RANDR +render -noreset -nolisten tcp 8>&- 9>&- </dev/null >${log}-xvfb.log 2>&1 &`,
           `  for i in $(seq 1 100); do xdpyinfo -display ${layout.display} >/dev/null 2>&1 && break; sleep 0.1; done`,
@@ -850,12 +850,12 @@ function renderEnsureScreenCommand(
     `desktop_view_token=${shellQuote(viewToken)}`,
     '[[ "$desktop_view_token" =~ ^[a-zA-Z0-9_-]{1,64}$ ]] || exit 75',
     proxyEnvironmentCommand(),
-    `mkdir -p /tmp/rakazo`,
+    `mkdir -p /tmp/smith`,
     `printf %s ${shellQuote(browserLauncherCommand(index, screenId, env))} >${browserLauncherPath(layout.displayNumber)}`,
     `chmod 700 ${browserLauncherPath(layout.displayNumber)}`,
     ...setupDisplay,
     `xdpyinfo -display ${layout.display} >/dev/null 2>&1 || { echo 'computer display is not running' >&2; exit 1; }`,
-    `mkdir -p /tmp/rakazo ${shellQuote(path.posix.dirname(profile))}`,
+    `mkdir -p /tmp/smith ${shellQuote(path.posix.dirname(profile))}`,
     ...browserRunningFunction(profile, pidFile),
     `printf %s ${shellQuote(profile)} >/tmp/rakazo/browser-profile-${layout.displayNumber}`,
     ...renderStartScreenSessionCommand(index, env),
@@ -1047,7 +1047,7 @@ for slot in pathlib.Path(sys.argv[1]).glob("*.slot"):
         with slot.open() as source: used.add(int(source.readline()))
     except ValueError: pass
 # A damaged assignment must not make a live display available to another bot.
-for marker in pathlib.Path("/tmp/rakazo").glob("browser-profile-*"):
+for marker in pathlib.Path("/tmp/smith").glob("browser-profile-*"):
     display = marker.name.rsplit("-", 1)[-1]
     if display.isascii() and display.isdigit(): used.add(int(display) - ${env.displayStart})
 index = 0

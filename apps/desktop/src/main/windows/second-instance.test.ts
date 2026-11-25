@@ -8,7 +8,7 @@ import {
   secondInstanceWindow,
 } from "./second-instance.js";
 
-function fakeWindow(overrides: Partial<BrowserWindow> = {}, currentUrl = "https://rakazo.example") {
+function fakeWindow(overrides: Partial<BrowserWindow> = {}, currentUrl = "https://smith.example") {
   const loadURL = vi.fn(() => Promise.resolve());
   return {
     isDestroyed: vi.fn(() => false),
@@ -73,7 +73,7 @@ describe("desktop deep-link events", () => {
       ...handlers,
       isOpening,
       reopen,
-      launch: (...argv: string[]) => app.emit("second-instance", {}, ["Rakazo", ...argv]),
+      launch: (...argv: string[]) => app.emit("second-instance", {}, ["Smith", ...argv]),
       openUrl: (url: string) => {
         const preventDefault = vi.fn();
         app.emit("open-url", { preventDefault }, url);
@@ -93,29 +93,29 @@ describe("desktop deep-link events", () => {
     events.finishStartup();
     const win = fakeWindow({ isMinimized: () => true });
     desktop.mainWindow = win;
-    desktop.currentTargetUrl = "https://rakazo.example:8443";
+    desktop.currentTargetUrl = "https://smith.example:8443";
 
     events.launch("rakazo://app/bot-99?m=abc");
 
     expect(win.restore).toHaveBeenCalledOnce();
     expect(win.focus).toHaveBeenCalledOnce();
     expect(win.webContents.loadURL).toHaveBeenCalledExactlyOnceWith(
-      "https://rakazo.example:8443/app/bot-99?m=abc",
+      "https://smith.example:8443/app/bot-99?m=abc",
     );
   });
 
   it("opens a cold-start argument once startup finishes", () => {
-    const events = listen(["Rakazo", "rakazo://app/cold"]);
+    const events = listen(["Smith", "rakazo://app/cold"]);
     const win = fakeWindow();
     desktop.mainWindow = win;
-    desktop.currentTargetUrl = "https://rakazo.example";
+    desktop.currentTargetUrl = "https://smith.example";
 
     events.applyPending();
     expect(win.webContents.loadURL).not.toHaveBeenCalled();
     events.finishStartup();
     events.applyPending();
     expect(win.webContents.loadURL).toHaveBeenCalledExactlyOnceWith(
-      "https://rakazo.example/app/cold",
+      "https://smith.example/app/cold",
     );
   });
 
@@ -137,11 +137,11 @@ describe("desktop deep-link events", () => {
     events.launch("rakazo://app/latest");
     expect(win.webContents.loadURL).not.toHaveBeenCalled();
 
-    desktop.currentTargetUrl = "https://rakazo.example";
+    desktop.currentTargetUrl = "https://smith.example";
     events.isOpening.mockReturnValue(false);
     events.applyPending();
     expect(win.webContents.loadURL).toHaveBeenCalledExactlyOnceWith(
-      "https://rakazo.example/app/latest",
+      "https://smith.example/app/latest",
     );
   });
 
@@ -156,10 +156,10 @@ describe("desktop deep-link events", () => {
 
     const win = fakeWindow();
     desktop.mainWindow = win;
-    desktop.currentTargetUrl = "https://rakazo.example";
+    desktop.currentTargetUrl = "https://smith.example";
     events.applyPending();
     expect(win.webContents.loadURL).toHaveBeenCalledExactlyOnceWith(
-      "https://rakazo.example/app/reopen",
+      "https://smith.example/app/reopen",
     );
   });
 

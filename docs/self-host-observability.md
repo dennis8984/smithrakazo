@@ -121,13 +121,13 @@ Set `OTEL_EXPORTER_OTLP_ENDPOINT` on the worker to enable optional OpenTelemetry
 to the base endpoint and honors standard `OTEL_EXPORTER_OTLP_HEADERS` (comma-separated
 `key=value` pairs) and `OTEL_SERVICE_NAME` (default `rakazo-worker`). Compose workers
 read these settings from `.env`. With an empty or unset endpoint, no tracing SDK loads
-or initializes. No collector or hosted service is required to run Rakazo.
+or initializes. No collector or hosted service is required to run Smith.
 
-Traces contain a `rakazo.agent.run` span with `pi.ai.request` model-call spans and
+Traces contain a `smith.agent.run` span with `pi.ai.request` model-call spans and
 `pi.agent.tool` steps, including duration, token usage, cost when known, and success/error
-status. Each span carries `rakazo.bot.id`, `rakazo.run.id`, and `rakazo.routine.id`
+status. Each span carries `smith.bot.id`, `smith.run.id`, and `smith.routine.id`
 when the run belongs to a routine. Helper model calls inherit the same correlation.
-Pi 0.87.1 exposes built-in telemetry through its newer harness; Rakazo’s legacy Agent
+Pi 0.87.1 exposes built-in telemetry through its newer harness; Smith’s legacy Agent
 adapter maps its model and tool lifecycle through the same Pi telemetry contract.
 
 Prompt, response, tool arguments and tool results are excluded by default.
@@ -186,7 +186,7 @@ Operators read recent events through server-side database/log tooling. For examp
 
 ```bash
 docker compose --env-file .env -f infra/compose/docker-compose.prod.yml exec postgres \
-  psql -U rakazo -d rakazo -c 'SELECT "createdAt", type, ip, "userId", "userAgent", metadata
+  psql -U smith -d smith -c 'SELECT "createdAt", type, ip, "userId", "userAgent", metadata
   FROM security_events ORDER BY "createdAt" DESC LIMIT 50'
 ```
 
@@ -276,7 +276,7 @@ installing units or drop-ins. The base backup service does not require the monit
 
 ## Host audit trail
 
-`harden-host.sh` installs audit rules for writes to SSH keys, sudoers, accounts, `/etc/rakazo`, the
+`harden-host.sh` installs audit rules for writes to SSH keys, sudoers, accounts, `/etc/smith`, the
 deployment's `.env`, `/usr/local/sbin`, systemd units, cron, and the Docker daemon config. A rule
 whose directory does not exist yet, such as the `.env` before the first clone, is skipped with a
 notice; rerun the script once it exists. Anyone with root can wipe local logs, so the record only

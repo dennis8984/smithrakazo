@@ -7,7 +7,7 @@ const relay =
   Platform.OS === "ios"
     ? requireOptionalNativeModule<{
         invalidateWatchChat?(kind: WatchChange, spaceId: string | null): void;
-      }>("RakazoNotifications")
+      }>("SmithNotifications")
     : null;
 
 /** Let the paired watch re-read through its own authorized request after a run signal, or clear its view when the iPhone session changes. */

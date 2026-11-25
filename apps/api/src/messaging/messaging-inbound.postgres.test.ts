@@ -121,7 +121,7 @@ describe.skipIf(!enabled)("group roster versioning under concurrency (PostgreSQL
         data: {
           id: ids.userId,
           name: ids.userId,
-          email: `${ids.userId}@rakazo.test`,
+          email: `${ids.userId}@smith.test`,
           emailVerified: false,
         },
       });

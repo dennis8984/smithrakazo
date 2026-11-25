@@ -122,7 +122,7 @@ describe("stopped workspace files", () => {
     expect(download).toHaveBeenCalledOnce();
   });
 
-  it("ignores earlier snapshots after a forced stop or a newer Rakazo checkpoint", async () => {
+  it("ignores earlier snapshots after a forced stop or a newer Smith checkpoint", async () => {
     const download = vi.spyOn(FakeBoatApi.prototype, "getSnapshotFileRaw");
     const { api, computer, provider } = await boat();
     const bytes = new TextEncoder().encode("last saved content");
@@ -2621,7 +2621,7 @@ describe("BoatSandboxProvider", () => {
           type: "command.finished",
           success: false,
           stdout: "",
-          stderr: `mkdir: cannot create directory '/tmp/rakazo': ${failure}\n`,
+          stderr: `mkdir: cannot create directory '/tmp/smith': ${failure}\n`,
           exitCode: 1,
           timedOut: false,
         };

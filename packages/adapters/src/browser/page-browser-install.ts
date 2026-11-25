@@ -56,7 +56,7 @@ export function installPageBrowserFilesCommand(): string {
   const unpack = [
     "import gzip, json, os, sys",
     "files = json.loads(gzip.decompress(sys.stdin.buffer.read()))",
-    "os.makedirs('/usr/local/lib/rakazo', exist_ok=True)",
+    "os.makedirs('/usr/local/lib/smith', exist_ok=True)",
     "for name, mode, target in (('page_secrets.py', 0o644, '/usr/local/lib/rakazo/page_secrets.py'),",
     "                           ('rakazo-page-browser', 0o755, '/usr/local/bin/rakazo-page-browser')):",
     "    with open(target + '.new', 'w', encoding='utf-8') as file:",

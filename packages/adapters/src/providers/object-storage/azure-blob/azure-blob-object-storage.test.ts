@@ -344,7 +344,7 @@ describe("azureBlobConfigFromEnv", () => {
       account: "account",
       accountKey: "key",
       endpoint: "http://127.0.0.1:10000/account",
-      prefix: "rakazo/",
+      prefix: "smith/",
     });
   });
 

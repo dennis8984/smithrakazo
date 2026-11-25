@@ -36,7 +36,7 @@ const RESERVED_BOT_EMAIL_NAMES = new Set([
   "postmaster",
   "press",
   "privacy",
-  "rakazo",
+  "smith",
   "root",
   "sales",
   "security",
@@ -46,10 +46,10 @@ const RESERVED_BOT_EMAIL_NAMES = new Set([
   "webmaster",
 ]);
 
-/** A reserved name, alone or before a separator (support-team, admin.bot), or anything rakazo*. */
+/** A reserved name, alone or before a separator (support-team, admin.bot), or anything smith*. */
 function isReservedBotEmailName(name: string): boolean {
   return (
-    name.startsWith("rakazo") ||
+    name.startsWith("smith") ||
     [...RESERVED_BOT_EMAIL_NAMES].some(
       (reserved) =>
         name.startsWith(reserved) && ["", ".", "-", "_"].includes(name.charAt(reserved.length)),

@@ -46,7 +46,7 @@ describeAttachments("chat attachments", () => {
   });
 
   it("uploads, sends with image/file, and rejects invalid attachments", async () => {
-    const cookie = await signup(app, `attachments-${stamp}@rakazo.test`, "Attachment User");
+    const cookie = await signup(app, `attachments-${stamp}@smith.test`, "Attachment User");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Attacher",
       title: "Attacher",
@@ -181,7 +181,7 @@ describeAttachments("chat attachments", () => {
   });
 
   it("attaches a workspace file into the thread", async () => {
-    const cookie = await signup(app, `attach-thread-${stamp}@rakazo.test`, "Attach Thread User");
+    const cookie = await signup(app, `attach-thread-${stamp}@smith.test`, "Attach Thread User");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Attacher",
       title: "Attacher",
@@ -208,8 +208,8 @@ describeAttachments("chat attachments", () => {
     );
   });
   it("persists server-owned reply previews, isolates threads, and handles deletion", async () => {
-    const cookie = await signup(app, `replies-${stamp}@rakazo.test`, "Reply User");
-    const otherCookie = await signup(app, `replies-other-${stamp}@rakazo.test`, "Other User");
+    const cookie = await signup(app, `replies-${stamp}@smith.test`, "Reply User");
+    const otherCookie = await signup(app, `replies-other-${stamp}@smith.test`, "Other User");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Helper",
       title: "Helper",

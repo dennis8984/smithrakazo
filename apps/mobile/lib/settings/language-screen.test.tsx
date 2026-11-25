@@ -18,11 +18,11 @@ import { resumeLiveNotifications } from "../notifications/live-notifications";
 vi.mock("../layout/side-insets", () => ({ useSideInsets: () => ({}) }));
 const scope = vi.hoisted(() => ({ spaceId: "space-1" }));
 vi.mock("../api/api", () => ({
-  currentApiBase: () => "https://rakazo.test",
+  currentApiBase: () => "https://smith.test",
   rpc: vi.fn(async () => ({})),
   selectedSpaceId: () => scope.spaceId,
   captureApiRequestContext: async (spaceId: string | null = scope.spaceId) => ({
-    apiBase: "https://rakazo.test",
+    apiBase: "https://smith.test",
     sessionGeneration: 1,
     headers: spaceId ? { "x-rakazo-space-id": spaceId } : {},
   }),
@@ -77,7 +77,7 @@ vi.mock("react-native", () => {
 /** What every write carries: the server, session and space its save was started in. */
 const pinned = {
   requestContext: {
-    apiBase: "https://rakazo.test",
+    apiBase: "https://smith.test",
     sessionGeneration: 1,
     headers: { "x-rakazo-space-id": "space-1" },
   },
@@ -147,7 +147,7 @@ it.each(["ru", "de", "zh-TW"] as const)(
       await vi.mocked(i18n.setUiLocale).mock.results[0]!.value;
     });
     expect(i18n.getActiveUiLocale()).toBe(locale);
-    expect(resumeLiveNotifications).toHaveBeenCalledWith("https://rakazo.test", "token", "space-1");
+    expect(resumeLiveNotifications).toHaveBeenCalledWith("https://smith.test", "token", "space-1");
     expect(rpc).toHaveBeenCalledExactlyOnceWith("preferences/update", { locale }, pinned);
     expectSelected(APP_LOCALE_LABELS[locale]);
     expect(row("English").getAttribute("aria-pressed")).toBe("false");

@@ -76,7 +76,7 @@ function createosChromiumProfile(screenId: string) {
   return browserProfilePathForScreen(screenId, createosDesktopEnv());
 }
 const CREATEOS_DRAINING_SCREEN = "draining:";
-const CREATEOS_SCREEN_MAP_PATH = `${CREATEOS_WORKSPACE}/.rakazo/screens.json`;
+const CREATEOS_SCREEN_MAP_PATH = `${CREATEOS_WORKSPACE}/.smith/screens.json`;
 export const CREATEOS_SCREEN_MAP_SENTINEL = "RAKAZO_SCREEN_MAP_V1";
 const CREATEOS_SCREEN_MAP_NEED_CREATE = "NEED_CREATE";
 const DEFAULT_CREATEOS_BASE_URL = "https://api.sb.createos.sh";
@@ -1722,7 +1722,7 @@ function isTransientCreateOSHttpStatus(status: number): boolean {
 }
 
 function shouldSkipCreateOSWorkspaceFile(relative: string, isDirectory = false): boolean {
-  if (relative === ".rakazo" || relative.startsWith(".rakazo/")) return true;
+  if (relative === ".smith" || relative.startsWith(".smith/")) return true;
   return shouldSkipPortableWorkspaceFile(relative, isDirectory);
 }
 

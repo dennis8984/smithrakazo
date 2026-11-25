@@ -275,7 +275,7 @@ test("account menu shows the usage hint and Usage shows allowances and credits o
     });
   });
   const stamp = Date.now();
-  await signup(page, `usage-limits-${stamp}@rakazo.test`, "password12", "Usage limits");
+  await signup(page, `usage-limits-${stamp}@smith.test`, "password12", "Usage limits");
   await completeOnboarding(page);
 
   await page.getByTestId("user-menu-trigger").click();

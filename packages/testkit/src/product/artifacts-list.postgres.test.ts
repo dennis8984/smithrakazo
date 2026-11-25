@@ -42,7 +42,7 @@ describe.skipIf(!hasDb)("artifacts.listSpace made by bots", () => {
   });
 
   it("keeps files whose newest version a bot made, page by page", async () => {
-    const cookie = await signup(app, `artifacts-list-${Date.now()}@rakazo.test`);
+    const cookie = await signup(app, `artifacts-list-${Date.now()}@smith.test`);
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Analyst",
       title: "Analyst",

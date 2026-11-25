@@ -42,7 +42,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("lists active runs from two bots and keeps completed runs under recent", async () => {
-    const cookie = await signup(app, `runs-${stamp}@rakazo.test`, "Runs User");
+    const cookie = await signup(app, `runs-${stamp}@smith.test`, "Runs User");
     const alpha = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Alpha",
       title: "Alpha",
@@ -80,7 +80,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("never returns runs from another workspace", async () => {
-    const ownerCookie = await signup(app, `runs-owner-${stamp}@rakazo.test`, "Owner");
+    const ownerCookie = await signup(app, `runs-owner-${stamp}@smith.test`, "Owner");
     const ownerBot = await rpc<{ id: string }>(app, ownerCookie, "bots/create", {
       name: "OwnerBot",
       title: "OwnerBot",
@@ -90,7 +90,7 @@ describeRunsList("runs.list activity tracker", () => {
     });
     await seedRun(prisma, ownerBot.id, "running", "owner active run");
 
-    const intruderCookie = await signup(app, `runs-intruder-${stamp}@rakazo.test`, "Intruder");
+    const intruderCookie = await signup(app, `runs-intruder-${stamp}@smith.test`, "Intruder");
     const active = await rpc<{ runs: RunActivityRow[] }>(app, intruderCookie, "runs/list", {
       filter: "active",
     });
@@ -98,7 +98,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("excludes archived bots from recent before applying the limit", async () => {
-    const cookie = await signup(app, `runs-archived-${stamp}@rakazo.test`, "Archive User");
+    const cookie = await signup(app, `runs-archived-${stamp}@smith.test`, "Archive User");
     const archivedBot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Archived",
       title: "Archived",
@@ -135,7 +135,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("finds an older failure in a chat after 20 chats completed newer runs", async () => {
-    const cookie = await signup(app, `runs-status-${stamp}@rakazo.test`, "Runs User");
+    const cookie = await signup(app, `runs-status-${stamp}@smith.test`, "Runs User");
     const failedAt = new Date("2026-01-01T00:00:00Z");
     const successes = [];
     for (let i = 20; i > 0; i -= 1) {
@@ -164,7 +164,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("lists each chat's latest finished run, so a busy chat leaves room for the rest", async () => {
-    const cookie = await signup(app, `runs-busy-${stamp}@rakazo.test`, "Busy User");
+    const cookie = await signup(app, `runs-busy-${stamp}@smith.test`, "Busy User");
     const busy = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Busy",
       title: "Busy",
@@ -204,7 +204,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("returns legacy labels alongside structured agent messages", async () => {
-    const cookie = await signup(app, `runs-message-${stamp}@rakazo.test`, "Runs User");
+    const cookie = await signup(app, `runs-message-${stamp}@smith.test`, "Runs User");
     const bot = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Worker",
       title: "Worker",
@@ -261,7 +261,7 @@ describeRunsList("runs.list activity tracker", () => {
   });
 
   it("returns group runs with groupId for navigation", async () => {
-    const cookie = await signup(app, `runs-group-${stamp}@rakazo.test`, "Group User");
+    const cookie = await signup(app, `runs-group-${stamp}@smith.test`, "Group User");
     const botA = await rpc<{ id: string }>(app, cookie, "bots/create", {
       name: "Worker",
       title: "Worker",

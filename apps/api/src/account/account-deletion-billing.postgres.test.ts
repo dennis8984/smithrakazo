@@ -55,7 +55,7 @@ class FailingCancelEmulator extends BillingEmulator {
 describePostgres("account deletion billing ordering (PostgreSQL)", () => {
   const stamp = `${process.pid}-${Date.now()}`;
   const userId = `acct-billing-${stamp}`;
-  const email = `acct-billing-${stamp}@rakazo.test`;
+  const email = `acct-billing-${stamp}@smith.test`;
   const organizationIds: string[] = [];
   let prisma: PrismaClient, db: ReturnType<typeof createDb>, root: string;
 

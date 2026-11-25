@@ -189,7 +189,7 @@ test("returning people see the sign-in method they used last", async ({ page }, 
 });
 
 test("a successful email sign-up is remembered for the next sign-in", async ({ page }) => {
-  await signup(page, `last-used-${Date.now()}@rakazo.test`, "password12", "Last Used QA");
+  await signup(page, `last-used-${Date.now()}@smith.test`, "password12", "Last Used QA");
   const cookie = (await page.context().cookies()).find(({ name }) => name === LAST_SIGN_IN_COOKIE);
   expect(cookie?.value).toBe("email");
   expect(cookie?.httpOnly).toBe(false);
@@ -220,7 +220,7 @@ test("one provider spans the chooser row", async ({ page }, testInfo) => {
 test("sign-in hides the chooser when none are configured", async ({ page }, testInfo) => {
   await mockSignedOut(page, []);
   await page.goto("/sign-in");
-  await expect(page.getByRole("heading", { name: "Sign in to Rakazo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign in to Smith" })).toBeVisible();
   await expect(page.getByText("Welcome back")).toHaveCount(0);
   await expect(page.getByLabel("Email", { exact: true })).toBeVisible();
   await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
@@ -264,7 +264,7 @@ test("linked social accounts use a supported deletion confirmation method", asyn
 }, testInfo) => {
   await signup(
     page,
-    `social-confirmation-${Date.now()}@rakazo.test`,
+    `social-confirmation-${Date.now()}@smith.test`,
     "password12",
     "Confirmation QA",
   );

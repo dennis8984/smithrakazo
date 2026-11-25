@@ -71,12 +71,12 @@ describe("last bot shortcut target", () => {
     selectedSpace.id = "shared-space";
     await saveLastBotId("researcher", "shared-space");
     expect(await loadLastBotId()).toBe("researcher");
-    expect(JSON.parse(saved.get("rakazo.last_bot_id") ?? "null").spaceId).toBe("shared-space");
+    expect(JSON.parse(saved.get("smith.last_bot_id") ?? "null").spaceId).toBe("shared-space");
 
     selectedSpace.id = null;
     await saveLastBotId("writer", null);
     expect(await loadLastBotId()).toBe("writer");
-    expect(JSON.parse(saved.get("rakazo.last_bot_id") ?? "null").spaceId).toBeNull();
+    expect(JSON.parse(saved.get("smith.last_bot_id") ?? "null").spaceId).toBeNull();
   });
 
   it("does not carry a chat saved without a Space into a later explicit Space", async () => {
@@ -107,7 +107,7 @@ describe("last bot shortcut target", () => {
     release.resolve();
     await Promise.all([researcher, writer]);
     expect(await loadLastBotId()).toBe("writer");
-    expect(JSON.parse(saved.get("rakazo.last_bot_id") ?? "null").spaceId).toBe("writing-space");
+    expect(JSON.parse(saved.get("smith.last_bot_id") ?? "null").spaceId).toBe("writing-space");
   });
 
   it.each(["sign-in", "sign-out", "server"])("clears the last bot on %s", async (change) => {
@@ -117,7 +117,7 @@ describe("last bot shortcut target", () => {
     else if (change === "sign-out") await clearSessionToken();
     else await restoreSessionToken("other-server-session");
     expect(await loadLastBotId()).toBe("");
-    expect(saved.has("rakazo.last_bot_space_id")).toBe(false);
+    expect(saved.has("smith.last_bot_space_id")).toBe(false);
   });
 
   it("keeps the last bot and Space during same-account password token rotation", async () => {
@@ -125,7 +125,7 @@ describe("last bot shortcut target", () => {
     await saveLastBotId("researcher", "shared-space");
     await rotateSessionTokenIfCurrent(currentSessionGeneration(), "session-a", "rotated-session");
     expect(await loadLastBotId()).toBe("researcher");
-    expect(JSON.parse(saved.get("rakazo.last_bot_id") ?? "null").spaceId).toBe("shared-space");
+    expect(JSON.parse(saved.get("smith.last_bot_id") ?? "null").spaceId).toBe("shared-space");
   });
 
   it("keeps the last bot and Space after verified SSO re-authentication", async () => {
@@ -144,7 +144,7 @@ describe("last bot shortcut target", () => {
     });
     expect(await continueWithSso("reauthenticate")).toBe(true);
     expect(await loadLastBotId()).toBe("researcher");
-    expect(JSON.parse(saved.get("rakazo.last_bot_id") ?? "null").spaceId).toBe("shared-space");
+    expect(JSON.parse(saved.get("smith.last_bot_id") ?? "null").spaceId).toBe("shared-space");
   });
 
   it("clears a delayed old-session write and drops other saves queued by that session", async () => {
@@ -162,17 +162,17 @@ describe("last bot shortcut target", () => {
     release.resolve();
     await Promise.all([writing, obsolete, changing]);
     expect(await loadLastBotId()).toBe("");
-    expect(saved.has("rakazo.last_bot_space_id")).toBe(false);
+    expect(saved.has("smith.last_bot_space_id")).toBe(false);
     expect(
       vi
         .mocked(SecureStore.setItemAsync)
-        .mock.calls.filter(([key]) => key === "rakazo.last_bot_id")
+        .mock.calls.filter(([key]) => key === "smith.last_bot_id")
         .map(([, value]) => JSON.parse(value).botId),
     ).not.toContain("obsolete");
     await saveLastBotId("writer", "space-b");
     selectedSpace.id = "space-b";
     expect(await loadLastBotId()).toBe("writer");
-    expect(JSON.parse(saved.get("rakazo.last_bot_id") ?? "null").spaceId).toBe("space-b");
+    expect(JSON.parse(saved.get("smith.last_bot_id") ?? "null").spaceId).toBe("space-b");
   });
 
   it("waits for a pending delete before exposing a target to the new session", async () => {
@@ -181,7 +181,7 @@ describe("last bot shortcut target", () => {
     const release = deferred();
     const remove = vi.mocked(SecureStore.deleteItemAsync).getMockImplementation()!;
     vi.mocked(SecureStore.deleteItemAsync).mockImplementation(async (key) => {
-      if (key === "rakazo.last_bot_id") {
+      if (key === "smith.last_bot_id") {
         started.resolve();
         await release.promise;
       }

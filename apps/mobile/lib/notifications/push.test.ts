@@ -187,7 +187,7 @@ it("does not restore a signed-out session while push registration loads its toke
     await loaded.promise;
     await signOut();
     expect(stopLiveNotifications).toHaveBeenCalledWith(true);
-    expect(native.store.has("rakazo.session_token")).toBe(false);
+    expect(native.store.has("smith.session_token")).toBe(false);
   } finally {
     release.resolve();
     await registration;

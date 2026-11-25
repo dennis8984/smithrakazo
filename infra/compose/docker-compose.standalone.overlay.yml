@@ -118,8 +118,8 @@ services:
   migrate:
     entrypoint: ["sh", "/run/rakazo-secrets/start", "docker-entrypoint.sh"]
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
-      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
+      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-smith}:${POSTGRES_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
     volumes:
       - secrets-migrate:/run/rakazo-secrets:ro
     depends_on: *after-secrets
@@ -127,7 +127,7 @@ services:
   api:
     entrypoint: ["sh", "/run/rakazo-secrets/start", "docker-entrypoint.sh"]
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
       SANDBOX_SUPERVISOR_TOKEN: ${SANDBOX_SUPERVISOR_TOKEN:-}
       SCREEN_PROXY_SECRET: ${SCREEN_PROXY_SECRET:-}
       API_URL: ${API_URL:-${RAKAZO_PUBLIC_URL:-http://127.0.0.1:5173}}
@@ -140,7 +140,7 @@ services:
   worker:
     entrypoint: ["sh", "/run/rakazo-secrets/start", "docker-entrypoint.sh"]
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:-}@postgres:5432/${POSTGRES_DB:-smith}
       SANDBOX_SUPERVISOR_TOKEN: ${SANDBOX_SUPERVISOR_TOKEN:-}
       API_URL: ${API_URL:-${RAKAZO_PUBLIC_URL:-http://127.0.0.1:5173}}
       WEB_ORIGIN: ${WEB_ORIGIN:-${RAKAZO_PUBLIC_URL:-http://127.0.0.1:5173}}

@@ -44,7 +44,7 @@ describe("thread answer delivery", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const handler = new RPCHandler(createRouter(deps));
@@ -380,7 +380,7 @@ describe("thread stream authorization", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const stillAuthorized = vi.fn().mockResolvedValue(true);
@@ -591,7 +591,7 @@ describe("threads.answerCall and threads.declineCall", () => {
     const actor = {
       spaceId: "space-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const handler = new RPCHandler(createRouter(deps));
@@ -709,7 +709,7 @@ describe("threads.endCall", () => {
     const actor = {
       spaceId: "space-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     const handler = new RPCHandler(createRouter(deps));

@@ -10,7 +10,7 @@ import { createLogger, installLogger } from "./logger.js";
 import { createTestSink } from "./test-sink.js";
 
 afterEach(() => {
-  installLogger(createLogger({ service: "rakazo", level: "off", sinks: [] }));
+  installLogger(createLogger({ service: "smith", level: "off", sinks: [] }));
 });
 
 describe("job correlation envelope", () => {

@@ -280,7 +280,7 @@ export class DockerSandboxProvider implements SandboxProvider {
       body: JSON.stringify({
         ...request,
         argv: sandboxCommandArgv(request),
-        cwd: workspaceCwd("/home/rakazo", request.cwd),
+        cwd: workspaceCwd("/home/smith", request.cwd),
         timeoutMs,
       }),
       signal: streamSignal,

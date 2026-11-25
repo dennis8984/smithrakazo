@@ -61,7 +61,7 @@ it("remembers Keep for that device zone and asks again in another", async () => 
   await checkDeviceTimezone("user-1", "Europe/London", active);
   lastPrompt().press("Keep");
   expect(SecureStore.setItemAsync).toHaveBeenCalledWith(
-    "rakazo.timezone-kept.user-1",
+    "smith.timezone-kept.user-1",
     JSON.stringify({ device: "Asia/Tokyo", account: "Europe/London" }),
   );
 

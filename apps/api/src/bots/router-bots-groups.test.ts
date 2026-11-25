@@ -24,7 +24,7 @@ describe("bot intro run", () => {
   const actor = {
     spaceId: "space-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const bot = { id: "bot-1", threadId: "thread-1" } as unknown as Bot;
@@ -203,7 +203,7 @@ describe("group restore with archived bots", () => {
     const call = async () =>
       handle(
         handler,
-        new Request("http://rakazo.test/rpc/groups/restore", {
+        new Request("http://smith.test/rpc/groups/restore", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ json: { groupId: "group-1" } }),
@@ -339,7 +339,7 @@ describe("groups.archive", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
 
@@ -623,7 +623,7 @@ describe("boards.rename", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
 
@@ -779,7 +779,7 @@ describe("boards.tickets.list", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
 
@@ -825,7 +825,7 @@ describe("boards.tickets.list", () => {
 });
 
 describe("shared space bot permissions", () => {
-  const actor = { userId: "user-1", spaceId: "space-1", email: "user@rakazo.test" };
+  const actor = { userId: "user-1", spaceId: "space-1", email: "user@smith.test" };
 
   function sharedBotClient(role: string) {
     const bot = {

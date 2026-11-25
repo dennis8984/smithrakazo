@@ -81,10 +81,10 @@ vi.mock("../api/session", () => ({
 }));
 vi.mock("./page-runtime", () => ({ loadPageRuntime: async () => "" }));
 vi.mock("../api/api", () => ({
-  currentApiBase: () => "https://rakazo.example",
+  currentApiBase: () => "https://smith.example",
   selectedSpaceId: () => "space-1",
   captureApiRequestContext: async () => ({
-    apiBase: "https://rakazo.example",
+    apiBase: "https://smith.example",
     sessionGeneration: 0,
     headers: { "x-rakazo-space-id": "space-1" },
   }),
@@ -101,7 +101,7 @@ vi.mock("../api/api", () => ({
       host.server = {
         visibility: input.visibility!,
         shareUrl:
-          input.visibility === "link" ? `https://rakazo.example/p/${host.sent.length}` : null,
+          input.visibility === "link" ? `https://smith.example/p/${host.sent.length}` : null,
       };
       if (host.loseAnswer) throw new TypeError("Network request failed");
       return { ...host.server };
@@ -174,7 +174,7 @@ it("shows what the server has after a lost answer, unknown if it can't say, and 
 });
 
 it("says a page that could not be read in the user's words, and Try again reads it again", async () => {
-  host.server = { visibility: "link", shareUrl: "https://rakazo.example/p/1" };
+  host.server = { visibility: "link", shareUrl: "https://smith.example/p/1" };
   host.readFails = true;
   const { root, row, press, checked, text } = await sheet();
   expect(text()).toBe("Could not reach the serverTry again");
@@ -186,7 +186,7 @@ it("says a page that could not be read in the user's words, and Try again reads 
 });
 
 it("shows a retry when a refresh fails after sharing controls loaded", async () => {
-  host.server = { visibility: "link", shareUrl: "https://rakazo.example/p/1" };
+  host.server = { visibility: "link", shareUrl: "https://smith.example/p/1" };
   const { root, row, press, checked, text } = await sheet();
   try {
     expect(row("Copy link")).not.toBeNull();
@@ -242,7 +242,7 @@ it("clears a reviewer load error when the owner leaves Specific people", async (
 });
 
 it("drops the copied mark once the link is turned off, since turning it on issues a new one", async () => {
-  host.server = { visibility: "link", shareUrl: "https://rakazo.example/p/1" };
+  host.server = { visibility: "link", shareUrl: "https://smith.example/p/1" };
   const { root, row, press } = await sheet();
   const mark = () => row("Copy link")?.querySelector("i")?.getAttribute("data-symbol");
   expect(mark()).toBe("doc.on.doc");

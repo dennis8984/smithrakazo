@@ -55,7 +55,7 @@ describePostgres("saved home retention (PostgreSQL)", () => {
       .homeStorageId;
     return [...storage.objects.keys()].filter((key) => !key.includes(`/${storageId}/`));
   };
-  const sent = () => email.sent.filter((message) => message.to === `${id}@rakazo.test`);
+  const sent = () => email.sent.filter((message) => message.to === `${id}@smith.test`);
 
   beforeAll(async () => {
     const db = createDb(databaseUrl!);
@@ -83,7 +83,7 @@ describePostgres("saved home retention (PostgreSQL)", () => {
     errors = [];
     syncBilling = async () => {};
     await system.user.create({
-      data: { id, name: "Alex", email: `${id}@rakazo.test`, emailVerified: true },
+      data: { id, name: "Alex", email: `${id}@smith.test`, emailVerified: true },
     });
     await system.organization.create({ data: { id, name: id, slug: id, createdAt: new Date() } });
     await system.member.create({
@@ -228,7 +228,7 @@ describePostgres("saved home retention (PostgreSQL)", () => {
     async (_, paid, text) => {
       const owner = `${id}-owner`;
       await system.user.create({
-        data: { id: owner, name: "Sam", email: `${owner}@rakazo.test`, emailVerified: true },
+        data: { id: owner, name: "Sam", email: `${owner}@smith.test`, emailVerified: true },
       });
       await system.member.update({ where: { id }, data: { role: "member" } });
       await system.member.create({
@@ -253,7 +253,7 @@ describePostgres("saved home retention (PostgreSQL)", () => {
       await sweep();
       expect(errors).toEqual([]);
       expect(sent()).toHaveLength(0);
-      expect(email.sent.map((message) => message.to)).toEqual([`${owner}@rakazo.test`]);
+      expect(email.sent.map((message) => message.to)).toEqual([`${owner}@smith.test`]);
       expect(email.sent[0]!.text).toContain(text);
     },
   );

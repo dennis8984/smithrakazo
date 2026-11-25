@@ -1,9 +1,9 @@
-# 自托管 Rakazo
+# 自托管 Smith
 
 [English](../self-host.md) | 简体中文
 
 在自己掌控的机器上运行 API、后台任务、网页应用、数据库和机器人计算机。
-Rakazo 需要持续运行的后端服务，不是静态网站；`apps/www` 中的官网可以单独托管。
+Smith 需要持续运行的后端服务，不是静态网站；`apps/www` 中的官网可以单独托管。
 
 ## 准备条件
 
@@ -16,7 +16,7 @@ Rakazo 需要持续运行的后端服务，不是静态网站；`apps/www` 中�
 在空目录中运行：
 
 ```bash
-mkdir -p rakazo && cd rakazo &&
+mkdir -p smith && cd smith &&
 curl -fsSLO https://raw.githubusercontent.com/elie222/rakazo/main/infra/compose/install-images.sh &&
 bash install-images.sh
 ```
@@ -69,7 +69,7 @@ app.example.com {
 `RAKAZO_ALLOWED_HOSTS`。否则网页服务会拒绝其他 `Host` 请求头，计算机屏幕可能保持空白。
 如需 Compose 内置 Caddy 或完整的主机加固流程，使用[生产部署指南（英文）](../self-host-production.md#public-single-vm-deployment)。
 
-在应用前再加一层 Cookie 登录门（例如 Google / oauth2-proxy）时，必须把计算机屏幕路径 `/novnc/session/*` 单独转发到 Rakazo，由应用校验屏幕能力 URL，否则画面会一直被外层登录重定向挡住。见[登录门与计算机屏幕](./self-host-login-gate.md)。
+在应用前再加一层 Cookie 登录门（例如 Google / oauth2-proxy）时，必须把计算机屏幕路径 `/novnc/session/*` 单独转发到 Smith，由应用校验屏幕能力 URL，否则画面会一直被外层登录重定向挡住。见[登录门与计算机屏幕](./self-host-login-gate.md)。
 
 ### 受限网络
 
@@ -101,7 +101,7 @@ pnpm dev
 桌面端的“这台电脑”选项会自行安装镜像版服务，默认使用 `45173` 端口，与开发服务不同。
 该服务只监听回环地址，手机无法连接；见[桌面端“这台电脑”服务（英文）](../self-host-clients.md#desktop-this-computer-servers)。
 
-在 WSL 中开发时，将仓库和 `data` 放在 Linux 文件系统中，例如 `~/rakazo`，并以普通用户运行。
+在 WSL 中开发时，将仓库和 `data` 放在 Linux 文件系统中，例如 `~/smith`，并以普通用户运行。
 宿主机运行的监督服务会让机器人容器使用该用户的 UID/GID。
 若无法访问 Docker Desktop 容器 IP，在 `.env` 中设置 `SANDBOX_CONTROL_VIA_LOOPBACK=true`；
 Compose 内运行监督服务时不要设置此项。
@@ -151,4 +151,4 @@ docker compose -f docker-compose.images.yml exec api node dist/cli/diagnostics.j
 
 源码版改用 `-f infra/compose/docker-compose.yml`，生产部署使用对应的生产文件。
 报告包含版本、功能开关、迁移状态、MCP 健康状态与最近运行情况；不会输出密钥、设置值、姓名、地址、路径或消息内容。
-用户让机器人报告问题时，反馈只保存在本服务器的 `feedback_reports` 表中，不会自动发送给 Rakazo 项目。
+用户让机器人报告问题时，反馈只保存在本服务器的 `feedback_reports` 表中，不会自动发送给 Smith 项目。

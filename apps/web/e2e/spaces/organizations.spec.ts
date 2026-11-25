@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 });
 
 function selectedSpace(page: Page) {
-  return page.evaluate(() => window.localStorage.getItem("rakazo:space-id"));
+  return page.evaluate(() => window.localStorage.getItem("smith:space-id"));
 }
 
 async function openAvatarMenu(page: Page) {
@@ -64,7 +64,7 @@ async function switchFromAvatarMenu(page: Page, name: string, spaceId: string) {
 
 test("create, switch, rename and delete an organization", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `organizations-${stamp}@rakazo.test`, "password12", "Org Owner");
+  await signup(page, `organizations-${stamp}@smith.test`, "password12", "Org Owner");
   await completeOnboarding(page);
 
   // One organization: settings show only its name and its members, and the avatar menu names it
@@ -245,8 +245,8 @@ test("create, switch, rename and delete an organization", async ({ page }, testI
 const auditTest = test.extend({ locale: "de-DE", timezoneId: "America/New_York" });
 
 auditTest("owner activity log uses the UI language", async ({ page }, testInfo) => {
-  await page.addInitScript(() => localStorage.setItem("rakazo.uiLocale", "en"));
-  await signup(page, `audit-log-${Date.now()}@rakazo.test`, "password12", "Audit Owner");
+  await page.addInitScript(() => localStorage.setItem("smith.uiLocale", "en"));
+  await signup(page, `audit-log-${Date.now()}@smith.test`, "password12", "Audit Owner");
   await completeOnboarding(page);
   await rpc(page, "spaces/create", { name: "Audited space" });
 

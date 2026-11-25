@@ -10,7 +10,7 @@ import {
 test("a completed subagent card folds, opens from its header, and fills its width", async ({
   page,
 }, testInfo) => {
-  await signup(page, `subagent-card-${Date.now()}@rakazo.test`, "password12", "Subagent Card");
+  await signup(page, `subagent-card-${Date.now()}@smith.test`, "password12", "Subagent Card");
   await completeOnboarding(page);
 
   const composer = page.getByPlaceholder(/Message/);
@@ -49,7 +49,7 @@ test("a completed subagent card folds, opens from its header, and fills its widt
 test("a background helper's card can be stopped while the chat stays free", async ({
   page,
 }, testInfo) => {
-  await signup(page, `background-card-${Date.now()}@rakazo.test`, "password12", "Background Card");
+  await signup(page, `background-card-${Date.now()}@smith.test`, "password12", "Background Card");
   await completeOnboarding(page);
 
   const composer = page.getByPlaceholder(/Message/);
@@ -80,7 +80,7 @@ test("a subagent approval survives refresh while the parent keeps answering", as
 }, testInfo) => {
   await signup(
     page,
-    `subagent-approval-${Date.now()}@rakazo.test`,
+    `subagent-approval-${Date.now()}@smith.test`,
     "password12",
     "Subagent Approval",
   );
@@ -92,7 +92,7 @@ test("a subagent approval survives refresh while the parent keeps answering", as
     matchValue: "web_fetch",
   });
   const composer = page.getByPlaceholder(/Message/);
-  await composer.fill("delegate to a helper: fetch https://helper-approval.rakazo.test/notes");
+  await composer.fill("delegate to a helper: fetch https://helper-approval.smith.test/notes");
   await page.keyboard.press("Enter");
   const allow = page.getByRole("button", { name: "Allow once", exact: true });
   await expect(allow).toBeVisible({ timeout: 30_000 });

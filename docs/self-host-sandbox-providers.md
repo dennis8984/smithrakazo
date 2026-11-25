@@ -48,17 +48,17 @@ Native file reads and workspace exports are limited to 8 MiB per file. A larger 
 - **Docker** is the quick-start default for published images and for a source checkout / full local
   Compose stack. Workspace bots share a persistent Team Computer by default; Private computers are
   optional. Keep the supervisor private, as the included Compose files do.
-- **E2B** runs bot computers away from the Rakazo host and is a good choice for public or multi-user
-  production deployments. Rakazo checkpoints the portable workspace and browser-profile directory to
+- **E2B** runs bot computers away from the Smith host and is a good choice for public or multi-user
+  production deployments. Smith checkpoints the portable workspace and browser-profile directory to
   `DATA_DIR`; the E2B disk is a runtime cache, not the durable source of truth.
 - **Daytona** provides the same remote-computer contract through Daytona sandboxes. Configure
   `DAYTONA_API_KEY` and optionally `DAYTONA_API_URL` / `DAYTONA_TARGET` / `DAYTONA_SNAPSHOT`.
 - **CreateOS** provides the same remote-computer contract through CreateOS desktop sandboxes.
   Configure `CREATEOS_SANDBOX_API_KEY` and optionally `CREATEOS_SANDBOX_BASE_URL`,
-  `CREATEOS_SANDBOX_SHAPE`, or `CREATEOS_SANDBOX_ROOTFS`. Rakazo defaults to
+  `CREATEOS_SANDBOX_SHAPE`, or `CREATEOS_SANDBOX_ROOTFS`. Smith defaults to
   `https://api.sb.createos.sh`, `s-2vcpu-2gb`, and `desktop:1`.
 - **Boat** provides a managed Linux desktop through `BOAT_API_KEY` and optionally
-  `BOAT_API_URL`. Rakazo always creates or resumes sandboxes with `noEnv: true`, keeps the portable
+  `BOAT_API_URL`. Smith always creates or resumes sandboxes with `noEnv: true`, keeps the portable
   workspace under `/home/user/rakazo-home`, and refreshes a two-hour TTL. Boat uses the shared Linux
   desktop runtime and protected port routes for concurrent bot desktops. Each bot has its own
   persistent Chrome profile; logins are not shared between bots.
@@ -172,12 +172,12 @@ mounted home, saving copies files back to the server and may pause browsers. Mor
 that copy faster, but it does not remove the copy or its exclusive save period.
 
 If the computer writes directly to the server's workspace directory, those files are already
-saved. This is a **mounted home**: only `DATA_DIR/homes/<home key>` is mounted at `/home/rakazo`.
+saved. This is a **mounted home**: only `DATA_DIR/homes/<home key>` is mounted at `/home/smith`.
 Run checkpoints record a revision without exporting files or changing the computer to
 `suspending`, so they do not interrupt its screen. An intentional stop or idle shutdown still
 closes the screen.
 
-This option applies to the local home store. With `OBJECT_STORAGE_BUCKET` configured, Rakazo
+This option applies to the local home store. With `OBJECT_STORAGE_BUCKET` configured, Smith
 ignores the home claim and continues copying workspaces. A mounted home retains the latest files;
 it is not an immutable snapshot or a backup. Keep encrypted, off-host backups of the data volume.
 
@@ -187,14 +187,14 @@ The simplest layout puts the API, worker and computer pods in the same namespace
 worker mount the data claim at `DATA_DIR`; computers mount only their own subdirectory from that
 same claim. A new empty claim with the same name is **not** the same storage.
 
-For example, if the application namespace is `rakazo`, its data claim is `data`, and API pods
+For example, if the application namespace is `smith`, its data claim is `data`, and API pods
 have label `app=rakazo-api`, configure both API and worker with:
 
 ```env
 SANDBOX_PROVIDER=kubernetes
-KUBERNETES_SANDBOX_NAMESPACE=rakazo
+KUBERNETES_SANDBOX_NAMESPACE=smith
 KUBERNETES_SANDBOX_HOME_CLAIM=data
-KUBERNETES_SANDBOX_HOME_COLOCATE_NAMESPACE=rakazo
+KUBERNETES_SANDBOX_HOME_COLOCATE_NAMESPACE=smith
 KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS={"app":"rakazo-api"}
 ```
 
@@ -207,7 +207,7 @@ The two `HOME_COLOCATE` settings are required. They keep computers on a node wit
 application pods. A ReadWriteOnce volume can be used by multiple pods on the same node; it does
 not mean one pod only. A ReadWriteOncePod claim is unsuitable for this shared layout. See
 [Kubernetes volume access modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes).
-The directory must be writable by the computer image's uid/gid 1000. Rakazo sets `fsGroup: 1000`
+The directory must be writable by the computer image's uid/gid 1000. Smith sets `fsGroup: 1000`
 and mounts the exact `homes/<home key>` subpath, not the whole data directory.
 
 #### Keeping a separate computer namespace on k3s
@@ -231,7 +231,7 @@ apply this technique to a CSI volume by duplicating its volume handle; use the s
 supported sharing arrangement instead. See [local volume requirements](https://kubernetes.io/docs/concepts/storage/volumes/#local).
 
 Preserve the sandbox boundary when allowing the new volume. Admission should allow only the
-named home PVC, mounted at `/home/rakazo`, with a `subPath` exactly equal to
+named home PVC, mounted at `/home/smith`, with a `subPath` exactly equal to
 `homes/` plus the pod's validated `rakazo-bot-id` label. Reject parent paths, a mount of the entire
 claim, other home keys, host paths, injected credentials, and privileged containers. Keep the
 service-account token disabled. These restrictions constrain the pods created by the trusted
@@ -240,7 +240,7 @@ server-side dry runs before replacing live pods.
 
 #### Move existing computers without losing their files
 
-1. Wait for bot jobs and manual computer sessions to finish. Stop each computer through Rakazo
+1. Wait for bot jobs and manual computer sessions to finish. Stop each computer through Smith
    and confirm its save succeeds. Do not delete an unmounted pod first: its newest files may
    exist only inside that pod.
 2. Back up the data volume, including `homes` and `home-revisions`, and record checksums of
@@ -249,15 +249,15 @@ server-side dry runs before replacing live pods.
    access and admission policies for your namespace layout. Existing unmounted pods keep the
    old copy behavior until they are stopped and recreated.
 4. Start one computer. Inspect its pod's volumes and mounts: the correct claim must appear at
-   `/home/rakazo` with that computer's `homes/<home key>` subpath. A successful boot alone does
+   `/home/smith` with that computer's `homes/<home key>` subpath. A successful boot alone does
    not prove the home is mounted.
 5. Compare the saved file checksums. Write a small test file in the computer, stop and start it
-   through Rakazo, then verify that file again. Confirm that finishing a bot task no longer
+   through Smith, then verify that file again. Confirm that finishing a bot task no longer
    disconnects the screen during its workspace checkpoint before moving the remaining computers.
 
 For rollback, stop computers cleanly before removing mounts or changing the storage mapping.
 Retain the shared directory and the backup. Removing the environment variable alone does not
-unmount an existing pod; Rakazo still detects its mounted home to avoid copying over live files.
+unmount an existing pod; Smith still detects its mounted home to avoid copying over live files.
 A replacement unmounted pod restores from the saved server directory.
 
 #### When a computer still feels slow
@@ -326,7 +326,7 @@ own start command and every command run as uid 1000, set on the instance and on 
 than taken from the image's user, with no privilege
 escalation, the same boundary as a Docker computer, so a custom image must keep that command.
 
-Each start creates a new instance named `rakazo-<uuid>` and labelled `user.rakazo-bot-id=<bot id>`;
+Each start creates a new instance named `smith-<uuid>` and labelled `user.rakazo-bot-id=<bot id>`;
 one carrying another bot's id is never reused or deleted. Instances are ephemeral: Incus deletes
 one when it stops, and the saved workspace is the persistence boundary, copied in when a computer
 starts and saved back when it stops, as on Kubernetes. Only cache paths and the screen size are set
@@ -341,7 +341,7 @@ instance on a network the host routes to the computers.
 
 ### Restricted project and certificate
 
-Give Rakazo a project and a client certificate that can reach nothing else. A restricted
+Give Smith a project and a client certificate that can reach nothing else. A restricted
 certificate cannot change its project's restrictions or limits. On the Incus host:
 
 ```bash
@@ -360,17 +360,17 @@ incus network acl rule add rakazo-computers egress action=reject protocol=icmp6 
 incus network acl rule add rakazo-computers ingress action=allow protocol=tcp \
   source=<rakazo-server-address> destination_port=6100
 
-incus project create rakazo -c features.images=true -c features.profiles=true \
+incus project create smith -c features.images=true -c features.profiles=true \
   -c restricted=true -c restricted.networks.access=rakazo0 \
   -c restricted.images.servers=ghcr.io
-incus profile device add default root disk path=/ pool=default --project rakazo
-incus profile device add default eth0 nic network=rakazo0 --project rakazo \
+incus profile device add default root disk path=/ pool=default --project smith
+incus profile device add default eth0 nic network=rakazo0 --project smith \
   security.acls=rakazo-computers security.acls.default.egress.action=allow \
   security.ipv4_filtering=true security.ipv6_filtering=true
 
 openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 -nodes -days 3650 \
-  -subj /CN=rakazo -keyout rakazo.key -out rakazo.crt
-incus config trust add-certificate rakazo.crt --restricted --projects rakazo
+  -subj /CN=smith -keyout smith.key -out smith.crt
+incus config trust add-certificate smith.crt --restricted --projects smith
 ```
 
 The ACL sits on each computer's network device, so it also keeps computers from reaching each
@@ -379,11 +379,11 @@ computer are refused except to the screen port. IPv6 neighbour discovery keeps w
 echo requests are refused among ICMPv6 messages to private addresses; DHCP and DNS from the bridge are
 allowed by Incus before any ACL rule. The IP filtering options stop
 a computer from spoofing addresses or sending router advertisements to the host. Set
-`INCUS_SANDBOX_PROJECT=rakazo` and the certificate and key from `rakazo.crt` and `rakazo.key`.
+`INCUS_SANDBOX_PROJECT=smith` and the certificate and key from `smith.crt` and `smith.key`.
 
 ## `local-vm`
 
-Each computer is one lightweight Linux VM on the Mac running Rakazo, started from the published
+Each computer is one lightweight Linux VM on the Mac running Smith, started from the published
 computer image by Apple's [`container`](https://github.com/apple/container) runtime
 (Virtualization.framework). It needs Apple silicon and macOS 26 or newer, with the `container`
 system service started; no Docker, supervisor or socket is involved.
@@ -395,13 +395,13 @@ system service started; no Docker, supervisor or socket is involved.
 | `LOCAL_VM_CPUS`           | `2`                                    | CPUs of each VM                              |
 | `LOCAL_VM_MEMORY`         | `2g`                                   | Memory of each VM                            |
 
-Each start creates a VM and a network of its own, both named `rakazo-<uuid>`, labelled
-`rakazo.bot-id=<bot id>`; one carrying another bot's id is never reused or removed. The image's
+Each start creates a VM and a network of its own, both named `smith-<uuid>`, labelled
+`smith.bot-id=<bot id>`; one carrying another bot's id is never reused or removed. The image's
 start command and every command run as uid 1000 with no capabilities and no privilege escalation.
 As with Incus, VMs are removed when they stop: the saved workspace is copied in when a computer
 starts and saved back when it stops. The API, worker and web reach the screen on the VM's address.
 
-Before a computer is used, Rakazo loads an nftables firewall into the VM as root and checks it is
+Before a computer is used, Smith loads an nftables firewall into the VM as root and checks it is
 in place; if that fails, the VM is removed and the start fails. The firewall allows the public
 internet and DNS to the VM's gateway, and rejects everything else to the Mac, the LAN,
 link-local and cloud-metadata, CGNAT, multicast and other private addresses (the same list as the
@@ -413,7 +413,7 @@ bot's uid 1000 cannot change it.
 Bot computers run on one existing Wuying (无影) cloud computer. An admin can also set this up in
 **Settings → Computers** instead of these variables; see [Wuying cloud computers](./wuying-computers.md)
 for the full setup. Each computer's home is a folder
-under the desktop user's profile (`%USERPROFILE%\rakazo\<home>`), and the desktop's own disk
+under the desktop user's profile (`%USERPROFILE%\smith\<home>`), and the desktop's own disk
 keeps it between stops, so nothing is copied in or out. Commands run in PowerShell; files,
 screenshots and input go through the desktop's MCP gateway. Stopping the last computer on it
 powers the desktop off; deleting one removes only its home folder, never the desktop.
@@ -444,7 +444,7 @@ the same Windows desktop and account permissions, including files outside their 
 folders. Use it only in a trusted deployment.
 The gateway bounds each call to one minute, 16 KiB of command output and 1,000 folder entries.
 A command allowed longer than a minute runs detached with its output in files under
-`%USERPROFILE%\rakazo\.runs`, read back every second and removed when it ends or is cancelled.
+`%USERPROFILE%\smith\.runs`, read back every second and removed when it ends or is cancelled.
 
 ## `none`
 
@@ -463,7 +463,7 @@ Set `SANDBOX_PROVIDER` to exactly one of:
 | `boxd`     | `BOXD_API_KEY`                                   | Optional `BOXD_ORG` to create computers in a boxd organization                                                                                                                                                                                            |
 | `instabox` | `INSTABOX_API_KEY`                               | Computers start in the key's organization; see [instabox computers](#instabox-computers)                                                                                                                                                                  |
 | `createos` | `CREATEOS_SANDBOX_API_KEY`                       | Optional `CREATEOS_SANDBOX_BASE_URL`, `CREATEOS_SANDBOX_SHAPE`, `CREATEOS_SANDBOX_ROOTFS`                                                                                                                                                                 |
-| `railway`  | `RAILWAY_API_TOKEN` and `RAILWAY_ENVIRONMENT_ID` | Optional `RAILWAY_SANDBOX_REGION`; `RAILWAY_MAX_WORKSPACE_FILE_BYTES` (default 64 MiB) caps each workspace file Rakazo reads or saves. Railway supplies the environment ID when Rakazo runs there; see the [Railway template](../infra/railway/README.md) |
+| `railway`  | `RAILWAY_API_TOKEN` and `RAILWAY_ENVIRONMENT_ID` | Optional `RAILWAY_SANDBOX_REGION`; `RAILWAY_MAX_WORKSPACE_FILE_BYTES` (default 64 MiB) caps each workspace file Smith reads or saves. Railway supplies the environment ID when Smith runs there; see the [Railway template](../infra/railway/README.md) |
 | `wuying`   | `WUYING_*` (below)                               | One existing Wuying cloud computer (Windows)                                                                                                                                                                                                              |
 
 Remote paths still need a working API/worker; they do not replace Postgres or
@@ -494,7 +494,7 @@ computer's owner and space. A run starts when the computer becomes ready (boot t
 counted) and ends when it stops. `endReason` says how: `stopped`, `idle`, `active_limit`,
 `replaced` (update, recovery, or reset), `gone` (the provider had already stopped or lost
 the sandbox), `deleted`, or `reconciled` (the end was never seen; the worker found the
-computer no longer running). For `gone` and `reconciled`, `endedAt` is when Rakazo
+computer no longer running). For `gone` and `reconciled`, `endedAt` is when Smith
 noticed, so the true end may be earlier. The worker also opens the run of a running
 computer whose start was not recorded. An open run whose computer still reads as running
 is a computer that may be left on. Deleting a user or space keeps their runs with
@@ -633,7 +633,7 @@ the instabox account's vault, so secrets saved on that account never reach a bot
 The desktop is served on the computer's public HTTPS address; every screen and terminal still
 needs its own token, which the desktop gateway checks. Stopping a computer suspends it with its
 memory. instabox also pauses a computer after 30 idle minutes, later than the default
-`SANDBOX_IDLE_MS`, so Rakazo normally stops it first. One key's computers share its account's
+`SANDBOX_IDLE_MS`, so Smith normally stops it first. One key's computers share its account's
 limits on requests at once (API calls, and connections to screens and terminals), so a
 deployment with many active computers at the same time can see them slow down.
 
@@ -662,14 +662,14 @@ provisioning and desktop access.
 Set `RAKAZO_COMPUTER_PROXY` on the API and worker to send the browser on every Railway computer
 through an upstream proxy, for example `http://user:pass@proxy.example.com:8080` or
 `socks5://user:pass@proxy.example.com:1080`. Chrome cannot send proxy credentials from policy, so
-when a computer is prepared Rakazo installs `tinyproxy`, writes its config (credentials included)
+when a computer is prepared Smith installs `tinyproxy`, writes its config (credentials included)
 to a root-only file, starts it on `127.0.0.1:18080`, and adds a managed Chrome policy that points
 the browser there. Loopback stays direct so the bot's page tools still reach the browser.
 
 The credentials are not secret from the people using your bots. Bot commands run as root on the
 computer, so a user can ask a bot to read the config, and any program on the computer can send
 traffic through the loopback proxy. Set it only when you trust everyone who can use a bot on this
-deployment, and give Rakazo its own proxy login with a usage cap so a leak is limited and easy to
+deployment, and give Smith its own proxy login with a usage cap so a leak is limited and easy to
 revoke.
 
 The setting applies to every bot. It covers the browser only: terminal commands go direct. The

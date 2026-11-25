@@ -18,7 +18,7 @@ test("a bot joins a meeting and saves its transcript as an artifact", async ({
     process.env.MEETING_PROVIDER?.trim() !== "emulator",
     "This flow requires MEETING_PROVIDER=emulator to exercise the offline meeting adapter.",
   );
-  await signup(page, `meeting-${Date.now()}@rakazo.test`, "password12", "Meeting Tester");
+  await signup(page, `meeting-${Date.now()}@smith.test`, "password12", "Meeting Tester");
   await completeOnboarding(page);
   const chat = page.url();
   await page.getByRole("button", { name: "Meetings", exact: true }).click();

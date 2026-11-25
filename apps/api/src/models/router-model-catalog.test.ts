@@ -13,7 +13,7 @@ describe("codex catalog auth", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const spark = "gpt-5.3-codex-spark";
@@ -99,7 +99,7 @@ describe("codex live catalog", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const spark = "gpt-5.3-codex-spark";

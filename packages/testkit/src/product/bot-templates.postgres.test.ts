@@ -49,7 +49,7 @@ describeIntegration("bot templates", () => {
   });
 
   it("creates the bot, its skill and a paused routine, and asks only for missing apps", async () => {
-    const cookie = await signup(app, `template-${stamp}@rakazo.test`);
+    const cookie = await signup(app, `template-${stamp}@smith.test`);
     const owner = await ownerOf(cookie);
     // Gmail is already connected, so only the calendar is asked for.
     await composio.begin(
@@ -108,7 +108,7 @@ describeIntegration("bot templates", () => {
   });
 
   it("returns the existing bot on a repeat, even from an older preview, until it is deleted", async () => {
-    const cookie = await signup(app, `template-repeat-${stamp}@rakazo.test`);
+    const cookie = await signup(app, `template-repeat-${stamp}@smith.test`);
     const owner = await ownerOf(cookie);
     const input = { templateId: triage.id, version: triage.version };
 
@@ -160,7 +160,7 @@ describeIntegration("bot templates", () => {
   });
 
   it("renames its skill on a clash and points the routine at the new name", async () => {
-    const cookie = await signup(app, `template-clash-${stamp}@rakazo.test`);
+    const cookie = await signup(app, `template-clash-${stamp}@smith.test`);
     const existing = buildSkillMd({ name: "Inbox triage", description: "Mine", body: "Mine." });
     await rpc(app, cookie, "agentSkills/create", { content: existing });
     // The name the preview showed in the user's language is the one the bot gets.
@@ -190,7 +190,7 @@ describeIntegration("bot templates", () => {
   });
 
   it("writes nothing when the last write fails", async () => {
-    const cookie = await signup(app, `template-rollback-${stamp}@rakazo.test`);
+    const cookie = await signup(app, `template-rollback-${stamp}@smith.test`);
     const owner = await ownerOf(cookie);
     const count = async () => ({
       bots: await db.bot.count({ where: owner }),

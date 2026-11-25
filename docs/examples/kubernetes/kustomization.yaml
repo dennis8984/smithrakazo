@@ -14,26 +14,26 @@ resources:
   - sandbox-policy.yaml
 configMapGenerator:
   - name: rakazo-config
-    namespace: rakazo
+    namespace: smith
     envs:
       - config.env
   - name: rakazo-installation
-    namespace: rakazo
+    namespace: smith
     envs:
       - installation.env
   - name: rakazo-migration-state
-    namespace: rakazo
+    namespace: smith
     envs:
       - migration.env
 secretGenerator:
   - name: rakazo-secrets
-    namespace: rakazo
+    namespace: smith
     envs:
       - secrets.env
 generatorOptions:
   disableNameSuffixHash: true
   labels:
-    rakazo.example/phase: foundation
+    smith.example/phase: foundation
 replacements:
   - source:
       kind: ConfigMap

@@ -65,11 +65,11 @@ function domainName(prefix: string, id: string): string {
 }
 
 function isolatedDomain(botId: string): string {
-  return domainName("rakazo:bot:", botId);
+  return domainName("smith:bot:", botId);
 }
 
 function sharedDomain(spaceId: string): string {
-  return domainName("rakazo:space:", spaceId);
+  return domainName("smith:space:", spaceId);
 }
 
 /** Where a save goes: the Space's own domain when shared, the bot's otherwise. */
@@ -154,7 +154,7 @@ export class MnemoverseMemoryProvider implements SemanticMemoryProvider {
     request: SemanticMemorySaveRequest,
     context: AdapterContext,
   ): Promise<SemanticMemoryResponse> {
-    // Compaction summaries stay in Rakazo; Mnemoverse holds durable facts only.
+    // Compaction summaries stay in Smith; Mnemoverse holds durable facts only.
     if (request.source.kind === "history") return { ok: true, value: undefined };
     return writeMnemoverse(
       this.connection,

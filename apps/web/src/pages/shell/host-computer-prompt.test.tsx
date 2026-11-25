@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import type { Me, RakazoDesktop } from "@rakazo/contracts";
+import type { Me, SmithDesktop } from "@rakazo/contracts";
 import { deferred, flush } from "@rakazo/core/test-async";
 import type { ComponentProps, ReactNode } from "react";
 import { act } from "react";
@@ -83,7 +83,7 @@ function macWith(computer: Record<string, unknown>) {
       },
       ...computer,
     },
-  } as unknown as RakazoDesktop;
+  } as unknown as SmithDesktop;
 }
 
 const docker = { canChooseHostComputer: true, computerHost: "docker" } as Me;

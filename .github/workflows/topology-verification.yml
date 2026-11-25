@@ -18,4 +18,4 @@ jobs:
       - uses: ./.github/actions/setup-workspace
       - run: pnpm test:topology
       - name: Replay computer tools against real Chromium without inference
-        run: pnpm test:computer-replay --image=rakazo/computer:topology
+        run: pnpm test:computer-replay --image=smith/computer:topology

@@ -22,7 +22,7 @@
 
 ### 恢复源码备份
 
-`scripts/restore.sh` 只接收上面脚本生成的备份，目标是开发 Compose 中的空 `rakazo` 数据库：
+`scripts/restore.sh` 只接收上面脚本生成的备份，目标是开发 Compose 中的空 `smith` 数据库：
 
 ```bash
 ./scripts/restore.sh backups/<stamp>
@@ -39,12 +39,12 @@ SQL 成功后，原目录移到 `data.rollback.<random>/data`，脚本打印回�
 
 全部成功后才启动服务。如果关闭写入后又发生失败，脚本会再次尝试停止服务。
 SQL 提交后的文件替换失败不能自动回滚数据库。应保持应用停止，保留两个目录，恢复与回滚目录配套的数据库后再恢复文件。
-需要回滚时，必须事先单独备份恢复前的数据库。此脚本不能读取生产备份的 `rakazo.dump` 或 `appdata.tgz`。
+需要回滚时，必须事先单独备份恢复前的数据库。此脚本不能读取生产备份的 `smith.dump` 或 `appdata.tgz`。
 
 ## 生产快照
 
 单虚拟机生产部署使用 `infra/compose/backup-prod.sh`，安装到 `/usr/local/sbin/rakazo-backup`，
-并启用配套的 `rakazo-backup.timer`。它在 `/var/backups/rakazo` 创建经过验证的 Postgres 自定义格式备份和应用数据归档，文件权限为 `0600`。
+并启用配套的 `rakazo-backup.timer`。它在 `/var/backups/smith` 创建经过验证的 Postgres 自定义格式备份和应用数据归档，文件权限为 `0600`。
 安装步骤见[生产部署（英文）](../self-host-production.md)。
 
 默认保留 `RAKAZO_BACKUP_KEEP=3` 份快照，受 `RAKAZO_BACKUP_MAX_GB=50` GiB 限制，并保留至少
@@ -52,10 +52,10 @@ SQL 提交后的文件替换失败不能自动回滚数据库。应保持应用�
 脚本先清理遗留的未完成快照和超额历史，再检查容量；空间不足时保留最新的已验证快照，失败时清理该次未完成输出。
 仅有本地快照无法应对整台服务器丢失。
 
-默认部署目录是 `/srv/rakazo`。其他目录可在 root 所有、权限为 `0600` 的 `/etc/rakazo/backup.env` 中设置：
+默认部署目录是 `/srv/smith`。其他目录可在 root 所有、权限为 `0600` 的 `/etc/rakazo/backup.env` 中设置：
 
 ```env
-RAKAZO_DEPLOY_DIR=/srv/rakazo
+RAKAZO_DEPLOY_DIR=/srv/smith
 RAKAZO_BACKUP_KEEP=3
 RAKAZO_BACKUP_MAX_GB=50
 RAKAZO_BACKUP_MIN_FREE_GB=5
@@ -81,7 +81,7 @@ sudo chmod 755 /usr/local/sbin/rakazo-backup
 for unit in rakazo-backup.service rakazo-backup.timer; do
   sudo curl -fsSL "$base/systemd/$unit" -o "/etc/systemd/system/$unit"
 done
-sudo install -d -m 700 /etc/rakazo
+sudo install -d -m 700 /etc/smith
 printf '\nRAKAZO_DEPLOY_DIR=%s\n' "$PWD" | sudo tee -a /etc/rakazo/backup.env >/dev/null
 sudo chmod 600 /etc/rakazo/backup.env
 sudo systemctl daemon-reload
@@ -133,7 +133,7 @@ RAKAZO_BACKUP_AGE_RECIPIENTS=age1exampleprimaryrecipient age1examplerecoveryreci
 # RAKAZO_BACKUP_AGE_RECIPIENTS_FILE=/etc/rakazo/backup-recipients.txt
 ```
 
-示例公钥必须替换为实际公钥。设置后，快照包含 `rakazo.dump.age`、`appdata.tgz.age`、`SOURCE_SIZE_KB` 和 `SHA256SUMS`。
+示例公钥必须替换为实际公钥。设置后，快照包含 `smith.dump.age`、`appdata.tgz.age`、`SOURCE_SIZE_KB` 和 `SHA256SUMS`。
 数据库和文件流直接进入 age，明文不落盘；验证过程不需要私钥。
 未设置接收者时会生成明文并告警；一旦成功生成过加密备份，之后缺少接收者会拒绝备份。
 只有明确接受明文风险时才设置 `RAKAZO_BACKUP_ALLOW_PLAINTEXT=1`。
@@ -182,10 +182,10 @@ umask 077
 COMPOSE="sudo docker compose --env-file .env -f infra/compose/docker-compose.prod.yml"
 VOLUME=rakazo-prod_appdata
 
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE stop api worker web"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE stop api worker web"
 ROLLBACK_DUMP="$(mktemp "$PWD/before-restore.dump.XXXXXX")"
 if ! ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'pg_dump -Fc -U \"\$POSTGRES_USER\" \"\$POSTGRES_DB\"'" \
+  "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'pg_dump -Fc -U \"\$POSTGRES_USER\" \"\$POSTGRES_DB\"'" \
   > "$ROLLBACK_DUMP"; then
   printf '恢复前数据库导出失败。不要使用 %s 这个不完整文件，并保持应用停止。\n' "$ROLLBACK_DUMP" >&2
   exit 1
@@ -199,13 +199,13 @@ printf '记录这组回滚路径：\n数据库导出：%s\n远程数据目录：
 age -d -i rakazo-backup.key <stamp>/appdata.tgz.age | ssh deploy@app.example.com \
   "sudo tar -xzf - --numeric-owner -C '$RESTORE/staged'"
 
-age -d -i rakazo-backup.key <stamp>/rakazo.dump.age | ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'pg_restore --clean --if-exists --no-owner --exit-on-error --single-transaction -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\"'"
+age -d -i rakazo-backup.key <stamp>/smith.dump.age | ssh deploy@app.example.com \
+  "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'pg_restore --clean --if-exists --no-owner --exit-on-error --single-transaction -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\"'"
 
 ssh deploy@app.example.com \
   "sudo mv -- '$APPDATA' '$RESTORE/previous' && sudo mv -- '$RESTORE/staged' '$APPDATA'"
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE up -d --force-recreate --wait --pull never api worker web"
+  "cd /srv/smith && $COMPOSE up -d --force-recreate --wait --pull never api worker web"
 ```
 
 归档必须先成功解包，然后才能开始导入 SQL。干净的临时目录和回滚目录都位于数据卷活动目录的同级，
@@ -225,7 +225,7 @@ ssh deploy@app.example.com \
 如果第一次目录移动就失败了，旧目录仍在 `$APPDATA`；移动任何内容前先检查两个路径。
 只切回文件目录不会回滚数据库。
 
-明文快照没有 `.age` 后缀，应分别用 `cat` 代替 `age -d`，文件名是 `rakazo.dump` 和 `appdata.tgz`；
+明文快照没有 `.age` 后缀，应分别用 `cat` 代替 `age -d`，文件名是 `smith.dump` 和 `appdata.tgz`；
 干净目录与回滚步骤不变。
 
 恢复到新部署时，必须先创建 `rakazo_app` 角色，再执行上述流程。备份会把权限授予该角色，
@@ -233,8 +233,8 @@ ssh deploy@app.example.com \
 不要先运行迁移：比快照更新的表会阻止恢复；流程最后启动应用时才会应用迁移。
 
 ```bash
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE up -d --wait postgres"
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE exec -T postgres sh -c 'psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -c \"CREATE ROLE rakazo_app NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE\"'"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE up -d --wait postgres"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE exec -T postgres sh -c 'psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -c \"CREATE ROLE rakazo_app NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE\"'"
 ```
 
 ## 时间点恢复
@@ -303,11 +303,11 @@ sudo infra/compose/pitr.sh drill < rakazo-backup.key
 
 ```bash
 COMPOSE="sudo docker compose --env-file .env -f infra/compose/docker-compose.prod.yml"
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE stop api worker web pitr postgres"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE stop api worker web pitr postgres"
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && sudo infra/compose/pitr.sh restore '2026-01-31 09:41:00+00' rakazo-prod_postgres" \
+  "cd /srv/smith && sudo infra/compose/pitr.sh restore '2026-01-31 09:41:00+00' rakazo-prod_postgres" \
   < rakazo-backup.key
-ssh deploy@app.example.com "cd /srv/rakazo && $COMPOSE up -d --wait"
+ssh deploy@app.example.com "cd /srv/smith && $COMPOSE up -d --wait"
 ```
 
 恢复会选择目标时间之前最近完成的完整基础备份，重放 WAL 到目标时间并提升数据库，从而开启新的时间线；
@@ -315,7 +315,7 @@ sidecar 会为它创建新的基础备份。恢复期间应暂停 CI 部署。�
 
 ```bash
 ssh deploy@app.example.com \
-  "cd /srv/rakazo && $COMPOSE run --rm --no-deps --entrypoint sh postgres -c 'rm -rf \"\$PGDATA\".before-restore-*'"
+  "cd /srv/smith && $COMPOSE run --rm --no-deps --entrypoint sh postgres -c 'rm -rf \"\$PGDATA\".before-restore-*'"
 ```
 
 关闭 PITR 时，先从 `COMPOSE_PROFILES` 中移除 `pitr`，再运行 `sudo infra/compose/pitr.sh disable`。
@@ -323,7 +323,7 @@ ssh deploy@app.example.com \
 
 ## 在不同实例间迁移账号
 
-在不同 Rakazo 实例之间迁移账号，可在旧实例“设置 → 导出数据”，在新实例导入。
+在不同 Smith 实例之间迁移账号，可在旧实例“设置 → 导出数据”，在新实例导入。
 导出 ZIP 包含所属空间的机器人、聊天、文件、记忆、例行任务、技能、工作区文件，以及自己拥有空间的看板。
 ZIP 中的内容已解密，应保密保存。导入会创建自己拥有的新空间，例行任务默认关闭。
 模型密钥和其他连接凭据（包括应用、MCP 服务器和消息集成）不会迁移，需重新连接。

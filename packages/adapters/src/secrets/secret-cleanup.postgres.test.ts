@@ -64,7 +64,7 @@ describePostgres("secret cleanup (PostgreSQL)", () => {
     pool = new Pool({ connectionString: runtimeUrl, max: 2 });
     jobs = new GraphileJobPublisher(pool);
     await asSystem(owner.prisma).user.create({
-      data: { id: userId, name: "Cleanup", email: `${userId}@rakazo.test`, emailVerified: true },
+      data: { id: userId, name: "Cleanup", email: `${userId}@smith.test`, emailVerified: true },
     });
   });
 

@@ -5,7 +5,7 @@
 x-app-environment: &app-environment # Runtime
   NODE_ENV: ${NODE_ENV:-production}
   # The app's own login, subject to row-level security (docs/self-host-configuration.md#database-roles).
-  DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+  DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
   REALTIME_DATABASE_URL:
   DB_POOL_MAX:
   DATA_DIR: /data
@@ -362,9 +362,9 @@ services:
       # USER/PASSWORD/DB apply only on first volume init. Keep existing values in
       # .env, or ALTER ROLE / rename in place. Recreate the volume only after backup
       # (or when it is disposable); down -v deletes all DB state.
-      POSTGRES_USER: ${POSTGRES_USER:-rakazo}
+      POSTGRES_USER: ${POSTGRES_USER:-smith}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-      POSTGRES_DB: ${POSTGRES_DB:-rakazo}
+      POSTGRES_DB: ${POSTGRES_DB:-smith}
     volumes:
       # Postgres 18 keeps each major version's cluster in /var/lib/postgresql/<major>/docker.
       - postgres:/var/lib/postgresql
@@ -373,7 +373,7 @@ services:
       # upgrade-postgres.sh (docs/self-host-upgrading.md#upgrading-to-postgres-18).
       - pgdata:/var/lib/postgresql/16/docker:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rakazo} -d ${POSTGRES_DB:-rakazo}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-smith} -d ${POSTGRES_DB:-smith}"]
       interval: 3s
       timeout: 5s
       retries: 20
@@ -388,7 +388,7 @@ services:
       SUPERVISOR_HOST: "0.0.0.0"
       SUPERVISOR_PORT: "7091"
       DOCKER_SOCKET: /var/run/docker.sock
-      RAKAZO_COMPUTER_IMAGE: rakazo/computer:local
+      RAKAZO_COMPUTER_IMAGE: smith/computer:local
       RAKAZO_COMPUTER_MEMORY: ${RAKAZO_COMPUTER_MEMORY:-2g}
       RAKAZO_COMPUTER_CPUS: ${RAKAZO_COMPUTER_CPUS:-2}
       RAKAZO_COMPUTER_PIDS_LIMIT: ${RAKAZO_COMPUTER_PIDS_LIMIT:-2048}
@@ -420,7 +420,7 @@ services:
         condition: service_completed_successfully
 
   computer:
-    image: rakazo/computer:local
+    image: smith/computer:local
     build:
       context: ../sandboxes/computer
     command: ["true"]
@@ -463,8 +463,8 @@ services:
     command: ["pnpm", "db:deploy"]
     restart: "no"
     environment:
-      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
-      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-rakazo}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-rakazo}
+      DATABASE_URL: postgres://rakazo_app:${POSTGRES_APP_PASSWORD:?Set POSTGRES_APP_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
+      DATABASE_MIGRATION_URL: postgres://${POSTGRES_USER:-smith}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-smith}
     depends_on:
       postgres:
         condition: service_healthy

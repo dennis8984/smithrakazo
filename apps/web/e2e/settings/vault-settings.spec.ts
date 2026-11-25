@@ -15,7 +15,7 @@ test("saves a contact, a card billed to it, and a login from Settings, showing n
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `vault-${stamp}@rakazo.test`, "password12", "Vault Owner");
+  await signup(page, `vault-${stamp}@smith.test`, "password12", "Vault Owner");
   await completeOnboarding(page);
   const settings = await openUserSettings(page, "vault");
   const vault = settings.getByTestId("vault");
@@ -358,7 +358,7 @@ test("saves a contact, a card billed to it, and a login from Settings, showing n
 
 test("imports logins from a CSV export after a review", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `vault-import-${stamp}@rakazo.test`, "password12", "Vault Import");
+  await signup(page, `vault-import-${stamp}@smith.test`, "password12", "Vault Import");
   await completeOnboarding(page);
   const settings = await openUserSettings(page, "vault");
   const vault = settings.getByTestId("vault");

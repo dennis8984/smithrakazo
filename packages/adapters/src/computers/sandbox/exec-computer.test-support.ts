@@ -36,7 +36,7 @@ export function execComputerShell() {
     if (command.includes("find") || command.some((arg) => arg.includes("find . -regextype"))) {
       const directory = command.includes("find")
         ? command[command.indexOf("find") + 1]!
-        : "/home/rakazo";
+        : "/home/smith";
       let stdout = "";
       for (const [name, file] of files) {
         if (!name.startsWith(`${directory}/`)) continue;

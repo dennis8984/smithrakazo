@@ -82,7 +82,7 @@ def browser_profile():
             return profile
     except OSError:
         pass
-    home = os.environ.get("HOME") or "/home/rakazo"
+    home = os.environ.get("HOME") or "/home/smith"
     if number == "1":
         return f"{home}/.browser-profiles/chromium"
     return f"{home}/.browser-profiles/chromium-screen-{number}"

@@ -6,7 +6,7 @@ import { currentApiBase } from "../api/api";
 import { usesCustomApiBase } from "../api/endpoint";
 import { openExternalUrl } from "../platform/open-url";
 
-const ASKED_KEY = "rakazo.self-hosted-support-asked";
+const ASKED_KEY = "smith.self-hosted-support-asked";
 // Redirects on the website, so the payment pages can change without an app release.
 const SUPPORTER_URL = "https://rakazo.com/supporter";
 const PRIORITY_SUPPORT_URL = "https://rakazo.com/priority-support";
@@ -19,8 +19,8 @@ export function selfHosted(): boolean {
 
 export function showSelfHostedSupport(): void {
   Alert.alert(
-    t`Support Rakazo`,
-    t`Rakazo is free to self-host. If you'd like to support it, subscribers can email support@rakazo.com for help.`,
+    t`Support Smith`,
+    t`Smith is free to self-host. If you'd like to support it, subscribers can email support@rakazo.com for help.`,
     [
       { text: t`Support for $25 / month`, onPress: () => void openExternalUrl(SUPPORTER_URL) },
       {

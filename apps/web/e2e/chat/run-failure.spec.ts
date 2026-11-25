@@ -17,7 +17,7 @@ function seenRunErrorCount(page: Page) {
   return page.evaluate(() => {
     let count = 0;
     for (let index = 0; index < localStorage.length; index += 1) {
-      if (localStorage.key(index)?.startsWith("rakazo:seen-run-error:")) count += 1;
+      if (localStorage.key(index)?.startsWith("smith:seen-run-error:")) count += 1;
     }
     return count;
   });
@@ -25,7 +25,7 @@ function seenRunErrorCount(page: Page) {
 
 test("a failed run is visible once without returning after reload", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `run-failure-${stamp}@rakazo.test`, "password12", "Run Failure");
+  await signup(page, `run-failure-${stamp}@smith.test`, "password12", "Run Failure");
   await completeOnboarding(page);
 
   // "fail this run" makes the scripted runtime throw, so the run fails the same way a
@@ -70,7 +70,7 @@ test("a failed run is visible once without returning after reload", async ({ pag
 
 test("a covered run error is not remembered until it is presented", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `covered-run-failure-${stamp}@rakazo.test`, "password12", "Covered Failure");
+  await signup(page, `covered-run-failure-${stamp}@smith.test`, "password12", "Covered Failure");
   await completeOnboarding(page);
   await page.setViewportSize({ width: 390, height: 844 });
 
@@ -142,7 +142,7 @@ test("a covered run error is not remembered until it is presented", async ({ pag
 test("an operator usage cap explains the pause without offering a billing upgrade", async ({
   page,
 }, testInfo) => {
-  await signup(page, `usage-cap-${Date.now()}@rakazo.test`, "password12", "Usage Limit");
+  await signup(page, `usage-cap-${Date.now()}@smith.test`, "password12", "Usage Limit");
   await completeOnboarding(page);
   // Use the normal failure fixture and replace only the server's error message.
   await page.route("**/rpc/threads/get", async (route) => {
@@ -163,7 +163,7 @@ test("an operator usage cap explains the pause without offering a billing upgrad
 });
 
 test("a retryable failure offers Try again on the original message", async ({ page }, testInfo) => {
-  await signup(page, `run-retry-${Date.now()}@rakazo.test`, "password12", "Run Retry");
+  await signup(page, `run-retry-${Date.now()}@smith.test`, "password12", "Run Retry");
   await completeOnboarding(page);
   // The normal failure fixture supplies the run and its sender. Simulate the worker's
   // eligibility flag so the scripted runtime need not emulate a transient model error.

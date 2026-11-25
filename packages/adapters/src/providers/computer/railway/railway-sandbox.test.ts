@@ -863,7 +863,7 @@ describe("Railway computers", () => {
 
   it("satisfies the shared workspace contract through the Railway SDK", async () => {
     const directory = await mkdtemp(path.join(tmpdir(), "rakazo-railway-contract-"));
-    const localPath = (filePath: string) => filePath.replace("/home/rakazo", directory);
+    const localPath = (filePath: string) => filePath.replace("/home/smith", directory);
     sandbox.files.write.mockImplementation(
       async (filePath: string, content: Uint8Array, options?: { mode: number }) => {
         await mkdir(path.dirname(localPath(filePath)), { recursive: true });
@@ -890,7 +890,7 @@ describe("Railway computers", () => {
         const result = await promisify(execFile)("bash", [
           "-c",
           command
-            .replaceAll("/home/rakazo", directory)
+            .replaceAll("/home/smith", directory)
             .replaceAll(
               "find . -regextype posix-extended",
               process.platform === "darwin" ? "find -E ." : "find . -regextype posix-extended",
@@ -1184,7 +1184,7 @@ describe("Railway computers", () => {
     expect(started).toContain(String(token));
     expect(started).toContain("/tmp/rakazo/sockets/terminal-");
     expect(started).toContain("0.0.0.0:6080 8>&-");
-    expect(started).toContain("/home/rakazo");
+    expect(started).toContain("/home/smith");
   });
 
   it.each([
@@ -1251,7 +1251,7 @@ describe("Railway computers", () => {
         const result = await promisify(execFile)("bash", [
           "-c",
           command
-            .replaceAll("/home/rakazo", directory)
+            .replaceAll("/home/smith", directory)
             .replaceAll(
               "find . -regextype posix-extended",
               process.platform === "darwin" ? "find -E ." : "find . -regextype posix-extended",
@@ -1261,7 +1261,7 @@ describe("Railway computers", () => {
       });
       sandbox.files.read.mockImplementation(
         async (filePath: string) =>
-          new Uint8Array(await readFile(filePath.replace("/home/rakazo", directory))),
+          new Uint8Array(await readFile(filePath.replace("/home/smith", directory))),
       );
       const exported = [];
       for await (const file of provider.exportWorkspace(computer, ctx)) exported.push(file);
@@ -1291,7 +1291,7 @@ describe("Railway computers", () => {
       expect(Sandbox.connect).toHaveBeenCalledTimes(1);
       expect(sandbox.exec).toHaveBeenNthCalledWith(
         1,
-        "chmod 700 -- '/home/rakazo'",
+        "chmod 700 -- '/home/smith'",
         expect.objectContaining({ signal: ctx.signal }),
       );
       const protectOrder = sandbox.exec.mock.invocationCallOrder[0];

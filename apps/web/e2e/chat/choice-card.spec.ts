@@ -8,7 +8,7 @@ import {
 } from "../helpers/helpers";
 
 test("onboarding choices show borderless rows in both themes", async ({ page }, testInfo) => {
-  await signup(page, `onboarding-rows-${Date.now()}@rakazo.test`, "password12", "Sample");
+  await signup(page, `onboarding-rows-${Date.now()}@smith.test`, "password12", "Sample");
   await completeOnboarding(page);
   const question = page.getByText("What do you want me on first?", { exact: true });
   await expect(question).toBeVisible();
@@ -35,7 +35,7 @@ test("renders tappable choice buttons and submits the offered action id", async 
   page,
 }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `choice-card-${stamp}@rakazo.test`, "password12", "Choice Card");
+  await signup(page, `choice-card-${stamp}@smith.test`, "password12", "Choice Card");
   await completeOnboarding(page);
 
   const botId = activeBotId(page);
@@ -160,7 +160,7 @@ test("renders tappable choice buttons and submits the offered action id", async 
 
 test("shows the content being decided on above the choices", async ({ page }, testInfo) => {
   const stamp = Date.now();
-  await signup(page, `ask-detail-${stamp}@rakazo.test`, "password12", "Ask Detail");
+  await signup(page, `ask-detail-${stamp}@smith.test`, "password12", "Ask Detail");
   await completeOnboarding(page);
 
   const botId = activeBotId(page);

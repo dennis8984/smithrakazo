@@ -33,7 +33,7 @@ describe.skipIf(!databaseUrl)("raw routes", () => {
       agentRuntime: "scripted",
       wakeupDriver: "memory",
       scimBearerToken: "raw-routes-directory-token-0123456789",
-      inboundEmail: { domain: "bots.rakazo.test", secret: "raw-routes-inbound-email-secret" },
+      inboundEmail: { domain: "bots.smith.test", secret: "raw-routes-inbound-email-secret" },
       slackClientId: "raw-routes-client-id",
       slackClientSecret: "raw-routes-client-secret",
       slackSigningSecret: "raw-routes-signing-secret",

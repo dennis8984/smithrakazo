@@ -47,7 +47,7 @@ export const honchoMemory: MemoryProviderDefinition = {
         label: "Workspace",
         kind: "text",
         required: false,
-        placeholder: "rakazo-<space>",
+        placeholder: "smith-<space>",
         maxLength: 512,
         checks: [RESOURCE_ID],
         advanced: true,
@@ -59,14 +59,14 @@ export const honchoMemory: MemoryProviderDefinition = {
         label: "User peer",
         kind: "text",
         required: false,
-        description: "Recall from this peer; save to Rakazo’s own peers.",
+        description: "Recall from this peer; save to Smith’s own peers.",
         maxLength: 512,
         checks: [
           RESOURCE_ID,
           {
-            // Rakazo writes to these peers, so they cannot be read as the user's own peer.
+            // Smith writes to these peers, so they cannot be read as the user's own peer.
             pattern: UNRESERVED_HONCHO_PEER_PATTERN,
-            message: "rakazo-shared and IDs starting with bot- are reserved for Rakazo.",
+            message: "rakazo-shared and IDs starting with bot- are reserved for Smith.",
           },
         ],
         advanced: true,

@@ -27,7 +27,7 @@ describe("model setup gate", () => {
     const prisma = {
       user: {
         findUniqueOrThrow: vi.fn().mockResolvedValue({
-          email: "user@rakazo.test",
+          email: "user@smith.test",
           name: "Test User",
           avatarStyle: "robot",
           secrets: [],
@@ -78,7 +78,7 @@ describe("model setup gate", () => {
     const actor = {
       spaceId: "workspace-1",
       userId: "user-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner: true,
     } satisfies Actor;
     return { actor, handler: appHandler(deps) };
@@ -316,7 +316,7 @@ describe("model settings", () => {
   const actor = {
     spaceId: "space-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
 
@@ -599,7 +599,7 @@ describe("model set default auth", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const spark = "gpt-5.3-codex-spark";
@@ -987,7 +987,7 @@ describe("bot model auth on save", () => {
   const actor = {
     spaceId: "workspace-1",
     userId: "user-1",
-    email: "user@rakazo.test",
+    email: "user@smith.test",
     isDeploymentOwner: true,
   } satisfies Actor;
   const spark = "gpt-5.3-codex-spark";

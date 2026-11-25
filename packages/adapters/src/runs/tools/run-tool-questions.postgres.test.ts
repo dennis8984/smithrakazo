@@ -31,7 +31,7 @@ postgres("a tool's question in a running run (PostgreSQL)", () => {
 
   beforeAll(async () => {
     run = await fixture(async () => {
-      await prisma.user.create({ data: { id: userId, name: "Asker", email: `${id}@rakazo.test` } });
+      await prisma.user.create({ data: { id: userId, name: "Asker", email: `${id}@smith.test` } });
       await prisma.organization.create({
         data: { id: organizationId, name: "Question tests", slug: id, createdAt: new Date() },
       });

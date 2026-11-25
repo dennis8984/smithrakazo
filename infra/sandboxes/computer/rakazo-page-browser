@@ -2,7 +2,7 @@
 """Serve the page-browser commands on the Chromium showing on this computer's DISPLAY.
 
 agent-browser (pinned in the image) attaches to that Chromium over CDP and browses. This wrapper
-keeps Rakazo's contract and policy on top: which tab, refs that must still name the element the
+keeps Smith's contract and policy on top: which tab, refs that must still name the element the
 bot saw, the snapshot's size, masked secrets, upload confinement, and the computer_act fallback.
 Saved logins, cards and pay tokens go through page_secrets instead.
 """
@@ -27,7 +27,7 @@ import urllib.request
 from typing import Any, Callable
 from urllib.parse import unquote, urljoin, urlsplit
 
-sys.path[:0] = [os.path.dirname(os.path.realpath(__file__)), "/usr/local/lib/rakazo"]
+sys.path[:0] = [os.path.dirname(os.path.realpath(__file__)), "/usr/local/lib/smith"]
 import page_secrets  # noqa: E402
 from page_secrets import CardFieldUncertain, Refused, payment_frame_origin  # noqa: E402
 
@@ -1732,7 +1732,7 @@ class Downloads:
 
     def __init__(self, client: CdpClient, folder: Any, session_id: str | None = None, home: str | None = None) -> None:
         self.client = client
-        self.home = os.path.realpath(home or os.environ.get("HOME") or "/home/rakazo")
+        self.home = os.path.realpath(home or os.environ.get("HOME") or "/home/smith")
         try:
             self.folder: str | None = download_folder(folder, self.home)
         except (RuntimeError, OSError):
@@ -2556,7 +2556,7 @@ def resolve_upload_paths(paths: Any, home: str | None = None, roots: list[str] |
     """Resolve regular files within trusted roots before handing them to Chromium."""
     if not isinstance(paths, list) or not 1 <= len(paths) <= MAX_UPLOAD_FILES:
         raise RuntimeError(f"upload needs 1 to {MAX_UPLOAD_FILES} file paths")
-    home = os.path.realpath(home or os.environ.get("HOME") or "/home/rakazo")
+    home = os.path.realpath(home or os.environ.get("HOME") or "/home/smith")
     location = "your folder or shared/" if roots is not None else "this computer's home folder"
     allowed = [home]
     if roots is not None:

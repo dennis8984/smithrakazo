@@ -10,9 +10,9 @@ import { stopLiveNotifications } from "../notifications/live-notifications";
 import { clearFailedSends } from "../thread/send/thread-feedback";
 import { clearNetworkCache } from "./network-cache";
 
-const SESSION_KEY = "rakazo.session_token";
+const SESSION_KEY = "smith.session_token";
 // Named for the screen that first kept it; renaming it would drop every saved identity.
-const VERIFIED_SCOPE_KEY = "rakazo.integrations-scope";
+const VERIFIED_SCOPE_KEY = "smith.integrations-scope";
 
 export type SavedVerifiedScope = {
   apiBase: string;

@@ -66,7 +66,7 @@ import {
   ComputerIdentityError,
   countSpaceContainers,
   findBotContainer,
-  isRakazoContainer,
+  isSmithContainer,
   managedContainer,
 } from "./identity.js";
 import { withBotLifecycleLock, withComputerScreenLock, withSpaceComputerLock } from "./locks.js";
@@ -344,7 +344,7 @@ app.post("/computers", async (c) => {
           removeOwnedComputer(
             docker.getContainer(name),
             (id) => docker.getContainer(id).remove({ force: true }),
-            (info) => isRakazoContainer(info, body.botId, body.spaceId),
+            (info) => isSmithContainer(info, body.botId, body.spaceId),
             (id) => clearComputerScreenRegistry(computerScreens, computerScreenBoots, id),
           );
         try {
@@ -477,7 +477,7 @@ app.post("/computers/:id/exec", async (c) => {
           container,
           body.argv.length ? body.argv : ["/bin/echo", "ready"],
           {
-            workingDir: body.cwd ?? "/home/rakazo",
+            workingDir: body.cwd ?? "/home/smith",
             env: [
               ...computerCommandEnv(layout),
               ...Object.entries(body.env ?? {}).map(([k, v]) => `${k}=${v}`),
@@ -666,7 +666,7 @@ app.post("/computers/:id/browser", async (c) => {
         env: [
           `DISPLAY=${layout.display}`,
           `RAKAZO_CDP_PORT=${layout.debugPort}`,
-          "HOME=/home/rakazo",
+          "HOME=/home/smith",
           "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
           "RAKAZO_BROWSER_WATCH_STDIN=1",
           "RAKAZO_BROWSER_ARGS_STDIN=1",

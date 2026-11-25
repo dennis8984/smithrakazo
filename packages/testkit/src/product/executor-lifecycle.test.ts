@@ -216,7 +216,7 @@ describeIntegration("run executor lifecycle", () => {
   it("records an uncertain result without replaying an interrupted external effect", async () => {
     const prompt = "write this to the destination crm as a note";
     const seeded = await seedRun("uncertain-effect", prompt);
-    const args = { collection: "notes", title: "Rakazo result", body: prompt };
+    const args = { collection: "notes", title: "Smith result", body: prompt };
     const executionId = approvalEffectKey(seeded.run.id, "destination.write", args);
     await db.externalEffect.create({
       data: {
@@ -256,7 +256,7 @@ describeIntegration("run executor lifecycle", () => {
   it("recreates the approval pause when an intended effect was interrupted before the card", async () => {
     const prompt = "write this to the destination crm as a note";
     const seeded = await seedRun("interrupted-before-approval", prompt);
-    const args = { collection: "notes", title: "Rakazo result", body: prompt };
+    const args = { collection: "notes", title: "Smith result", body: prompt };
     const executionId = approvalEffectKey(seeded.run.id, "destination.write", args);
     const effect = await db.externalEffect.create({
       data: {
@@ -720,7 +720,7 @@ describeIntegration("run executor lifecycle", () => {
 
   it("applies the same no-parallel-run rule to the targeted group member", async () => {
     const cookie = await signup(
-      `executor-group-steering-${stamp}@rakazo.test`,
+      `executor-group-steering-${stamp}@smith.test`,
       "Executor group steering",
     );
     const me = await rpc<{ userId: string; spaceId: string }>(cookie, "me");
@@ -1580,7 +1580,7 @@ describeIntegration("run executor lifecycle", () => {
     } = {},
     computerMode?: "team" | "dedicated",
   ) {
-    const cookie = await signup(`executor-${label}-${stamp}@rakazo.test`, `Executor ${label}`);
+    const cookie = await signup(`executor-${label}-${stamp}@smith.test`, `Executor ${label}`);
     const me = await rpc<{ userId: string; spaceId: string }>(cookie, "me");
     const bot = await rpc<{ id: string }>(cookie, "bots/create", {
       name: `Executor ${label}`,

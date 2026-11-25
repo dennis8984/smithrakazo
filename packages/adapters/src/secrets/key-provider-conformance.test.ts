@@ -161,7 +161,7 @@ describe("AWS KMS key provider", () => {
     kms.state.contexts.length = 0;
     await aws().wrap(randomBytes(32), { spaceId: "space-a", version: 3 });
     expect(kms.state.contexts).toEqual([
-      { "rakazo:purpose": "space-key/v1", "rakazo:space": "space-a", "rakazo:version": "3" },
+      { "smith:purpose": "space-key/v1", "smith:space": "space-a", "smith:version": "3" },
     ]);
   });
 
@@ -193,7 +193,7 @@ describe("AWS KMS key provider", () => {
       "AWS_KMS_PROFILE",
     );
     expect(() => awsKmsConfigFromEnv({ AWS_KMS_KEY_ARN: KEY_ARN })).toThrow("AWS_KMS_PROFILE");
-    const alias = "arn:aws:kms:eu-central-1:111122223333:alias/rakazo";
+    const alias = "arn:aws:kms:eu-central-1:111122223333:alias/smith";
     expect(() => new AwsKmsKeyProvider({ ...config, keyArn: alias })).toThrow("AWS_KMS_KEY_ARN");
   });
 });
@@ -201,7 +201,7 @@ describe("AWS KMS key provider", () => {
 describe("wrapped environment values under AWS KMS", () => {
   it("binds the variable name into the KMS encryption context", async () => {
     const env = { BETTER_AUTH_SECRET: await wrapEnvValue(aws(), "BETTER_AUTH_SECRET", "fake") };
-    expect(kms.state.contexts.at(-1)).toMatchObject({ "rakazo:space": "env:BETTER_AUTH_SECRET" });
+    expect(kms.state.contexts.at(-1)).toMatchObject({ "smith:space": "env:BETTER_AUTH_SECRET" });
     await unwrapEnv(env, aws());
     expect(env.BETTER_AUTH_SECRET).toBe("fake");
   });

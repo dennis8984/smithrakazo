@@ -1,4 +1,4 @@
-import type { RakazoDesktop } from "@rakazo/contracts";
+import type { SmithDesktop } from "@rakazo/contracts";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -37,7 +37,7 @@ export async function writeClipboard(text: string, isCurrent = () => true): Prom
     // A desktop document can lose focus even during a Copy click.
   }
   if (!isCurrent()) return false;
-  const desktop = (globalThis as { rakazoDesktop?: RakazoDesktop }).rakazoDesktop;
+  const desktop = (globalThis as { rakazoDesktop?: SmithDesktop }).rakazoDesktop;
   if (desktop?.clipboard) {
     try {
       if (await desktop.clipboard.writeText(text)) return true;

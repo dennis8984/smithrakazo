@@ -7,7 +7,7 @@ export function nativeCalendarDeviceKey() {
   const expo = globalThis.expo;
   if (
     !expo?.modules?.CalendarNext ||
-    (Platform.OS !== "android" && !(Platform.OS === "ios" && expo.modules.RakazoCalendar)) ||
+    (Platform.OS !== "android" && !(Platform.OS === "ios" && expo.modules.SmithCalendar)) ||
     typeof expo.uuidv4 !== "function"
   )
     return undefined;

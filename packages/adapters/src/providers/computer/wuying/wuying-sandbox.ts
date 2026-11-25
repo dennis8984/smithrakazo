@@ -603,7 +603,7 @@ export class WuyingSandboxProvider implements SandboxProvider {
     context: AdapterContext,
   ): AsyncIterable<ProcessEvent> {
     const { signal } = context;
-    const dir = `${await this.userProfile(signal)}\\rakazo\\.runs\\${randomUUID()}`;
+    const dir = `${await this.userProfile(signal)}\\smith\\.runs\\${randomUUID()}`;
     const paths = {
       cwd: command.cwd,
       out: `${dir}\\stdout`,
@@ -738,7 +738,7 @@ export class WuyingSandboxProvider implements SandboxProvider {
    * Windows' own SendKeys from a windowless script that leaves the foreground window focused.
    */
   private async sendKeys(keys: string, signal: AbortSignal) {
-    const dir = `${await this.userProfile(signal)}\\rakazo\\.runs\\${randomUUID()}`;
+    const dir = `${await this.userProfile(signal)}\\smith\\.runs\\${randomUUID()}`;
     const done = `${dir}\\done`;
     await this.mkdirs(dir, signal);
     try {
@@ -1078,7 +1078,7 @@ export class WuyingSandboxProvider implements SandboxProvider {
 
   private async home(homeKey: string, signal: AbortSignal) {
     if (!HOME_KEY.test(homeKey)) throw new Error("computer home key is not portable");
-    return `${await this.userProfile(signal)}\\rakazo\\${homeKey}`;
+    return `${await this.userProfile(signal)}\\smith\\${homeKey}`;
   }
 
   private userProfile(signal: AbortSignal) {

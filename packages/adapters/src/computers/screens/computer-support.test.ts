@@ -14,7 +14,7 @@ describe("workspaceCwd", () => {
   const root = "/home/user/rakazo-home";
 
   it("maps empty, '.', '/', the root and home aliases to the root", () => {
-    for (const cwd of [undefined, "", ".", "/", root, "/home/rakazo", "/home/user"]) {
+    for (const cwd of [undefined, "", ".", "/", root, "/home/smith", "/home/user"]) {
       expect(workspaceCwd(root, cwd, ["/home/user"])).toBe(root);
     }
   });
@@ -122,10 +122,10 @@ describe("Team Computer bot folders", () => {
     expect(displayBotWorkspacePath("team", "bot-1", "~/bots", "bots/bot-1")).toBe("bots/bot-1");
   });
 
-  it("treats a leading /home/rakazo as the workspace root", () => {
-    expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazo")).toBe("");
+  it("treats a leading /home/smith as the workspace root", () => {
+    expect(resolveBotWorkspacePath("team", "bot-1", "/home/smith")).toBe("");
     expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazo/notes/x.md")).toBe("notes/x.md");
-    expect(resolveBotWorkspacePath("team", "bot-1", String.raw`\home\rakazo\notes\x.md`)).toBe(
+    expect(resolveBotWorkspacePath("team", "bot-1", String.raw`\home\smith\notes\x.md`)).toBe(
       "notes/x.md",
     );
     expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazo/shared/brief.md")).toBe(
@@ -134,8 +134,8 @@ describe("Team Computer bot folders", () => {
     expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/rakazo/notes/x.md")).toBe(
       "/notes/x.md",
     );
-    expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/rakazo")).toBe("/");
-    expect(resolveBotWorkspacePath("dedicated", "bot-1", String.raw`\home\rakazo\notes\x.md`)).toBe(
+    expect(resolveBotWorkspacePath("dedicated", "bot-1", "/home/smith")).toBe("/");
+    expect(resolveBotWorkspacePath("dedicated", "bot-1", String.raw`\home\smith\notes\x.md`)).toBe(
       String.raw`\notes\x.md`,
     );
     expect(resolveBotWorkspacePath("team", "bot-1", "/home/rakazotest/file.txt")).toBe(
@@ -146,7 +146,7 @@ describe("Team Computer bot folders", () => {
     );
   });
 
-  it("keeps root paths for a listing requested under /home/rakazo", () => {
+  it("keeps root paths for a listing requested under /home/smith", () => {
     expect(displayBotWorkspacePath("team", "bot-1", "/home/rakazo/bots", "bots/bot-1")).toBe(
       "bots/bot-1",
     );

@@ -75,7 +75,7 @@ Take a backup and run the drill on it first ([encrypted backups](./self-host-bac
 Then update the checkout and run the upgrade as root:
 
 ```bash
-cd /srv/rakazo
+cd /srv/smith
 git pull --ff-only
 sudo infra/compose/upgrade-postgres.sh
 ```
@@ -260,7 +260,7 @@ For a published-image installation on Linux, add these settings to the host's `.
 
 ```dotenv
 COMPOSE_PROFILES=updater
-RAKAZO_DEPLOY_DIR=/srv/rakazo
+RAKAZO_DEPLOY_DIR=/srv/smith
 RAKAZO_AUTO_UPDATE_INTERVAL_HOURS=6
 ```
 
@@ -396,7 +396,7 @@ manually before scheduling can proceed. Cloud CI deployment triggers remain unch
 
 `RAKAZO_DEPLOY_DIR` is bind-mounted into the updater at the same path it is read from
 (`${RAKAZO_DEPLOY_DIR}:${RAKAZO_DEPLOY_DIR}`), and that is load-bearing rather than tidy. Production
-Compose defaults both sides to `/srv/rakazo`; set the variable for any other layout. When the
+Compose defaults both sides to `/srv/smith`; set the variable for any other layout. When the
 updater runs `docker compose -p <project> --file $RAKAZO_DEPLOY_DIR/infra/compose/docker-compose.prod.yml up -d`,
 the Compose CLI _inside_ the container expands this file's relative bind mounts — `../../.env`,
 `./Caddyfile.prod` — against that path and hands the results to the daemon. The daemon has to be
@@ -412,11 +412,11 @@ The value therefore has to be the path **the daemon** sees, which is not always 
 sees:
 
 - **Linux.** The daemon shares the host filesystem, so the checkout path is the answer:
-  `/srv/rakazo` is the default and supported production layout. Set `RAKAZO_DEPLOY_DIR` explicitly
+  `/srv/smith` is the default and supported production layout. Set `RAKAZO_DEPLOY_DIR` explicitly
   when the checkout is elsewhere.
 - **Docker Desktop (Windows/macOS).** The daemon runs in a VM that mounts your drive somewhere else.
-  On Windows, `C:` appears at `/run/desktop/mnt/host/c`, so a checkout at `C:\Users\you\rakazo` is
-  `RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/rakazo`. Host Git may use `core.autocrlf=true`; the updater ignores CR-only diffs so that does not block `/apply`. Verify the mount before deploying:
+  On Windows, `C:` appears at `/run/desktop/mnt/host/c`, so a checkout at `C:\Users\you\smith` is
+  `RAKAZO_DEPLOY_DIR=/run/desktop/mnt/host/c/Users/you/smith`. Host Git may use `core.autocrlf=true`; the updater ignores CR-only diffs so that does not block `/apply`. Verify the mount before deploying:
 
 ```bash
 docker compose --env-file .env -f infra/compose/docker-compose.prod.yml \

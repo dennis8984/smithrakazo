@@ -82,9 +82,9 @@ describe("MCP server health", () => {
       mcpServerSpace: { findMany: vi.fn(async () => []) },
       secret: { findFirst: vi.fn(), create: vi.fn(), deleteMany: vi.fn() },
       user: {
-        findUnique: vi.fn(async () => ({ email: "owner@rakazo.test", emailVerified: true })),
+        findUnique: vi.fn(async () => ({ email: "owner@smith.test", emailVerified: true })),
         findUniqueOrThrow: vi.fn(async () => ({
-          email: "owner@rakazo.test",
+          email: "owner@smith.test",
           name: "Owner",
           secrets: [],
         })),
@@ -111,7 +111,7 @@ describe("MCP server health", () => {
         sandboxProvider: "fake",
         mcpStdioEnabled: true,
         mcpStdioAllowedCommands: ["npx"],
-        adminEmails: ["owner@rakazo.test"],
+        adminEmails: ["owner@smith.test"],
       },
       dataDir: "/tmp/rakazo-router-test",
     } as unknown as RouterDeps;
@@ -121,7 +121,7 @@ describe("MCP server health", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "owner-1",
-            email: "owner@rakazo.test",
+            email: "owner@smith.test",
             isDeploymentOwner: true,
             ...actor,
           },
@@ -140,7 +140,7 @@ describe("MCP server health", () => {
             actor: {
               spaceId: "workspace-1",
               userId: "owner-1",
-              email: "owner@rakazo.test",
+              email: "owner@smith.test",
               isDeploymentOwner: true,
             },
           } as never,
@@ -188,7 +188,7 @@ describe("MCP server health", () => {
 
   it("lets only admins add or change stdio servers", async () => {
     const h = harness();
-    Object.assign(h.deps.env, { adminEmails: ["someone-else@rakazo.test"] });
+    Object.assign(h.deps.env, { adminEmails: ["someone-else@smith.test"] });
     const refusal = { code: "FORBIDDEN", message: "Only admins can add local MCP servers" };
 
     expect((await h.client.me()).mcpStdioEnabled).toBe(false);
@@ -544,7 +544,7 @@ describe("MCP server health", () => {
               actor: {
                 spaceId: "workspace-1",
                 userId: "owner-1",
-                email: "owner@rakazo.test",
+                email: "owner@smith.test",
                 isDeploymentOwner: true,
               },
             },
@@ -589,7 +589,7 @@ describe("MCP server health", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "owner-1",
-            email: "owner@rakazo.test",
+            email: "owner@smith.test",
             isDeploymentOwner: true,
           },
         } as never,
@@ -632,7 +632,7 @@ describe("MCP server health", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "owner-1",
-            email: "owner@rakazo.test",
+            email: "owner@smith.test",
             isDeploymentOwner: true,
           },
         } as never,
@@ -655,7 +655,7 @@ describe("MCP server health", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "owner-1",
-            email: "owner@rakazo.test",
+            email: "owner@smith.test",
             isDeploymentOwner: true,
           },
         } as never,
@@ -685,7 +685,7 @@ describe("MCP server health", () => {
           actor: {
             spaceId: "workspace-1",
             userId: "owner-1",
-            email: "owner@rakazo.test",
+            email: "owner@smith.test",
             isDeploymentOwner: true,
           },
         } as never,
@@ -915,7 +915,7 @@ describe("private API connectors", () => {
     return {
       spaceId: "workspace-1",
       userId: isDeploymentOwner ? "owner-1" : "member-1",
-      email: "user@rakazo.test",
+      email: "user@smith.test",
       isDeploymentOwner,
     };
   }

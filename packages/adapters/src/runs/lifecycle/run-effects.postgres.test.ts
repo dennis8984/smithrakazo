@@ -20,7 +20,7 @@ postgres("tool effects under the run lease (PostgreSQL)", () => {
       const userId = `${id}-user`;
       const organizationId = `${id}-org`;
       await prisma.user.create({
-        data: { id: userId, name: "Effect tester", email: `${id}@rakazo.test` },
+        data: { id: userId, name: "Effect tester", email: `${id}@smith.test` },
       });
       await prisma.organization.create({
         data: { id: organizationId, name: "Effect tests", slug: id, createdAt: new Date() },
@@ -79,7 +79,7 @@ postgres("tool effects under the run lease (PostgreSQL)", () => {
       { owner, fence },
     );
   const send = vi.fn();
-  // A tool records its effect, then reaches outside Rakazo.
+  // A tool records its effect, then reaches outside Smith.
   const sendTool = (deps: ExecutorDeps, key: string) =>
     runAsSystem("agent run tool call", async () => {
       const applied = await recordEffect(deps, run, "send_fixture", key, { to: key });

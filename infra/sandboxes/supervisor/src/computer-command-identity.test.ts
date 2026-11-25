@@ -27,7 +27,7 @@ beforeEach(() => {
   mock.failWhen = () => false;
   mock.inspect.mockResolvedValue({
     Config: {
-      Labels: { "rakazo.managed": "true", "rakazo.botId": "bot", "rakazo.spaceId": "space" },
+      Labels: { "smith.managed": "true", "smith.botId": "bot", "smith.spaceId": "space" },
     },
     State: { Running: true, StartedAt: "2026-01-01T00:00:00Z" },
     HostConfig: {},
@@ -218,7 +218,7 @@ describe("computer command identity", () => {
         .at(-1)?.Env;
     };
     const workspace = [
-      "HOME=/home/rakazo",
+      "HOME=/home/smith",
       "PATH=/home/rakazo/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       "NPM_CONFIG_PREFIX=/home/rakazo/.local",
       "PIP_USER=1",

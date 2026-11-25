@@ -2,9 +2,9 @@ import { isBotChatRouteId, isReservedAppSegment } from "@rakazo/core";
 import { bestEffort } from "@rakazo/logging";
 import type { BrowserWindow } from "electron";
 
-export const DEEP_LINK_SCHEME = "rakazo";
+export const DEEP_LINK_SCHEME = "smith";
 
-const BOT_LINK = /^rakazo:\/\/app\/([^/?#]+)(?:[?#].*)?$/i;
+const BOT_LINK = /^smith:\/\/app\/([^/?#]+)(?:[?#].*)?$/i;
 // biome-ignore lint/suspicious/noControlCharactersInRegex: reject raw controls before URL normalization.
 const CONTROL_OR_WHITESPACE = /[\u0000-\u0020\u007f\s]/u;
 

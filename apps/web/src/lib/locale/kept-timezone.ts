@@ -19,7 +19,7 @@ function parseKept(raw: string | null): Record<string, KeptTimezone> {
 
 /** Per account, the Keep its owner last answered on this device. */
 export const keptTimezones = createStoredPreference<Record<string, KeptTimezone>>({
-  key: "rakazo:kept-timezone",
+  key: "smith:kept-timezone",
   parse: parseKept,
   serialize: (kept) => (Object.keys(kept).length > 0 ? JSON.stringify(kept) : null),
 });

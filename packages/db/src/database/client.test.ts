@@ -19,7 +19,7 @@ afterEach(async () => {
 
 describe("createDb", () => {
   it("caps the pg pool and swallows idle-client errors so they cannot crash the process", () => {
-    const { pool } = createDb("postgres://rakazo:rakazo@127.0.0.1:9/rakazo", {
+    const { pool } = createDb("postgres://smith:smith@127.0.0.1:9/smith", {
       poolMax: 3,
       applicationName: "rakazo-test",
     });
@@ -36,13 +36,13 @@ describe("createDb", () => {
   });
 
   it("defaults to a four-connection pool", () => {
-    const { pool } = createDb("postgres://rakazo:rakazo@127.0.0.1:9/rakazo");
+    const { pool } = createDb("postgres://smith:smith@127.0.0.1:9/smith");
     pools.push(pool);
     expect(pool.options.max).toBe(4);
   });
 
   it("lets a transaction wait for a busy pool past Prisma's 2s default", async () => {
-    const { prisma, pool } = createDb("postgres://rakazo:rakazo@127.0.0.1:9/rakazo");
+    const { prisma, pool } = createDb("postgres://smith:smith@127.0.0.1:9/smith");
     pools.push(pool);
     const released = new Error("connection freed after 2.5s");
     pool.connect = (() =>
@@ -54,7 +54,7 @@ describe("createDb", () => {
   it("refuses local master keys when a key manager is configured", () => {
     vi.stubEnv("MASTER_KEY_PROVIDER", "aws-kms");
     try {
-      expect(() => createDb("postgres://rakazo:rakazo@127.0.0.1:9/rakazo")).toThrow(
+      expect(() => createDb("postgres://smith:smith@127.0.0.1:9/smith")).toThrow(
         "MASTER_KEY_PROVIDER needs createDb(url, { keyProvider })",
       );
     } finally {

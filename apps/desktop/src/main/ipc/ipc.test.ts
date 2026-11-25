@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
-import type { DesktopUpdateState, RakazoDesktop } from "@rakazo/contracts";
+import type { DesktopUpdateState, SmithDesktop } from "@rakazo/contracts";
 import type { BrowserWindow, WebContents } from "electron";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { appWindowTargets, desktop } from "../desktop-state.js";
@@ -52,8 +52,8 @@ function strangers(page: ReturnType<typeof fakeWindow>): [string, IpcCaller][] {
 }
 
 /** The app page's bridge, as its preload builds it, for a page whose calls arrive as `caller`. */
-function appBridge(caller: IpcCaller): RakazoDesktop {
-  let bridge: RakazoDesktop | undefined;
+function appBridge(caller: IpcCaller): SmithDesktop {
+  let bridge: SmithDesktop | undefined;
   vm.runInNewContext(
     readFileSync(path.join(import.meta.dirname, "../../preload/preload.cjs"), "utf8"),
     {
@@ -61,7 +61,7 @@ function appBridge(caller: IpcCaller): RakazoDesktop {
       window: { addEventListener: () => undefined },
       require: () => ({
         contextBridge: {
-          exposeInMainWorld: (_name: string, value: RakazoDesktop) => (bridge = value),
+          exposeInMainWorld: (_name: string, value: SmithDesktop) => (bridge = value),
         },
         // Electron rejects the page's promise when the handler throws.
         ipcRenderer: {
