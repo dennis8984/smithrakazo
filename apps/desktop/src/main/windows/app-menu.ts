@@ -104,12 +104,15 @@ function updateMenuLabel(phase: DesktopUpdateState["phase"] | undefined) {
 type MenuActions = {
   revokeLocalComputerAccess: ReturnType<typeof createLocalComputerChoice>["revoke"];
   updaterEnvironment: Parameters<typeof updaterSupport>[0];
+  /** Opens smith.ph Advanced (hq | tools | skills). */
+  openAdvanced: (path: "hq" | "tools" | "skills") => Promise<void>;
 };
 
 /** The app menu's installer. It runs again whenever what the menu shows changes. */
 export function applicationMenuInstaller({
   revokeLocalComputerAccess,
   updaterEnvironment,
+  openAdvanced,
 }: MenuActions) {
   return function installApplicationMenu() {
     const computerAccess: Electron.MenuItemConstructorOptions = {
@@ -142,6 +145,39 @@ export function applicationMenuInstaller({
       label: t("Change Smith Server…"),
       accelerator: "CmdOrCtrl+Shift+K",
       click: () => showSetupWindow(),
+    };
+    const advancedMenu: Electron.MenuItemConstructorOptions = {
+      label: t("Advanced"),
+      submenu: [
+        {
+          label: t("Organization HQ"),
+          accelerator: "CmdOrCtrl+Shift+H",
+          click: () => {
+            void openAdvanced("hq");
+          },
+        },
+        {
+          label: t("Tool Hub"),
+          accelerator: "CmdOrCtrl+Shift+T",
+          click: () => {
+            void openAdvanced("tools");
+          },
+        },
+        {
+          label: t("Skills Hub"),
+          accelerator: "CmdOrCtrl+Shift+L",
+          click: () => {
+            void openAdvanced("skills");
+          },
+        },
+        { type: "separator" },
+        {
+          label: t("Open HQ in Browser"),
+          click: () => {
+            void openAdvanced("hq");
+          },
+        },
+      ],
     };
     const quitAndStopBots = quitAndStopBotsItem({
       mode: desktop.currentSetup?.mode,
@@ -259,6 +295,7 @@ export function applicationMenuInstaller({
                 computerAccess,
                 revokeComputerAccess,
                 changeServer,
+                advancedMenu,
                 { type: "separator" },
                 { role: "hide", label: t("Hide {name}", { name: app.name }) },
                 { role: "hideOthers", label: t("Hide Others") },
@@ -274,6 +311,8 @@ export function applicationMenuInstaller({
             },
             editMenu,
             viewMenu,
+            // Top-level Advanced so Tool Hub / Skills Hub are obvious (also under Smith menu).
+            advancedMenu,
             goMenu,
             {
               label: t("Window"),
@@ -301,6 +340,7 @@ export function applicationMenuInstaller({
                 computerAccess,
                 revokeComputerAccess,
                 changeServer,
+                advancedMenu,
                 { type: "separator" },
                 checkForUpdates,
                 { type: "separator" },

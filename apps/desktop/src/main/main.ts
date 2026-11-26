@@ -26,6 +26,15 @@ import {
   shell,
   systemPreferences,
 } from "electron";
+import { openAdvancedFromMenu } from "./advanced/open-advanced.js";
+import {
+  DEFAULT_SMITH_DASHBOARD_ORIGIN,
+  normalizeOrgSlug,
+  normalizeSmithOrigin,
+  parseAdvancedPath,
+  readSmithOrg,
+  writeSmithOrg,
+} from "./advanced/smith-org.js";
 import { createBrowserAuthHandlers } from "./auth/browser-auth.js";
 import { chooseLinuxKeyring, deviceTokenCipher } from "./auth/device-token-cipher.js";
 import { associatedPasskeyRpIds } from "./auth/passkeys.js";
@@ -202,6 +211,7 @@ const revokeLocalComputerAccess = localComputerChoice.revoke;
 const installApplicationMenu = applicationMenuInstaller({
   revokeLocalComputerAccess,
   updaterEnvironment,
+  openAdvanced: (pathKind) => openAdvancedFromMenu(app.getPath("userData"), pathKind),
 });
 async function probeServer(
   rawUrl: string,
@@ -822,6 +832,20 @@ app.whenReady().then(async () => {
   app.on("before-quit", browserAuth.cancelAll);
   handleIpc("desktop.oauth.open", browserAuth.open);
   handleIpc("desktop.oauth.cancel", browserAuth.cancel);
+  handleIpc("desktop.advanced.config", async () => readSmithOrg(userDataDir));
+  handleIpc("desktop.advanced.save", async (_event, orgSlug, origin) => {
+    const slug = normalizeOrgSlug(typeof orgSlug === "string" ? orgSlug : null);
+    if (!slug) throw new Error("Enter a valid Smith organization slug.");
+    const resolvedOrigin =
+      normalizeSmithOrigin(typeof origin === "string" ? origin : undefined) ??
+      DEFAULT_SMITH_DASHBOARD_ORIGIN;
+    const config = { origin: resolvedOrigin, orgSlug: slug };
+    await writeSmithOrg(userDataDir, config);
+    return config;
+  });
+  handleIpc("desktop.advanced.open", async (_event, pathKind) => {
+    await openAdvancedFromMenu(userDataDir, parseAdvancedPath(pathKind));
+  });
   // Signing an MCP server in again with another account starts from an empty
   // browser: no cookies, no cached login pages, no stored site data.
   handleIpc("desktop.mcpBrowser.clear", async (_event, serverId) => {

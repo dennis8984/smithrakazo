@@ -190,6 +190,28 @@ export interface SmithDesktop {
      */
     onCallback: (listener: (callback: SmithDesktopOAuthCallback) => void) => () => void;
   };
+  /**
+   * Smith.org HQ (Tool Hub / Skills / billing) in a dedicated window.
+   * Absent on older desktop releases and on the web shell.
+   */
+  advanced?: {
+    /** Saved origin + org slug, or null when Advanced has not been configured. */
+    config: () => Promise<SmithAdvancedConfig | null>;
+    /** Persist org slug (and optional origin) for Advanced. */
+    save: (orgSlug: string, origin?: string) => Promise<SmithAdvancedConfig>;
+    /**
+     * Open or focus Advanced. `path` is `hq` (default), `tools`, or `skills`.
+     * Rejects when org slug is missing.
+     */
+    open: (path?: SmithAdvancedPath) => Promise<void>;
+  };
+}
+
+export type SmithAdvancedPath = "hq" | "tools" | "skills";
+
+export interface SmithAdvancedConfig {
+  origin: string;
+  orgSlug: string;
 }
 
 /**

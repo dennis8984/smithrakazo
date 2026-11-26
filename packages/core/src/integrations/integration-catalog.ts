@@ -14,6 +14,13 @@ import {
 /** MCP services offered as one-step sources. A preset with a URL always connects there. */
 export const MCP_SOURCE_PRESETS: McpSourcePreset[] = [
   {
+    id: "smith-crm",
+    name: "Smith CRM",
+    url: "https://api.openclaw.smith.ph/api/mcp/smith-crm",
+    featured: true,
+    credentialHelpUrl: "https://www.smith.ph/dashboard",
+  },
+  {
     id: "github",
     name: "GitHub",
     url: "https://api.githubcopilot.com/mcp/readonly",

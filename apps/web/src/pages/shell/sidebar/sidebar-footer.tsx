@@ -44,6 +44,8 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   onIntegrations: () => void;
   onSkills: () => void;
+  /** Desktop-only: open smith.ph org HQ (or tools/skills) in Advanced window. */
+  onAdvanced?: (path?: "hq" | "tools" | "skills") => void;
   onBoard?: () => void;
   links?: NavLink[];
   onLink?: (link: NavLink) => void;
@@ -79,6 +81,7 @@ export function SidebarFooter({
   onOpenChange,
   onIntegrations,
   onSkills,
+  onAdvanced,
   onBoard,
   links = [],
   onLink,
@@ -212,6 +215,38 @@ export function SidebarFooter({
               <ScrollText className="text-muted-foreground" strokeWidth={1.75} />
               <Trans>Skills</Trans>
             </Button>
+            {onAdvanced ? (
+              <>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-start gap-2.5 font-normal"
+                  data-testid="account-menu-advanced"
+                  onClick={() => onAdvanced("hq")}
+                >
+                  <Building2 className="text-muted-foreground" strokeWidth={1.75} />
+                  <Trans>Advanced</Trans>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-start gap-2.5 ps-9 font-normal text-muted-foreground"
+                  data-testid="account-menu-advanced-tools"
+                  onClick={() => onAdvanced("tools")}
+                >
+                  <Trans>Tool Hub</Trans>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="w-full justify-start gap-2.5 ps-9 font-normal text-muted-foreground"
+                  data-testid="account-menu-advanced-skills"
+                  onClick={() => onAdvanced("skills")}
+                >
+                  <Trans>Skills Hub</Trans>
+                </Button>
+              </>
+            ) : null}
             <Button
               variant="ghost"
               size="lg"

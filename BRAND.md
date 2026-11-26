@@ -24,3 +24,11 @@ Published GHCR images still ship upstream assets until you rebuild. For the loca
 ## Desktop app name
 
 `apps/desktop/package.json` → `productName: "Smith"`. Rebuild the Electron app from this checkout to get a **Smith.app**; the App Store / rakazo.com download remains branded Rakazo until you ship a fork build.
+
+## Tool Hub / Skills / Advanced
+
+- **Connectors** — Smith Tool Hub items (CRM, SmithSend, …) as MCP/OpenAPI integrations; other apps remain client-chosen.
+- **Skills** — Smith Skills Hub packs install into Rakazo Skills; metering stays on smith.ph.
+- **Advanced** — dedicated Electron window to `SMITH_DASHBOARD_ORIGIN/dashboard/SMITH_ORG_SLUG` (default `https://www.smith.ph/dashboard/{slug}`). Not an iframe (smith.ph `frame-ancestors 'none'`). Config: runtime `SMITH_*` env + desktop `smith-org.json`.
+
+See `docs/smith-hub.md` and Smith.ai `specs/smithrakazo.md`.

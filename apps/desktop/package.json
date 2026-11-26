@@ -23,6 +23,10 @@
     "electron-updater": "6.8.12",
     "koffi": "3.3.7"
   },
+  "optionalDependencies": {
+    "@koromix/koffi-darwin-arm64": "3.3.7",
+    "@koromix/koffi-darwin-x64": "3.3.7"
+  },
   "devDependencies": {
     "@playwright/test": "1.64.1",
     "@rakazo/adapters": "workspace:*",
@@ -51,9 +55,22 @@
       "output": "out",
       "buildResources": "assets"
     },
+    "asar": true,
+    "asarUnpack": [
+      "**/*.{node,dylib}",
+      "**/@koromix/**"
+    ],
     "files": [
       "dist/**/*",
-      "package.json"
+      "package.json",
+      {
+        "from": "../../node_modules/.pnpm/@koromix+koffi-darwin-arm64@3.3.7/node_modules/@koromix/koffi-darwin-arm64",
+        "to": "node_modules/@koromix/koffi-darwin-arm64"
+      },
+      {
+        "from": "../../node_modules/.pnpm/@koromix+koffi-darwin-x64@3.3.7/node_modules/@koromix/koffi-darwin-x64",
+        "to": "node_modules/@koromix/koffi-darwin-x64"
+      }
     ],
     "extraResources": [
       {
@@ -99,6 +116,16 @@
         {
           "from": "build/server-bundle.json",
           "to": "server-bundle.json"
+        },
+        {
+          "from": "../../node_modules/.pnpm/@koromix+koffi-darwin-arm64@3.3.7/node_modules/@koromix/koffi-darwin-arm64/darwin_arm64",
+          "to": "koffi/darwin_arm64",
+          "filter": ["koffi.node"]
+        },
+        {
+          "from": "../../node_modules/.pnpm/@koromix+koffi-darwin-x64@3.3.7/node_modules/@koromix/koffi-darwin-x64/darwin_x64",
+          "to": "koffi/darwin_x64",
+          "filter": ["koffi.node"]
         }
       ],
       "target": [
@@ -148,8 +175,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "elie222",
-        "repo": "smith"
+        "owner": "dennis8984",
+        "repo": "smithrakazo"
       }
     ]
   }

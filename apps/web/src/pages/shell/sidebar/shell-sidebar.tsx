@@ -28,6 +28,7 @@ import { useAppRail } from "../app-rail";
 import type { ChatMenuState } from "../chat/chat-context-menu";
 import type { Panel } from "../right-panel-state";
 import type { SettingsSection } from "../shell-overlay-url";
+import { canOpenAdvanced, openAdvanced } from "../../../lib/platform/advanced";
 import { SidebarFooter } from "./sidebar-footer";
 import { SidebarHeader } from "./sidebar-header";
 import type { SidebarSearch } from "./use-sidebar-search";
@@ -411,6 +412,14 @@ function ShellSidebarFooter({
           setMenuOpen(false);
           openSkills();
         }}
+        onAdvanced={
+          canOpenAdvanced()
+            ? (path = "hq") => {
+                setMenuOpen(false);
+                void openAdvanced(path);
+              }
+            : undefined
+        }
         onBoard={
           boardEnabled
             ? () => {

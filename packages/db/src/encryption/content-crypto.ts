@@ -13,7 +13,7 @@ export const SEALED_FIELD = "$sealed";
 
 const IV_BYTES = 12;
 const TAG_BYTES = 16;
-const AAD_VERSION = "smith/content/v1";
+const AAD_VERSION = "rakazo/content/v1";
 
 export interface DataKey {
   /** SpaceKey row id; travels in every ciphertext header. */
@@ -147,7 +147,7 @@ const MAX_HAN_PAIRS = 512;
 const HAN = /\p{Script=Han}/u;
 
 function searchKey(key: DataKey): Buffer {
-  return Buffer.from(hkdfSync("sha256", key.key, Buffer.alloc(0), "smith/search/v1", 32));
+  return Buffer.from(hkdfSync("sha256", key.key, Buffer.alloc(0), "rakazo/search/v1", 32));
 }
 
 export function searchTerms(text: string): string[] {

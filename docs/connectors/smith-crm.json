@@ -1,0 +1,23 @@
+{
+  "id": "smith-crm",
+  "name": "Smith CRM",
+  "description": "Search contacts, deals, tasks, tickets, and dashboard KPIs in Smith CRM. Subscriptions and metering stay on smith.ph Advanced.",
+  "kind": "mcp",
+  "featured": true,
+  "vendor": "Smith",
+  "mcp": {
+    "transport": "streamable_http",
+    "endpoint": "https://api.openclaw.smith.ph/api/mcp/smith-crm",
+    "auth": "bearer",
+    "defaultAgentId": "rakazo"
+  },
+  "tools": [
+    "search_contacts",
+    "get_dashboard_summary",
+    "search_deals",
+    "search_tasks",
+    "list_calendar_events",
+    "search_tickets"
+  ],
+  "docs": "../smith-crm-connector.md"
+}

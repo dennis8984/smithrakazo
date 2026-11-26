@@ -93,6 +93,11 @@ contextBridge.exposeInMainWorld("rakazoDesktop", {
       return () => ipcRenderer.off("desktop.oauth.callback", handler);
     },
   },
+  advanced: {
+    config: () => ipcRenderer.invoke("desktop.advanced.config"),
+    save: (orgSlug, origin) => ipcRenderer.invoke("desktop.advanced.save", orgSlug, origin),
+    open: (path) => ipcRenderer.invoke("desktop.advanced.open", path),
+  },
   mcpBrowser: {
     clear: (serverId) => ipcRenderer.invoke("desktop.mcpBrowser.clear", serverId),
     onOAuthCallback: (listener) => {

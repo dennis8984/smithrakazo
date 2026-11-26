@@ -1,8 +1,9 @@
-import type { Bot, Group } from "@rakazo/contracts";
+import type { Bot, Group, SmithAdvancedPath } from "@rakazo/contracts";
 import { chatSnoozed } from "@rakazo/core";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { NavigateFunction, NavigateOptions, To } from "react-router-dom";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { canOpenAdvanced, openAdvanced } from "../../lib/platform/advanced";
 import type { ShellOverlay } from "./shell-overlay-url";
 import {
   readShellOverlay,
@@ -11,6 +12,11 @@ import {
   withShellOverlay,
 } from "./shell-overlay-url";
 import { guardShellNavigate } from "./space-switch";
+
+function advancedPathFromParam(value: string | null): SmithAdvancedPath {
+  if (value === "tools" || value === "skills") return value;
+  return "hq";
+}
 
 /** Router access for the shell: navigation stops once it unmounts, and overlays live in the URL. */
 export function useShellNavigation() {
@@ -57,6 +63,15 @@ export function useShellNavigation() {
     [guardedNavigate],
   );
   const overlay = readShellOverlay(searchParams);
+  // Desktop: ?advanced=1|tools|skills opens the Smith.org Advanced window, then clears the param.
+  useEffect(() => {
+    if (!searchParams.has("advanced") || !canOpenAdvanced()) return;
+    const path = advancedPathFromParam(searchParams.get("advanced"));
+    const next = new URLSearchParams(searchParams);
+    next.delete("advanced");
+    guardedNavigate({ search: searchString(next) }, { replace: true });
+    void openAdvanced(path);
+  }, [searchParams, guardedNavigate]);
   // Overlays replace the URL rather than adding history, so opening and closing never race a navigation.
   function setOverlay(next: ShellOverlay) {
     overlayRevision.current += 1;
