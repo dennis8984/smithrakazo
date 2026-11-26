@@ -13,6 +13,12 @@ Link those URLs from smith.ph (“Download for Mac / Windows”).
 
 Without these, CI cannot publish Gatekeeper/SmartScreen-safe builds.
 
+### Blockers (as of 2026-11-26)
+
+- **Apple Developer Program membership expired** for team **BORA GLOBAL LIMITED** (`NSLK3RH46C`). Banner: Account Holder **Kendany Go** must renew (US$99; last renewal date shown Apr 21, 2024). Until renewed: no new Developer ID certs, no notarization, Certificates UI empty.
+- Signed-in Admin (`dennisf@tuta.io` / solomon njilu) **cannot** request App Store Connect API access — only the Account Holder can (needed for `APPLE_API_*` notarization secrets).
+- **Azure** Trusted Signing still needs a portal login in Cursor browser (Windows path).
+
 ### macOS (Apple Developer)
 
 Repo secrets (Actions → Secrets):
